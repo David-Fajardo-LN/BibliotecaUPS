@@ -5,7 +5,6 @@
 package Modelo.dominio;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -18,8 +17,6 @@ public class Autor {
     private String nacionalidad;
     private String estiloLiterario;
     private LocalDate fechaDeNacimiento;
-    
-    private ArrayList<Libro> libros;
 
     public Autor(String identificador, String nombre, String nacionalidad, LocalDate fechaDeNacimiento, String estiloL) {
         this.codigoIdentificador = identificador;
@@ -27,7 +24,6 @@ public class Autor {
         this.nacionalidad = nacionalidad;
         this.fechaDeNacimiento = fechaDeNacimiento;
         this.estiloLiterario = estiloL;
-        this.libros = new ArrayList<>();
     }
 
     public String getIdentificador() {
@@ -70,22 +66,9 @@ public class Autor {
         this.fechaDeNacimiento = fechaDeNacimiento;
     }
 
-    public ArrayList<Libro> getLibros() {
-        return libros;
-    }
-
-    public void agregarLibro(Libro l) {
-        this.libros.add(l);
-    }
-
     public void setEstiloLiterario(String estiloLiterario) {
         this.estiloLiterario = estiloLiterario;
     }
-    
-    public int librosActivos(){
-        return libros.size();
-    }
-    
 
     @Override
     public int hashCode() {

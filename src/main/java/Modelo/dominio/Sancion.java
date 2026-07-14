@@ -19,15 +19,15 @@ public class Sancion {
     private String descripción;
     private double monto;
     private boolean estado;
-    private Prestamo prestamo;
+    private String codigoPrestamo;
 
-    public Sancion(String codigo, LocalDate fechaDeSancion, String descripción, double monto, Prestamo prestamo) {
+    public Sancion(String codigo, LocalDate fechaDeSancion, String descripción, double monto, String codigoPrestamo) {
         this.codigo = codigo;
         this.fechaDeSancion = fechaDeSancion;
         this.descripción = descripción;
         this.monto = monto;
         this.estado=true;
-        this.prestamo = prestamo;
+        this.codigoPrestamo = codigoPrestamo;
     }
 
     public String getCodigo() {
@@ -62,12 +62,12 @@ public class Sancion {
         this.monto = monto;
     }
 
-    public Prestamo getPrestamo() {
-        return prestamo;
+    public String getPrestamo() {
+        return codigoPrestamo;
     }
 
-    public void setPrestamo(Prestamo prestamo) {
-        this.prestamo = prestamo;
+    public void setPrestamo(String codigoPrestamo) {
+        this.codigoPrestamo = codigoPrestamo;
     }
 
     public boolean getEstado() {

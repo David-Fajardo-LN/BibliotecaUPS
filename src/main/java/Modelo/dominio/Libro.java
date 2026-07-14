@@ -18,16 +18,16 @@ public class Libro {
     private int cantidadDisponible;
     private int cantidadTotal;
     private String generoLiterario;
-    private Autor autor;
+    private String identificadorAutor;
 
-    public Libro(String ISBN, String nombre, LocalDate fechaDePublicacion, int cantidadTotal, Autor autor, String generoL) {
+    public Libro(String ISBN, String nombre, LocalDate fechaDePublicacion, int cantidadTotal, String identificadorAutor, String generoL) {
         this.ISBN = ISBN;
         this.nombre = nombre;
         this.fechaDePublicacion = fechaDePublicacion;
         this.cantidadTotal = cantidadTotal;
         this.cantidadDisponible = cantidadTotal;
         this.generoLiterario= generoL;
-        this.autor = autor;
+        this.identificadorAutor = identificadorAutor;
     }
 
     public Libro(String ISBN, String nombre, LocalDate fechaDePublicacion, int cantidadDisponible, int cantidadTotal, String generoLiterario) {
@@ -38,9 +38,6 @@ public class Libro {
         this.cantidadTotal = cantidadTotal;
         this.generoLiterario = generoLiterario;
     }
-    
-    
-    
 
     public String getISBN() {
         return ISBN;
@@ -82,12 +79,12 @@ public class Libro {
         this.cantidadTotal = cantidadTotal;
     }
 
-    public Autor getAutor() {
-        return autor;
+    public String getAutor() {
+        return identificadorAutor;
     }
 
-    public void setAutor(Autor autor) {
-        this.autor = autor;
+    public void setAutor(String identificadorAutor) {
+        this.identificadorAutor = identificadorAutor;
     }
 
     public String getGeneroLiterario() {

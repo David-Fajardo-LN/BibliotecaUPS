@@ -16,53 +16,35 @@ import java.util.ArrayList;
  * @author User
  */
 public class PrestamoDao implements InterfazDao<Prestamo>{
-    private ArrayList<Prestamo> prestamos;
 
-    public PrestamoDao(ArrayList<Bibliotecario> bibliotecarios, ArrayList<Usuario> usuarios, ArrayList<Libro> libros) {
-        this.prestamos = new ArrayList<>();
-    }
-    
-    
     @Override
-    public Prestamo buscar(String codigo) {
-        for(Prestamo p : prestamos)
-            if(p.getCodigo().equals(codigo))
-                return p;
-        return null;
+    public Prestamo buscar(String parametro) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void eliminar(String codigo) {
-       prestamos.removeIf(p -> p.getCodigo().equals(codigo));
+    public void eliminar(String parametro) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void agregar(Prestamo p) {
-       prestamos.add(p);
+    public void agregar(Prestamo dato) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void actualizar(Prestamo otro) {
-        for(Prestamo p : prestamos){
-            if(p.getCodigo().equals(otro.getCodigo())){
-                p.setFechaDeDevolucion(otro.getFechaDeDevolucion());
-                p.setFechaDePrestamo(otro.getFechaDePrestamo());
-                p.setFechaLimiteDePrestamo(otro.getFechaLimiteDePrestamo());
-                return;
-            }
-        }
+    public void actualizar(Prestamo dato) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public boolean existe(String codigo) {
-       for(Prestamo p : prestamos)
-            if(p.getCodigo().equals(codigo))
-                return true;
-        return false;
+    public boolean existe(String parametro) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public ArrayList obtenerLista() {
-        return prestamos;
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
 }

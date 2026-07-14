@@ -190,7 +190,7 @@ public class PrincipalView extends javax.swing.JFrame {
 
     public JMenuItem getItemPagarMulta() {
         return itemPagarMulta;
-    }
+    } 
 
     public JMenu getMenuSanciones() {
         return menuSanciones;

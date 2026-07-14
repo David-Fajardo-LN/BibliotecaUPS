@@ -4,8 +4,6 @@
  */
 package Modelo.dominio;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author User
@@ -16,23 +14,15 @@ public class Bibliotecario extends Persona{
     private String sector;
     private String cargo;
     private boolean tienePermisoAvanzado;
-    private ArrayList<Prestamo> prestamos;
 
-    // ESTE CONSTRUCTOR NO SE USA
+    public Bibliotecario(String sector, String cargo, boolean tienePermisoAvanzado, String cedula, String nombre, String email, String telefono) {
+        super(cedula, nombre, email, telefono);
+        this.sector = sector;
+        this.cargo = cargo;
+        this.tienePermisoAvanzado = tienePermisoAvanzado;
+    }
+
     
-    public Bibliotecario(String sector, boolean permiso, String cedula, String nombre, String email, String telefono, String cargo) {
-        super(cedula, nombre, email, telefono);
-        this.sector = sector;
-        this.tienePermisoAvanzado = permiso;
-        this.cargo=cargo;
-        this.prestamos = new ArrayList<>();
-    }
-
-    public Bibliotecario(String sector, String cedula, String nombre, String email, String telefono) {
-        super(cedula, nombre, email, telefono);
-        this.sector = sector;
-        this.prestamos = new ArrayList<>();
-    }
 
     public boolean isTienePermisoAvanzado() {
         return tienePermisoAvanzado;
@@ -41,16 +31,7 @@ public class Bibliotecario extends Persona{
     public void setTienePermisoAvanzado(boolean tienePermisoAvanzado) {
         this.tienePermisoAvanzado = tienePermisoAvanzado;
     }
-
-    public ArrayList<Prestamo> getPrestamos() {
-        return prestamos;
-    }
-
-    public void sePrestamo(Prestamo p) {
-        this.prestamos.add(p);
-    }
     
-
     public String getSector() {
         return sector;
     }
@@ -73,18 +54,5 @@ public class Bibliotecario extends Persona{
 
     public void quitarPermisoAvanzado() {
         this.tienePermisoAvanzado = false;
-    }
-    
-    public void eliminarPrestamoDeBibliotecario(String codigoPrestamo){
-        for(Prestamo p : prestamos){
-            if(p.getCodigo().equals(codigoPrestamo)){
-                prestamos.remove(p);
-                return;
-            }
-        }
-    }
-    
-    public void agregarPrestamo(Prestamo p){
-        prestamos.add(p);
     }
 }
