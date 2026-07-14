@@ -4,11 +4,7 @@
  */
 package Modelo.dao;
 
-import Modelo.dominio.Bibliotecario;
-import Modelo.dominio.Libro;
-import Modelo.dominio.Prestamo;
 import Modelo.dominio.Sancion;
-import Modelo.dominio.Usuario;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -19,24 +15,15 @@ import java.util.ArrayList;
  *
  * @author User
  */
-public class PrestamoDao implements InterfazDao<Prestamo>{
-
+public class SancionDao implements InterfazDao<Sancion>{
     private static final String RUTA = "//RutaEjemplo";
 
     private static final int TAM_CODIGO = 10;
-    private static final int TAM_FECHA_PRESTAMO = 10;
-    private static final int TAM_FECHA_DEVOLUCION = 10;
-    private static final int TAM_FECHA_LIMITE = 10;
-    private static final int TAM_CEDULA_BIBLIOTECARIO = 10;
-    private static final int TAM_CEDULA_USUARIO = 10;
-    private static final int TAM_ISBN_LIBRO = 10;
-    private static final int TAM_CODIGO_SANCION = 10;
-    private static final int TAM_REGISTRO = 200;
-
-    private final BibliotecarioDao bibliotecarioDao = new BibliotecarioDao();
-    private final UsuarioDao usuarioDao = new UsuarioDao();
-    private final LibroDao libroDao = new LibroDao();
-    private final SancionDao sancionDao = new SancionDao();
+    private static final int TAM_FECHA_SANCION = 10;
+    private static final int TAM_DESCRIPCION = 80;
+    private static final int TAM_MONTO = 10;
+    private static final int TAM_CODIGO_PRESTAMO = 10;
+    private static final int TAM_REGISTRO = 300;
 
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
         char[] valor = new char[longitud];
@@ -61,19 +48,16 @@ public class PrestamoDao implements InterfazDao<Prestamo>{
         raf.writeChars(sb.toString());
     }
 
-    private void escribirRegistro(RandomAccessFile raf, Prestamo dato) throws IOException {
+    private void escribirRegistro(RandomAccessFile raf, Sancion dato) throws IOException {
 
         long inicioRegistro = raf.getFilePointer();
 
         escribirCadena(raf, dato.getCodigo(), TAM_CODIGO);
+        escribirCadena(raf, dato.getFechaDeSancion() == null ? "" : dato.getFechaDeSancion().toString(), TAM_FECHA_SANCION);
+        escribirCadena(raf, dato.getDescripción(), TAM_DESCRIPCION);
+        escribirCadena(raf, String.valueOf(dato.getMonto()), TAM_MONTO);
         raf.writeBoolean(dato.getEstado());
-        escribirCadena(raf, dato.getFechaDePrestamo() == null ? "" : dato.getFechaDePrestamo().toString(), TAM_FECHA_PRESTAMO);
-        escribirCadena(raf, dato.getFechaDeDevolucion() == null ? "" : dato.getFechaDeDevolucion().toString(), TAM_FECHA_DEVOLUCION);
-        escribirCadena(raf, dato.getFechaLimiteDePrestamo() == null ? "" : dato.getFechaLimiteDePrestamo().toString(), TAM_FECHA_LIMITE);
-        escribirCadena(raf, dato.getBibliotecario() == null ? "" : dato.getBibliotecario().getCedula(), TAM_CEDULA_BIBLIOTECARIO);
-        escribirCadena(raf, dato.getUsuario() == null ? "" : dato.getUsuario().getCedula(), TAM_CEDULA_USUARIO);
-        escribirCadena(raf, dato.getLibro() == null ? "" : dato.getLibro().getISBN(), TAM_ISBN_LIBRO);
-        escribirCadena(raf, dato.getSancion() == null ? "" : dato.getSancion().getCodigo(), TAM_CODIGO_SANCION);
+        escribirCadena(raf, dato.getPrestamo(), TAM_CODIGO_PRESTAMO);
 
         long bytesEscritos = raf.getFilePointer() - inicioRegistro;
 
@@ -83,31 +67,18 @@ public class PrestamoDao implements InterfazDao<Prestamo>{
         }
     }
 
-    private Prestamo leerRegistro(RandomAccessFile raf) throws IOException {
+    private Sancion leerRegistro(RandomAccessFile raf) throws IOException {
         String codigo = leerCadena(raf, TAM_CODIGO);
+        String fechaTexto = leerCadena(raf, TAM_FECHA_SANCION);
+        LocalDate fechaSancion = fechaTexto.isEmpty() ? null : LocalDate.parse(fechaTexto);
+        String descripcion = leerCadena(raf, TAM_DESCRIPCION);
+        double monto = Double.parseDouble(leerCadena(raf, TAM_MONTO));
         boolean estado = raf.readBoolean();
-        String fechaPrestamoTexto = leerCadena(raf, TAM_FECHA_PRESTAMO);
-        String fechaDevolucionTexto = leerCadena(raf, TAM_FECHA_DEVOLUCION);
-        String fechaLimiteTexto = leerCadena(raf, TAM_FECHA_LIMITE);
-        String cedulaBibliotecario = leerCadena(raf, TAM_CEDULA_BIBLIOTECARIO);
-        String cedulaUsuario = leerCadena(raf, TAM_CEDULA_USUARIO);
-        String isbnLibro = leerCadena(raf, TAM_ISBN_LIBRO);
-        String codigoSancion = leerCadena(raf, TAM_CODIGO_SANCION);
+        String codigoPrestamo = leerCadena(raf, TAM_CODIGO_PRESTAMO);
 
-        Bibliotecario bibliotecario = cedulaBibliotecario.isEmpty() ? null : bibliotecarioDao.buscar(cedulaBibliotecario);
-        Usuario usuario = cedulaUsuario.isEmpty() ? null : usuarioDao.buscar(cedulaUsuario);
-        Libro libro = isbnLibro.isEmpty() ? null : libroDao.buscar(isbnLibro);
-        Sancion sancion = codigoSancion.isEmpty() ? null : sancionDao.buscar(codigoSancion);
-
-        Prestamo prestamo = new Prestamo(codigo, bibliotecario, usuario, libro);
-        prestamo.setFechaDePrestamo(fechaPrestamoTexto.isEmpty() ? null : LocalDate.parse(fechaPrestamoTexto));
-        prestamo.setFechaDeDevolucion(fechaDevolucionTexto.isEmpty() ? null : LocalDate.parse(fechaDevolucionTexto));
-        prestamo.setFechaLimiteDePrestamo(fechaLimiteTexto.isEmpty() ? null : LocalDate.parse(fechaLimiteTexto));
-        prestamo.setSancion(sancion);
-        if (!estado) {
-            prestamo.cambiarEstadoFalse();
-        }
-        return prestamo;
+        Sancion sancion = new Sancion(codigo, fechaSancion, descripcion, monto, codigoPrestamo);
+        sancion.setEstado(estado);
+        return sancion;
     }
 
     private long buscarPosicion(RandomAccessFile raf, String codigo) throws IOException {
@@ -124,7 +95,7 @@ public class PrestamoDao implements InterfazDao<Prestamo>{
     }
 
     @Override
-    public Prestamo buscar(String parametro) {
+    public Sancion buscar(String parametro) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long posicion = buscarPosicion(raf, parametro);
             if (posicion == -1) {
@@ -147,7 +118,7 @@ public class PrestamoDao implements InterfazDao<Prestamo>{
             long ultimaPosicion = raf.length() - TAM_REGISTRO;
             if (posicion != ultimaPosicion) {
                 raf.seek(ultimaPosicion);
-                Prestamo ultimo = leerRegistro(raf);
+                Sancion ultimo = leerRegistro(raf);
                 raf.seek(posicion);
                 escribirRegistro(raf, ultimo);
             }
@@ -158,7 +129,7 @@ public class PrestamoDao implements InterfazDao<Prestamo>{
     }
 
     @Override
-    public void agregar(Prestamo dato) {
+    public void agregar(Sancion dato) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             raf.seek(raf.length());
             escribirRegistro(raf, dato);
@@ -168,7 +139,7 @@ public class PrestamoDao implements InterfazDao<Prestamo>{
     }
 
     @Override
-    public void actualizar(Prestamo dato) {
+    public void actualizar(Sancion dato) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long posicion = buscarPosicion(raf, dato.getCodigo());
             if (posicion == -1) {
@@ -192,7 +163,7 @@ public class PrestamoDao implements InterfazDao<Prestamo>{
 
     @Override
     public ArrayList obtenerLista() {
-        ArrayList<Prestamo> lista = new ArrayList<>();
+        ArrayList<Sancion> lista = new ArrayList<>();
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long cantidadRegistros = raf.length() / TAM_REGISTRO;
             for (long i = 0; i < cantidadRegistros; i++) {

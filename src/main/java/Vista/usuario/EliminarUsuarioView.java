@@ -76,7 +76,7 @@ public class EliminarUsuarioView extends javax.swing.JInternalFrame {
         jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
         jLabel6.setText(bundle.getString("numeroTelefonicoGeneral.IngresarDato"));
         jLabel4.setText(bundle.getString("correoElectronicoGeneral.IngresarDato"));
-        jLabel7.setText(bundle.getString("mensajeGenerar.DatosMostrados"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
         jLabel9.setText(bundle.getString("cedulaSupervisor.IngresarDato"));
         btnBuscarUsuario.setText(bundle.getString("btn.buscar"));
         btnEliminar.setText(bundle.getString("btn.eliminar"));

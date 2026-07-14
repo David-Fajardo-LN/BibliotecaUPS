@@ -82,7 +82,7 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
         jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
         jLabel6.setText(bundle.getString("numeroTelefonicoGeneral.IngresarDato"));
         jLabel4.setText(bundle.getString("correoElectronicoGeneral.IngresarDato"));
-        jLabel7.setText(bundle.getString("mensajeGenerar.DatosMostrados"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
         btnBuscarUsuario.setText(bundle.getString("btn.buscar"));
         btnRegresar.setText(bundle.getString("btn.cancelar"));
 
