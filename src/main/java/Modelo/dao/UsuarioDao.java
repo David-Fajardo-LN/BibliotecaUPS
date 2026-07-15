@@ -24,6 +24,9 @@ public class UsuarioDao implements InterfazDao<Usuario>{
     private static final int TAM_TELEFONO = 10;
     private static final int TAM_REGISTRO = 400;
 
+    public UsuarioDao() {
+    }
+
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
         char[] valor = new char[longitud];
         for (int i = 0; i < longitud; i++) {

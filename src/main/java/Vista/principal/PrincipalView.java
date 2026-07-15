@@ -29,8 +29,8 @@ public class PrincipalView extends javax.swing.JFrame {
         return btnBuscarLibro;
     }
 
-    public JButton getBtnBuscarUsuario() {
-        return btnBuscarUsuario;
+    public JButton getBtnRegistrarDevolucion() {
+        return btnRegistrarDevolucion;
     }
 
     public JButton getBtnRegistrarPrestamo() {
@@ -195,6 +195,18 @@ public class PrincipalView extends javax.swing.JFrame {
     public JMenu getMenuSanciones() {
         return menuSanciones;
     }
+    
+    // Idioma
+
+    public JMenuItem getItemMenuIdiomaEspañol() {
+        return itemMenuIdiomaEspañol;
+    }
+
+    public JMenuItem getItemMenuIdiomaIngles() {
+        return itemMenuIdiomaIngles;
+    }
+    
+    
 
     
     
@@ -208,7 +220,7 @@ public class PrincipalView extends javax.swing.JFrame {
         labelFrase.setText(bundle.getString("frase.VentanPrincipal"));
         
         btnRegistrarPrestamo.setText(bundle.getString("btn.RegistrarPrestamo"));
-        btnBuscarUsuario.setText(bundle.getString("btn.BuscarUsuario"));
+        btnRegistrarDevolucion.setText(bundle.getString("btn.registrarDevolucion"));
         btnBuscarLibro.setText(bundle.getString("btn.BuscarLibro"));
         bntPagarMulta.setText(bundle.getString("btn.PagarMulta"));
         
@@ -269,7 +281,7 @@ public class PrincipalView extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnRegistrarPrestamo = new javax.swing.JButton();
         bntPagarMulta = new javax.swing.JButton();
-        btnBuscarUsuario = new javax.swing.JButton();
+        btnRegistrarDevolucion = new javax.swing.JButton();
         btnBuscarLibro = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
@@ -306,6 +318,9 @@ public class PrincipalView extends javax.swing.JFrame {
         itemBuscarSancion = new javax.swing.JMenuItem();
         itemPagarMulta = new javax.swing.JMenuItem();
         itemListarSanciones = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        itemMenuIdiomaEspañol = new javax.swing.JMenuItem();
+        itemMenuIdiomaIngles = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -362,9 +377,9 @@ public class PrincipalView extends javax.swing.JFrame {
         desktopPane.add(bntPagarMulta);
         bntPagarMulta.setBounds(380, 340, 420, 60);
 
-        btnBuscarUsuario.setText("BUSCAR USUARIO");
-        desktopPane.add(btnBuscarUsuario);
-        btnBuscarUsuario.setBounds(380, 430, 420, 60);
+        btnRegistrarDevolucion.setText("REGISTRAR DEVOLUCIÓN");
+        desktopPane.add(btnRegistrarDevolucion);
+        btnRegistrarDevolucion.setBounds(380, 430, 420, 60);
 
         btnBuscarLibro.setText("BUSCAR LIBRO");
         desktopPane.add(btnBuscarLibro);
@@ -494,6 +509,16 @@ public class PrincipalView extends javax.swing.JFrame {
 
         menuBar.add(menuSanciones);
 
+        jMenu1.setText("Idioma");
+
+        itemMenuIdiomaEspañol.setText("Español");
+        jMenu1.add(itemMenuIdiomaEspañol);
+
+        itemMenuIdiomaIngles.setText("Ingles");
+        jMenu1.add(itemMenuIdiomaIngles);
+
+        menuBar.add(jMenu1);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -555,7 +580,7 @@ public class PrincipalView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntPagarMulta;
     private javax.swing.JButton btnBuscarLibro;
-    private javax.swing.JButton btnBuscarUsuario;
+    private javax.swing.JButton btnRegistrarDevolucion;
     private javax.swing.JButton btnRegistrarPrestamo;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem itemAgregarAutor;
@@ -578,6 +603,8 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemListarPrestamos;
     private javax.swing.JMenuItem itemListarSanciones;
     private javax.swing.JMenuItem itemListarUsuarios;
+    private javax.swing.JMenuItem itemMenuIdiomaEspañol;
+    private javax.swing.JMenuItem itemMenuIdiomaIngles;
     private javax.swing.JMenuItem itemModificarAutor;
     private javax.swing.JMenuItem itemModificarBibliotecario;
     private javax.swing.JMenuItem itemModificarLibro;
@@ -588,6 +615,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelFrase;
     private javax.swing.JLabel labelTitulo;

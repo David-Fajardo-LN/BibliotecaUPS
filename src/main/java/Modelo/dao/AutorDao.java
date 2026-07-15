@@ -26,6 +26,9 @@ public class AutorDao implements InterfazDao<Autor>{
     private static final int TAM_FECHA_NACIMIENTO = 10;
     private static final int TAM_REGISTRO = 700;
 
+    public AutorDao() {
+    }
+
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
         char[] valor = new char[longitud];
         for (int i = 0; i < longitud; i++) {

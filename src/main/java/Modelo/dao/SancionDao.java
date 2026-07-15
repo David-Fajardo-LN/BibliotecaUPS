@@ -25,6 +25,10 @@ public class SancionDao implements InterfazDao<Sancion>{
     private static final int TAM_CODIGO_PRESTAMO = 10;
     private static final int TAM_REGISTRO = 300;
 
+    public SancionDao() {
+    }
+    
+
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
         char[] valor = new char[longitud];
         for (int i = 0; i < longitud; i++) {

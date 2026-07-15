@@ -26,6 +26,10 @@ public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
     private static final int TAM_CARGO = 80;
     private static final int TAM_REGISTRO = 750;
 
+    public BibliotecarioDao() {
+    }
+    
+
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
         char[] valor = new char[longitud];
         for (int i = 0; i < longitud; i++) {

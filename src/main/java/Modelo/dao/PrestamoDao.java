@@ -38,6 +38,9 @@ public class PrestamoDao implements InterfazDao<Prestamo>{
     private final LibroDao libroDao = new LibroDao();
     private final SancionDao sancionDao = new SancionDao();
 
+    public PrestamoDao() {
+    }
+
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
         char[] valor = new char[longitud];
         for (int i = 0; i < longitud; i++) {
