@@ -4,6 +4,11 @@
  */
 package Vista.autor;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -13,6 +18,77 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
     public ModificarAutorView() {
         initComponents();
     }
+
+    public void mostrarInformacionAutor(String nombre, String nacionalidad, String estiloLiterario, java.util.Date fechaNacimiento){
+        txtNombreAutorAModificar.setText(nombre);
+        txtNacionalidadAutorAModificar.setText(nacionalidad);
+        txtGeneroAutorAModificar.setText(estiloLiterario);
+        fechaNacimientoAutorAModificar.setDate(fechaNacimiento);
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void limpiarTextos(){
+        txtIdentificadorAutor.setText("");
+        txtCedulaDeSupervisor.setText("");
+        txtNombreAutorAModificar.setText("");
+        txtNacionalidadAutorAModificar.setText("");
+        txtGeneroAutorAModificar.setText("");
+        fechaNacimientoAutorAModificar.setDate(null);
+    }
+
+    public JButton getBtnBuscarAutor() {
+        return btnBuscarAutor;
+    }
+
+    public JButton getBtnModificar() {
+        return btnModificar;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JTextField getTxtIdentificadorAutor() {
+        return txtIdentificadorAutor;
+    }
+
+    public JTextField getTxtNombreAutorAModificar() {
+        return txtNombreAutorAModificar;
+    }
+
+    public JTextField getTxtGeneroAutorAModificar() {
+        return txtGeneroAutorAModificar;
+    }
+
+    public JTextField getTxtNacionalidadAutorAModificar() {
+        return txtNacionalidadAutorAModificar;
+    }
+
+    public JTextField getTxtCedulaDeSupervisor() {
+        return txtCedulaDeSupervisor;
+    }
+
+    public com.toedter.calendar.JDateChooser getFechaNacimientoAutorAModificar() {
+        return fechaNacimientoAutorAModificar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaModificarAutor"));
+        jLabel3.setText(bundle.getString("identificadorGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("estiloLiterarioGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("nacionalidadGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosDeAutor"));
+        jLabel10.setText(bundle.getString("cedulaSupervisor.IngresarDato"));
+        jLabel8.setText(bundle.getString("fechaNacimientoGeneral.IngresarDato"));
+        btnBuscarAutor.setText(bundle.getString("btn.buscar"));
+        btnModificar.setText(bundle.getString("btn.modificar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

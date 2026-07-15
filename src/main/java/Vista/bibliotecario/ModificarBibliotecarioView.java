@@ -4,6 +4,12 @@
  */
 package Vista.bibliotecario;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -16,6 +22,93 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
     public ModificarBibliotecarioView() {
         initComponents();
     }
+
+    public void mostrarInformacionBibliotecario(String nombre, String telefono, String correo, String sector, String cargo){
+        txtNombreBibliotecarioModificar.setText(nombre);
+        txtNumeroBibliotecarioModificar.setText(telefono);
+        txtCorreoBibliotecarioModificar.setText(correo);
+        txtSectorArea.setText(sector);
+        if("Basico".equals(cargo)){
+            rbtnPermisoBasico.setSelected(true);
+        }else{
+            rbtnPermisoAvanzado.setSelected(true);
+        }
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void limpiarTextos(){
+        txtCedulaUsuarioNuevo.setText("");
+        txtCedulaUsuarioNuevo1.setText("");
+        txtCorreoBibliotecarioModificar.setText("");
+        txtNombreBibliotecarioModificar.setText("");
+        txtNumeroBibliotecarioModificar.setText("");
+        txtSectorArea.setText("");
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaModificarBibliotecario"));
+        jLabel3.setText(bundle.getString("cedulaGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("numeroTelefonicoGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("correoElectronicoGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
+        jLabel9.setText(bundle.getString("nivelPermiso.Titulo"));
+        jLabel10.setText(bundle.getString("cedulaSupervisor.IngresarDato"));
+        jLabel11.setText(bundle.getString("sectorGeneral.IngresarDato"));
+        rbtnPermisoBasico.setText(bundle.getString("permisoBasico.IngresarDato"));
+        rbtnPermisoAvanzado.setText(bundle.getString("permisoAvanzado.IngresarDato"));
+        btnAgregarUsuario.setText(bundle.getString("btn.buscar"));
+        btnModificar.setText(bundle.getString("btn.modificar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
+    public JButton getBtnAgregarUsuario() {
+        return btnAgregarUsuario;
+    }
+
+    public JButton getBtnModificar() {
+        return btnModificar;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JTextField getTxtCedulaUsuarioNuevo() {
+        return txtCedulaUsuarioNuevo;
+    }
+
+    public JTextField getTxtCedulaUsuarioNuevo1() {
+        return txtCedulaUsuarioNuevo1;
+    }
+
+    public JTextField getTxtCorreoBibliotecarioModificar() {
+        return txtCorreoBibliotecarioModificar;
+    }
+
+    public JTextField getTxtNombreBibliotecarioModificar() {
+        return txtNombreBibliotecarioModificar;
+    }
+
+    public JTextField getTxtNumeroBibliotecarioModificar() {
+        return txtNumeroBibliotecarioModificar;
+    }
+
+    public JTextField getTxtSectorArea() {
+        return txtSectorArea;
+    }
+
+    public JRadioButton getRbtnPermisoBasico() {
+        return rbtnPermisoBasico;
+    }
+
+    public JRadioButton getRbtnPermisoAvanzado() {
+        return rbtnPermisoAvanzado;
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

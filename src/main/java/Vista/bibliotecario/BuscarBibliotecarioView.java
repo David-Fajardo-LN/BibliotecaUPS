@@ -4,6 +4,14 @@
  */
 package Vista.bibliotecario;
 
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -13,6 +21,72 @@ public class BuscarBibliotecarioView extends javax.swing.JInternalFrame {
     public BuscarBibliotecarioView() {
         initComponents();
     }
+
+    public void cargarDatosTabla(ArrayList<Object[]> filas) {
+        DefaultTableModel modelo = (DefaultTableModel) TablaPrestamosDeBibliotecario.getModel();
+        modelo.setRowCount(0);
+        for (Object[] fila : filas) {
+            modelo.addRow(fila);
+        }
+    }
+
+    public void mostrarInformacion(String nombre, String telefono, String correo, String sector){
+        txtNombreBibliotecario.setText(nombre);
+        txtNumeroBibiotecario.setText(telefono);
+        txtCorreoBibliotecario1.setText(correo);
+        txtSectorBibliotecaario.setText(sector);
+    }
+
+    public void limpiarTextos(){
+        txtCedulaBibliotecarioBuscar.setText("");
+        txtNombreBibliotecario.setText("");
+        txtNumeroBibiotecario.setText("");
+        txtCorreoBibliotecario1.setText("");
+        txtSectorBibliotecaario.setText("");
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public JButton getBtnBuscarUsuario() {
+        return btnBuscarUsuario;
+    }
+
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
+
+    public JTextField getTxtCedulaBibliotecarioBuscar() {
+        return txtCedulaBibliotecarioBuscar;
+    }
+
+    public JTable getTablaPrestamosDeBibliotecario() {
+        return TablaPrestamosDeBibliotecario;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaBuscarBibliotecario"));
+        jLabel3.setText(bundle.getString("cedulaGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("numeroTelefonicoGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("correoElectronicoGeneral.IngresarDato"));
+        jLabel8.setText(bundle.getString("sectorGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
+        jLabel9.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
+        btnBuscarUsuario.setText(bundle.getString("btn.buscar"));
+        btnRegresar.setText(bundle.getString("btn.cancelar"));
+
+        DefaultTableModel modelo = (DefaultTableModel) TablaPrestamosDeBibliotecario.getModel();
+        modelo.setColumnIdentifiers(new Object[]{
+            bundle.getString("tituloTablaBibliotecarioBuscar.Codigo"),
+            bundle.getString("tituloTablaBibliotecarioBuscar.FechaPrestamo"),
+            bundle.getString("tituloTablaBibliotecarioBuscar.FechaDevolucion"),
+            bundle.getString("tituloTablaBibliotecarioBuscar.CedulaUsuario"),
+            bundle.getString("tituloTablaBibliotecarioBuscar.Sancion")
+        });
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

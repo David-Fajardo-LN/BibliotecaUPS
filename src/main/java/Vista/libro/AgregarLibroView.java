@@ -4,6 +4,11 @@
  */
 package Vista.libro;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -16,6 +21,64 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
     public AgregarLibroView() {
         initComponents();
     }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void limpiarTextos(){
+        txtISBNlibroAgregar.setText("");
+        txtNombreLibroAgregar.setText("");
+        txtCantidadTotalLibroAgregar.setText("");
+        txtAutorDeLbroAgregar.setText("");
+        txtGeneroLiterarioLibroAgregar.setText("");
+        txtFechaDePublicacionLibroAgregar.setDate(null);
+    }
+
+    public JButton getBtnAgregarLibro() {
+        return btnAgregarLibro;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JTextField getTxtISBNlibroAgregar() {
+        return txtISBNlibroAgregar;
+    }
+
+    public JTextField getTxtNombreLibroAgregar() {
+        return txtNombreLibroAgregar;
+    }
+
+    public JTextField getTxtCantidadTotalLibroAgregar() {
+        return txtCantidadTotalLibroAgregar;
+    }
+
+    public JTextField getTxtAutorDeLbroAgregar() {
+        return txtAutorDeLbroAgregar;
+    }
+
+    public JTextField getTxtGeneroLiterarioLibroAgregar() {
+        return txtGeneroLiterarioLibroAgregar;
+    }
+
+    public com.toedter.calendar.JDateChooser getTxtFechaDePublicacionLibroAgregar() {
+        return txtFechaDePublicacionLibroAgregar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaAgregarLibro"));
+        jLabel3.setText(bundle.getString("isbnGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreLibroGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("cantidadTotalGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("identificadorAutorGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("fechaPublicacionGeneral.IngresarDato"));
+        jLabel8.setText(bundle.getString("generoLiterarioGeneral.IngresarDato"));
+        btnAgregarLibro.setText(bundle.getString("btn.agregar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

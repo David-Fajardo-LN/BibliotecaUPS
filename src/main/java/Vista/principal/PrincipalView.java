@@ -6,6 +6,7 @@ package Vista.principal;
 
 import java.util.ResourceBundle;
 import javax.swing.JButton;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -19,6 +20,22 @@ public class PrincipalView extends javax.swing.JFrame {
     
     public PrincipalView() {
         initComponents();
+    }
+    
+    public void abrirVentana(JInternalFrame ventana) {
+
+        if (ventana.getDesktopPane() == null) {
+            desktopPane.add(ventana);
+        }
+
+        ventana.setVisible(true);
+        ventana.toFront();
+
+        try {
+            ventana.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {
+            e.printStackTrace();
+        }
     }
 
     public JButton getBtnPagarMulta() {

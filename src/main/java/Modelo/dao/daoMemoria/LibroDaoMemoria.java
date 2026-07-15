@@ -19,6 +19,12 @@ public class LibroDaoMemoria implements InterfazDao<Libro> {
 
     private ArrayList<Libro> libros;
 
+    public LibroDaoMemoria() {
+        this.libros = generarLibrosIniciales();
+    }
+    
+    
+
     @Override
     public Libro buscar(String isbn) {
         for (Libro l : libros) {

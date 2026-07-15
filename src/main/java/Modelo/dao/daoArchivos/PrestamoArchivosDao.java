@@ -6,7 +6,6 @@
  */
 package Modelo.dao.daoArchivos;
 
-import Modelo.dao.BibliotecarioArchivosDao;
 import Modelo.dao.InterfazDao;
 import Modelo.dao.SancionArchivosDao;
 import Modelo.dao.UsuarioArchivosDao;

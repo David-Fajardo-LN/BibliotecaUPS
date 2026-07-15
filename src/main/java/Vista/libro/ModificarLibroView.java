@@ -4,6 +4,11 @@
  */
 package Vista.libro;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -16,6 +21,84 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
     public ModificarLibroView() {
         initComponents();
     }
+
+    public void mostrarInformacionLibro(String nombre, String genero, String cantidadTotal, String cantidadDisponible, java.util.Date fechaPublicacion){
+        txtNombreLibroAModificar.setText(nombre);
+        txtGeneroLibroAModificar.setText(genero);
+        txtCantidadTotalLibroAModificar.setText(cantidadTotal);
+        txtCantidadDisponibleLibroAModificar.setText(cantidadDisponible);
+        txtFechaPublicacionLibroAModificar.setDate(fechaPublicacion);
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void limpiarTextos(){
+        txtISBNLibroABuscar.setText("");
+        txtCedulaDeSupervisor.setText("");
+        txtNombreLibroAModificar.setText("");
+        txtGeneroLibroAModificar.setText("");
+        txtCantidadTotalLibroAModificar.setText("");
+        txtCantidadDisponibleLibroAModificar.setText("");
+        txtFechaPublicacionLibroAModificar.setDate(null);
+    }
+
+    public JButton getBtnBuscarLibro() {
+        return btnBuscarLibro;
+    }
+
+    public JButton getBtnModificar() {
+        return btnModificar;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JTextField getTxtISBNLibroABuscar() {
+        return txtISBNLibroABuscar;
+    }
+
+    public JTextField getTxtCedulaDeSupervisor() {
+        return txtCedulaDeSupervisor;
+    }
+
+    public JTextField getTxtNombreLibroAModificar() {
+        return txtNombreLibroAModificar;
+    }
+
+    public JTextField getTxtGeneroLibroAModificar() {
+        return txtGeneroLibroAModificar;
+    }
+
+    public JTextField getTxtCantidadTotalLibroAModificar() {
+        return txtCantidadTotalLibroAModificar;
+    }
+
+    public JTextField getTxtCantidadDisponibleLibroAModificar() {
+        return txtCantidadDisponibleLibroAModificar;
+    }
+
+    public com.toedter.calendar.JDateChooser getTxtFechaPublicacionLibroAModificar() {
+        return txtFechaPublicacionLibroAModificar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaModificarLibro"));
+        jLabel3.setText(bundle.getString("isbnGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreLibroGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("generoLiterarioGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("cantidadTotalGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
+        jLabel10.setText(bundle.getString("cedulaSupervisor.IngresarDato"));
+        jLabel8.setText(bundle.getString("fechaPublicacionGeneral.IngresarDato"));
+        jLabel9.setText(bundle.getString("cantidadDisponibleGeneral.IngresarDato"));
+        btnBuscarLibro.setText(bundle.getString("btn.buscar"));
+        btnModificar.setText(bundle.getString("btn.modificar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

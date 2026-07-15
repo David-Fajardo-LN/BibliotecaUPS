@@ -4,6 +4,11 @@
  */
 package Vista.libro;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -16,6 +21,56 @@ public class BuscarLibroView extends javax.swing.JInternalFrame {
     public BuscarLibroView() {
         initComponents();
     }
+
+    public void mostrarInformacion(String nombre, String generoLiterario, String cantidadTotal, String cantidadDisponible, String fechaPublicacion, String nombreAutor){
+        txtNombreLibro.setText(nombre);
+        txtGeneroLiterarioLibro.setText(generoLiterario);
+        txtCantidadTotalLibro.setText(cantidadTotal);
+        txtCantidadDisponibleLibro.setText(cantidadDisponible);
+        txtFechaPublicacionLibro.setText(fechaPublicacion);
+        txtNombreAutorLibro.setText(nombreAutor);
+    }
+
+    public void limpiarTextos(){
+        txtISBNLibroBuscar.setText("");
+        txtNombreLibro.setText("");
+        txtGeneroLiterarioLibro.setText("");
+        txtCantidadTotalLibro.setText("");
+        txtCantidadDisponibleLibro.setText("");
+        txtFechaPublicacionLibro.setText("");
+        txtNombreAutorLibro.setText("");
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public JButton getBtnBuscarLibro() {
+        return btnBuscarLibro;
+    }
+
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
+
+    public JTextField getTxtISBNLibroBuscar() {
+        return txtISBNLibroBuscar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaBuscarLibro"));
+        jLabel3.setText(bundle.getString("isbnGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreLibroGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("generoLiterarioGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("cantidadTotalGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
+        jLabel8.setText(bundle.getString("cantidadDisponibleGeneral.IngresarDato"));
+        jLabel10.setText(bundle.getString("fechaPublicacionGeneral.IngresarDato"));
+        jLabel11.setText(bundle.getString("nombreAutorGeneral.IngresarDato"));
+        btnBuscarLibro.setText(bundle.getString("btn.buscar"));
+        btnRegresar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

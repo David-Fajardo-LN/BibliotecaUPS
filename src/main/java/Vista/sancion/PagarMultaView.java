@@ -5,6 +5,11 @@
 
 package Vista.sancion;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -15,6 +20,61 @@ public class PagarMultaView extends javax.swing.JInternalFrame {
     public PagarMultaView() {
         initComponents();
     }
+
+    public void mostrarInformacion(String fechaSancion, String motivo, String monto, String codigoPrestamo, String estado, String montoAPagar){
+        txtFechaSancion.setText(fechaSancion);
+        txtMotivoSancion.setText(motivo);
+        txtMontoSancion.setText(monto);
+        txtCodigoPrestamo.setText(codigoPrestamo);
+        txtEstadoDeSancion.setText(estado);
+        txtMontoAPagar.setText(montoAPagar);
+    }
+
+    public void limpiarTextos(){
+        txtCedulaBibliotecarioBuscar.setText("");
+        txtFechaSancion.setText("");
+        txtMotivoSancion.setText("");
+        txtMontoSancion.setText("");
+        txtCodigoPrestamo.setText("");
+        txtEstadoDeSancion.setText("");
+        txtMontoAPagar.setText("");
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public JButton getBtnBuscarSancion() {
+        return btnBuscarSancion;
+    }
+
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
+
+    public JButton getBtnRegresar1() {
+        return btnRegresar1;
+    }
+
+    public JTextField getTxtCedulaBibliotecarioBuscar() {
+        return txtCedulaBibliotecarioBuscar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaPagarMulta"));
+        jLabel3.setText(bundle.getString("codigoGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("fechaSancionGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("motivoGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("montoGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
+        jLabel8.setText(bundle.getString("codigoPrestamoGeneral.IngresarDato"));
+        jLabel9.setText(bundle.getString("estadoGeneral.IngresarDato"));
+        jLabel10.setText(bundle.getString("montoAPagarGeneral.IngresarDato"));
+        btnBuscarSancion.setText(bundle.getString("btn.buscar"));
+        btnRegresar.setText(bundle.getString("btn.cancelarMonto"));
+        btnRegresar1.setText(bundle.getString("btn.regresar"));
+    }
+
 
     /** This method is called from within the constructor to
      * initialize the form.

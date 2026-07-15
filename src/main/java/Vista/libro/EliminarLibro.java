@@ -4,6 +4,11 @@
  */
 package Vista.libro;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -16,6 +21,71 @@ public class EliminarLibro extends javax.swing.JInternalFrame {
     public EliminarLibro() {
         initComponents();
     }
+
+    public void limpiarTextos(){
+        txtCedulaSupervisor.setText("");
+        txtCedulaAutorAEliminar.setText("");
+        txtNombreLibroAEliminar.setText("");
+        txtAutorLibroAEliminar.setText("");
+        txtGeneroLibroAEliminar.setText("");
+        txtFechaPublicacionLibroAEliminar.setText("");
+        txtCantidadTotalLibroAEliminar.setText("");
+        txtCantidadDisponibleLibroAEliminar.setText("");
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void mostrarInformacion(String nombre, String autor, String genero, String fechaPublicacion, String cantidadTotal, String cantidadDisponible){
+        txtNombreLibroAEliminar.setText(nombre);
+        txtAutorLibroAEliminar.setText(autor);
+        txtGeneroLibroAEliminar.setText(genero);
+        txtFechaPublicacionLibroAEliminar.setText(fechaPublicacion);
+        txtCantidadTotalLibroAEliminar.setText(cantidadTotal);
+        txtCantidadDisponibleLibroAEliminar.setText(cantidadDisponible);
+    }
+
+    public JButton getBtnBuscarUsuario() {
+        return btnBuscarUsuario;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public JTextField getTxtCedulaSupervisor() {
+        return txtCedulaSupervisor;
+    }
+
+    public JTextField getTxtCedulaAutorAEliminar() {
+        return txtCedulaAutorAEliminar;
+    }
+
+    public JTextField getTxtNombreLibroAEliminar() {
+        return txtNombreLibroAEliminar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaEliminarLibro"));
+        jLabel3.setText(bundle.getString("isbnGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreLibroGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("identificadorAutorGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("generoLiterarioGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
+        jLabel9.setText(bundle.getString("cedulaSupervisor.IngresarDato"));
+        jLabel10.setText(bundle.getString("fechaPublicacionGeneral.IngresarDato"));
+        jLabel11.setText(bundle.getString("cantidadTotalGeneral.IngresarDato"));
+        jLabel12.setText(bundle.getString("cantidadDisponibleGeneral.IngresarDato"));
+        btnBuscarUsuario.setText(bundle.getString("btn.buscar"));
+        btnEliminar.setText(bundle.getString("btn.eliminar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

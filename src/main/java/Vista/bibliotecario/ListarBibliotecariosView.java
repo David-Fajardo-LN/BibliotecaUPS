@@ -4,6 +4,13 @@
  */
 package Vista.bibliotecario;
 
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -16,6 +23,47 @@ public class ListarBibliotecariosView extends javax.swing.JInternalFrame {
     public ListarBibliotecariosView() {
         initComponents();
     }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void cargarDatosTabla(ArrayList<Object[]> filas) {
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeBibliotecariosListar.getModel();
+        modelo.setRowCount(0);
+        for (Object[] fila : filas) {
+            modelo.addRow(fila);
+        }
+    }
+
+    public JTable getTablaDeBibliotecariosListar() {
+        return TablaDeBibliotecariosListar;
+    }
+
+    public JButton getBtnListarBibliotecarios() {
+        return btnListarBibliotecarios;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaListarBibliotecarios"));
+        btnListarBibliotecarios.setText(bundle.getString("btn.listar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeBibliotecariosListar.getModel();
+        modelo.setColumnIdentifiers(new Object[]{
+            bundle.getString("tituloTablaListarBibliotecarios.Cedula"),
+            bundle.getString("tituloTablaListarBibliotecarios.Nombres"),
+            bundle.getString("tituloTablaListarBibliotecarios.Email"),
+            bundle.getString("tituloTablaListarBibliotecarios.Telefono"),
+            bundle.getString("tituloTablaListarBibliotecarios.Sector"),
+            bundle.getString("tituloTablaListarBibliotecarios.Cargo")
+        });
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

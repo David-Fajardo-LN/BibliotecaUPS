@@ -5,11 +5,11 @@
 package Controlador;
 
 import Modelo.dao.AutorArchivosDao;
-import Modelo.dao.BibliotecarioArchivosDao;
 import Modelo.dao.InterfazDao;
 import Modelo.dao.daoArchivos.LibroArchivosDao;
 import Modelo.dao.SancionArchivosDao;
 import Modelo.dao.UsuarioArchivosDao;
+import Modelo.dao.daoArchivos.BibliotecarioArchivosDao;
 import Modelo.dao.daoArchivos.PrestamoArchivosDao;
 import Modelo.dao.daoMemoria.AutorDaoMemoria;
 import Modelo.dao.daoMemoria.BibliotecarioDaoMemoria;
@@ -23,7 +23,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javax.swing.Action;
 
 /**
  *
@@ -44,17 +43,17 @@ public class ControladorPrincipal {
     private InterfazDao sancionDao;
     
     private ControladorUsuario controladorUsuario;
+    private ControladorBibliotecario controladorBibliotecario;
+    private ControladorAutor controladorAutor;
+    private ControladorLibro controladorLibro;
+    private ControladorPrestamo controladorPrestamo;
+    private ControladorSancion controladorSancion;
 
     public ControladorPrincipal() {
         this.principalView = new PrincipalView();
+        this.tipoDePersistenciaDao = new TipoDePersistenciaDaoView();
         this.localeActual = new Locale("es", "EC");
-        this.bundle = ResourceBundle.getBundle("mensajes", localeActual);
-        
-        this.autorDao = new AutorArchivosDao();
-        this.bibliotecarioDao = new BibliotecarioArchivosDao();
-        this.libroDao = new LibroArchivosDao();
-        
-        this.controladorUsuario = new ControladorUsuario(usuarioDao, bibliotecarioDao, bundle);
+        this.bundle = ResourceBundle.getBundle("idioma.mensajes", localeActual);
 
         configuradorEventos();
     }
@@ -70,6 +69,7 @@ public class ControladorPrincipal {
         configurarEventosMenuPrestamos();
         configurarEventosMenuSanciones();
         configurarEventosMenuUsuarios();
+        configurarEventosMenuIdioma();
         configurarEventosTiposDePersistenciaDao();
     }
     
@@ -79,7 +79,50 @@ public class ControladorPrincipal {
     
     private void cambiarIdioma(String idioma, String pais){
         localeActual = new Locale(idioma, pais);
-        bundle = ResourceBundle.getBundle("mensajes", localeActual);
+        bundle = ResourceBundle.getBundle("idioma.mensajes", localeActual);
+        principalView.actualizarIdioma(bundle);
+    }
+    
+    private void inicializarControladores(){
+        controladorUsuario = new ControladorUsuario(usuarioDao, bibliotecarioDao, bundle,principalView);
+        controladorBibliotecario = new ControladorBibliotecario(bibliotecarioDao, bundle,principalView);
+        controladorAutor = new ControladorAutor(autorDao, bibliotecarioDao, bundle,principalView);
+        controladorLibro = new ControladorLibro(libroDao, autorDao, bibliotecarioDao, bundle,principalView);
+        controladorPrestamo = new ControladorPrestamo(prestamoDao, libroDao, usuarioDao, bibliotecarioDao, sancionDao, bundle,principalView);
+        controladorSancion = new ControladorSancion(sancionDao, prestamoDao, bundle,principalView);
+
+        controladorUsuario.configurarEventosAgregarUsuario();
+        controladorUsuario.configurarEventosBuscarUsuario();
+        controladorUsuario.configurarEventosEliminarUsuario();
+        controladorUsuario.configurarEventosModificarUsuario();
+        controladorUsuario.configurarEventosListarUsuarios();
+
+        controladorBibliotecario.configurarEventosAgregarBibliotecario();
+        controladorBibliotecario.configurarEventosBuscarBibliotecario();
+        controladorBibliotecario.configurarEventosEliminarBibliotecario();
+        controladorBibliotecario.configurarEventosModificarBibliotecario();
+        controladorBibliotecario.configurarEventosListarBibliotecarios();
+
+        controladorAutor.configurarEventosAgregarAutor();
+        controladorAutor.configurarEventosBuscarAutor();
+        controladorAutor.configurarEventosEliminarAutor();
+        controladorAutor.configurarEventosModificarAutor();
+        controladorAutor.configurarEventosListarAutores();
+
+        controladorLibro.configurarEventosAgregarLibro();
+        controladorLibro.configurarEventosBuscarLibro();
+        controladorLibro.configurarEventosEliminarLibro();
+        controladorLibro.configurarEventosModificarLibro();
+        controladorLibro.configurarEventosListarLibros();
+
+        controladorPrestamo.configurarEventosRegistrarPrestamo();
+        controladorPrestamo.configurarEventosBuscarPrestamo();
+        controladorPrestamo.configurarEventosRegistrarDevolucion();
+        controladorPrestamo.configurarEventosListarPrestamos();
+
+        controladorSancion.configurarEventosBuscarSancion();
+        controladorSancion.configurarEventosPagarMulta();
+        controladorSancion.configurarEventosListarSanciones();
     }
     
     private void configurarEventosTiposDePersistenciaDao(){
@@ -92,7 +135,9 @@ public class ControladorPrincipal {
                 usuarioDao = new UsuarioArchivosDao();
                 prestamoDao = new PrestamoArchivosDao();
                 sancionDao = new SancionArchivosDao();
+                inicializarControladores();
                 tipoDePersistenciaDao.dispose();
+                principalView.actualizarIdioma(bundle);
                 principalView.setVisible(true);
             }
         });
@@ -106,7 +151,9 @@ public class ControladorPrincipal {
                 usuarioDao = new UsuarioDaoMemoria();
                 prestamoDao = new PrestamoDaoMemoria();
                 sancionDao = new SancionDaoMemoria();
+                inicializarControladores();
                 tipoDePersistenciaDao.dispose();
+                principalView.actualizarIdioma(bundle);
                 principalView.setVisible(true);
             }
         });
@@ -119,28 +166,28 @@ public class ControladorPrincipal {
         principalView.getBtnBuscarLibro().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                // COMPLETAR CODIGO 777777777777777777777777
+                controladorLibro.activarVentanaBuscarLibro();
             }
         });
         
         principalView.getBtnPagarMulta().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                // COMPLETAR CODIGO 777777777777777777777777
+                controladorSancion.activarVentanaPagarMulta();
             }
         });
         
        principalView.getBtnRegistrarDevolucion().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                // COMPLETAR CODIGO 777777777777777777777777
+                controladorPrestamo.activarVentanaRegistrarDevolucion();
             }
        });
        
        principalView.getBtnRegistrarPrestamo().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               // COMPLETAR CODIGO 777777777777777777777777
+                controladorPrestamo.activarVentanaRegistrarPrestamo();
             }
        });
        
@@ -167,35 +214,35 @@ public class ControladorPrincipal {
         principalView.getItemAgregarUsuario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                controladorUsuario.activarVentanaAgregarUsuario();
             }
         });
         
         principalView.getItemBuscarUsuario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorUsuario.activarVentanaBuscarUsuario();
             }
         });
         
         principalView.getItemEliminarUsuario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorUsuario.activarVentanaEliminarUsuario();
             }
         });
         
         principalView.getItemModificarUsuario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorUsuario.activarVentanaModificarUsuario();
             }
         });
         
         principalView.getItemListarUsuarios().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorUsuario.activarVentanaListarUsuario();
             }
         });
     }
@@ -205,35 +252,35 @@ public class ControladorPrincipal {
         principalView.getItemAgregarBibliotecario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorBibliotecario.activarVentanaAgregarBibliotecario();
             }
         });
         
         principalView.getItemBuscarBibliotecario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                controladorBibliotecario.activarVentanaBuscarBibliotecario();
             }
         });
         
         principalView.getItemEliminarBibliotecario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                controladorBibliotecario.activarVentanaEliminarBibliotecario();
             }
         });
         
         principalView.getItemModificarBibliotecario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorBibliotecario.activarVentanaModificarBibliotecario();
             }
         });
         
         principalView.getItemListarBibliotecarios().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                controladorBibliotecario.activarVentanaListarBibliotecario();
             }
         });
         
@@ -243,35 +290,35 @@ public class ControladorPrincipal {
         principalView.getItemAgregarAutor().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                controladorAutor.activarVentanaAgregarAutor();
             }
         });
         
         principalView.getItemBuscarAutor().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                controladorAutor.activarVentanaBuscarAutor();
             }
         });
         
         principalView.getItemEliminarAutor().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorAutor.activarVentanaEliminarAutor();
             }
         });
         
         principalView.getItemModificarAutor().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorAutor.activarVentanaModificarAutor();
             }
         });
         
         principalView.getItemListarAutores().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorAutor.activarVentanaListarAutor();
             }
         });
     }
@@ -280,35 +327,35 @@ public class ControladorPrincipal {
         principalView.getItemAgregarLibro().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                controladorLibro.activarVentanaAgregarLibro();
             }
         });
         
         principalView.getItemBuscarLibro().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                controladorLibro.activarVentanaBuscarLibro();
             }
         });
         
         principalView.getItemEliminarLibro().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorLibro.activarVentanaEliminarLibro();
             }
         });
         
         principalView.getItemModificarLibro().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                controladorLibro.activarVentanaModificarLibro();
             }
         });
         
         principalView.getItemListarLibro().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                controladorLibro.activarVentanaListarLibro();
             }
         });
     }
@@ -317,28 +364,28 @@ public class ControladorPrincipal {
         principalView.getItemBuscarPrestamo().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-             
+                controladorPrestamo.activarVentanaBuscarPrestamo();
             }
         });
         
         principalView.getItemRegistrarPrestamo().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-            
+                controladorPrestamo.activarVentanaRegistrarPrestamo();
             }
         });
         
         principalView.getItemRegistrarDevolucion().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                controladorPrestamo.activarVentanaRegistrarDevolucion();
             }
         });
         
         principalView.getItemListarPrestamos().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                controladorPrestamo.activarVentanaListarPrestamo();
             }
         });
     }
@@ -347,38 +394,38 @@ public class ControladorPrincipal {
         principalView.getItemBuscarSancion().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                controladorSancion.activarVentanaBuscarSancion();
             }
         });
         
         principalView.getItemPagarMulta().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+                controladorSancion.activarVentanaPagarMulta();
             }
         });
         
         principalView.getItemListarSanciones().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                controladorSancion.activarVentanaListarSancion();
             }
         });
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public static void main(String[] args) {
+    System.out.println("A");
+
+    java.awt.EventQueue.invokeLater(() -> {
+        System.out.println("B");
+
+        ControladorPrincipal controlador = new ControladorPrincipal();
+
+        System.out.println("C");
+
+        controlador.iniciarPrograma();
+
+        System.out.println("D");
+    });
+}
 }

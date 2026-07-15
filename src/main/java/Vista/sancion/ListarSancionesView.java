@@ -4,6 +4,13 @@
  */
 package Vista.sancion;
 
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -16,6 +23,47 @@ public class ListarSancionesView extends javax.swing.JInternalFrame {
     public ListarSancionesView() {
         initComponents();
     }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void cargarDatosTabla(ArrayList<Object[]> filas) {
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeSancionesListar.getModel();
+        modelo.setRowCount(0);
+        for (Object[] fila : filas) {
+            modelo.addRow(fila);
+        }
+    }
+
+    public JTable getTablaDeSancionesListar() {
+        return TablaDeSancionesListar;
+    }
+
+    public JButton getBtnListarSanciones() {
+        return btnListarSanciones;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaListarSanciones"));
+        btnListarSanciones.setText(bundle.getString("btn.listar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeSancionesListar.getModel();
+        modelo.setColumnIdentifiers(new Object[]{
+            bundle.getString("tituloTablaListarSanciones.Codigo"),
+            bundle.getString("tituloTablaListarSanciones.FechaSancion"),
+            bundle.getString("tituloTablaListarSanciones.Motivo"),
+            bundle.getString("tituloTablaListarSanciones.Monto"),
+            bundle.getString("tituloTablaListarSanciones.Estado"),
+            bundle.getString("tituloTablaListarSanciones.CodigoPrestamo")
+        });
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

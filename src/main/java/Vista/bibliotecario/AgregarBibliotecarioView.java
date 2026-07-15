@@ -4,11 +4,68 @@
  */
 package Vista.bibliotecario;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
 
     public AgregarBibliotecarioView() {
         initComponents();
     }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void limpiarTextos(){
+        txtCedulaBibliotecarioNuevo.setText("");
+        txtCorreoBibliotecarioNuevo.setText("");
+        txtNombreBibliotecarioNuevo.setText("");
+        txtNumeroBibliotecarioNuevo.setText("");
+        txtSectorBibliotecarioNuevo.setText("");
+    }
+
+    public JButton getBtnAgregarBibliotecario() {
+        return btnAgregarBibliotecario;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JTextField getTxtCedulaBibliotecarioNuevo() {
+        return txtCedulaBibliotecarioNuevo;
+    }
+
+    public JTextField getTxtCorreoBibliotecarioNuevo() {
+        return txtCorreoBibliotecarioNuevo;
+    }
+
+    public JTextField getTxtNombreBibliotecarioNuevo() {
+        return txtNombreBibliotecarioNuevo;
+    }
+
+    public JTextField getTxtNumeroBibliotecarioNuevo() {
+        return txtNumeroBibliotecarioNuevo;
+    }
+
+    public JTextField getTxtSectorBibliotecarioNuevo() {
+        return txtSectorBibliotecarioNuevo;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaAgregarBibliotecario"));
+        jLabel3.setText(bundle.getString("cedulaGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("numeroTelefonicoGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("correoElectronicoGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("sectorGeneral.IngresarDato"));
+        btnAgregarBibliotecario.setText(bundle.getString("btn.agregar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

@@ -4,6 +4,11 @@
  */
 package Vista.prestamo;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -16,6 +21,64 @@ public class RegistrarDevolucionView extends javax.swing.JInternalFrame {
     public RegistrarDevolucionView() {
         initComponents();
     }
+
+    public void mostrarInformacion(String nombreUsuario, String nombreLibro, String fechaPrestamo, String fechaLimite, String fechaDevolucion, String sancion, String monto){
+        txtNombreDeUsuario.setText(nombreUsuario);
+        txtNombreDeLibro.setText(nombreLibro);
+        txtFechaPrestamo.setText(fechaPrestamo);
+        txtFechaLimite.setText(fechaLimite);
+        txtFechaDevolucion.setText(fechaDevolucion);
+        txtSancionDePrestamo.setText(sancion);
+        txtSancionMontoP.setText(monto);
+    }
+
+    public void limpiarTextos(){
+        txtCedulaBibliotecarioBuscar.setText("");
+        txtNombreDeUsuario.setText("");
+        txtNombreDeLibro.setText("");
+        txtFechaPrestamo.setText("");
+        txtFechaLimite.setText("");
+        txtFechaDevolucion.setText("");
+        txtSancionDePrestamo.setText("");
+        txtSancionMontoP.setText("");
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public JButton getBtnBuscarUsuario() {
+        return btnBuscarUsuario;
+    }
+
+    public JButton getBtnRegistrarDevolucion() {
+        return btnRegistrarDevolucion;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JTextField getTxtCedulaBibliotecarioBuscar() {
+        return txtCedulaBibliotecarioBuscar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaRegistrarDevolucion"));
+        jLabel3.setText(bundle.getString("codigoGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreUsuarioGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("nombreLibroGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("fechaPrestamoGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
+        jLabel8.setText(bundle.getString("fechaLimiteGeneral.IngresarDato"));
+        jLabel9.setText(bundle.getString("fechaDevolucionGeneral.IngresarDato"));
+        jLabel10.setText(bundle.getString("sancionGeneral.IngresarDato"));
+        jLabel11.setText(bundle.getString("montoGeneral.IngresarDato"));
+        btnBuscarUsuario.setText(bundle.getString("btn.buscar"));
+        btnRegistrarDevolucion.setText(bundle.getString("btn.registrarDevolucion"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

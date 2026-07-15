@@ -4,6 +4,13 @@
  */
 package Vista.prestamo;
 
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -16,6 +23,47 @@ public class ListarPrestamosView extends javax.swing.JInternalFrame {
     public ListarPrestamosView() {
         initComponents();
     }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void cargarDatosTabla(ArrayList<Object[]> filas) {
+        DefaultTableModel modelo = (DefaultTableModel) TablaDePrestamosListar.getModel();
+        modelo.setRowCount(0);
+        for (Object[] fila : filas) {
+            modelo.addRow(fila);
+        }
+    }
+
+    public JTable getTablaDePrestamosListar() {
+        return TablaDePrestamosListar;
+    }
+
+    public JButton getBtnListarPrestamos() {
+        return btnListarPrestamos;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaListarPrestamos"));
+        btnListarPrestamos.setText(bundle.getString("btn.listar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+
+        DefaultTableModel modelo = (DefaultTableModel) TablaDePrestamosListar.getModel();
+        modelo.setColumnIdentifiers(new Object[]{
+            bundle.getString("tituloTablaListarPrestamos.Codigo"),
+            bundle.getString("tituloTablaListarPrestamos.FechaPrestamo"),
+            bundle.getString("tituloTablaListarPrestamos.FechaLimite"),
+            bundle.getString("tituloTablaListarPrestamos.FechaDevolucion"),
+            bundle.getString("tituloTablaListarPrestamos.CedulaUsuario"),
+            bundle.getString("tituloTablaListarPrestamos.ISBNLibro")
+        });
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

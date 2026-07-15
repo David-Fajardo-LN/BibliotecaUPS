@@ -4,6 +4,13 @@
  */
 package Vista.autor;
 
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author User
@@ -13,6 +20,46 @@ public class ListarAutoresView extends javax.swing.JInternalFrame {
     public ListarAutoresView() {
         initComponents();
     }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void cargarDatosTabla(ArrayList<Object[]> filas) {
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeAutoresListar.getModel();
+        modelo.setRowCount(0);
+        for (Object[] fila : filas) {
+            modelo.addRow(fila);
+        }
+    }
+
+    public JTable getTablaDeAutoresListar() {
+        return TablaDeAutoresListar;
+    }
+
+    public JButton getBtnListarAutores() {
+        return btnListarAutores;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaListarAutores"));
+        btnListarAutores.setText(bundle.getString("btn.listar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeAutoresListar.getModel();
+        modelo.setColumnIdentifiers(new Object[]{
+            bundle.getString("tituloTablaListarAutores.Codigo"),
+            bundle.getString("tituloTablaListarAutores.Nombre"),
+            bundle.getString("tituloTablaListarAutores.Nacionalidad"),
+            bundle.getString("tituloTablaListarAutores.EstiloLiterario"),
+            bundle.getString("tituloTablaListarAutores.FechaNacimiento")
+        });
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

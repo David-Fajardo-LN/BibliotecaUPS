@@ -4,6 +4,11 @@
  */
 package Vista.prestamo;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -16,6 +21,75 @@ public class RegistrarPrestamoView extends javax.swing.JInternalFrame {
     public RegistrarPrestamoView() {
         initComponents();
     }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void limpiarTextos(){
+        txtCodigoPrestamo.setText("");
+        txtISBNDeLibroAPrestar.setText("");
+        txtNombreLibro.setText("");
+        txtCedulaDeBibliotecario.setText("");
+        txtNombreBibliotecario.setText("");
+        txtCedulaDeUsuario.setText("");
+        txtNombreUsuario.setText("");
+    }
+
+    public JButton getBtnRegistrarPrestamo() {
+        return btnRegistrarPrestamo;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JButton getJButton1() {
+        return jButton1;
+    }
+
+    public JTextField getTxtCodigoPrestamo() {
+        return txtCodigoPrestamo;
+    }
+
+    public JTextField getTxtISBNDeLibroAPrestar() {
+        return txtISBNDeLibroAPrestar;
+    }
+
+    public JTextField getTxtNombreLibro() {
+        return txtNombreLibro;
+    }
+
+    public JTextField getTxtCedulaDeBibliotecario() {
+        return txtCedulaDeBibliotecario;
+    }
+
+    public JTextField getTxtNombreBibliotecario() {
+        return txtNombreBibliotecario;
+    }
+
+    public JTextField getTxtCedulaDeUsuario() {
+        return txtCedulaDeUsuario;
+    }
+
+    public JTextField getTxtNombreUsuario() {
+        return txtNombreUsuario;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaRegistrarPrestamo"));
+        jLabel3.setText(bundle.getString("codigoPrestamoGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("isbnLibroGeneral.IngresarDato"));
+        jLabel8.setText(bundle.getString("nombreLibroGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("cedulaBibliotecarioGeneral.IngresarDato"));
+        jLabel9.setText(bundle.getString("nombreBibliotecarioGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("cedulaUsuarioGeneral.IngresarDato"));
+        jLabel10.setText(bundle.getString("nombreUsuarioGeneral.IngresarDato"));
+        btnRegistrarPrestamo.setText(bundle.getString("btn.registrar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+        jButton1.setText(bundle.getString("btn.verificarInformacion"));
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

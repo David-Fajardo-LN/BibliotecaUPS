@@ -4,6 +4,11 @@
  */
 package Vista.autor;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -13,6 +18,58 @@ public class AgregarAutorView extends javax.swing.JInternalFrame {
     public AgregarAutorView() {
         initComponents();
     }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void limpiarTextos(){
+        txtIdentificadorAutorNuevo.setText("");
+        txtNombreAutorNuevo.setText("");
+        txtNacionalidadAutorNuevo.setText("");
+        txtGeneroLiterarioAutorNuevo.setText("");
+        fechaNacimiento.setDate(null);
+    }
+
+    public JButton getBtnAgregarBibliotecario() {
+        return btnAgregarBibliotecario;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JTextField getTxtIdentificadorAutorNuevo() {
+        return txtIdentificadorAutorNuevo;
+    }
+
+    public JTextField getTxtNombreAutorNuevo() {
+        return txtNombreAutorNuevo;
+    }
+
+    public JTextField getTxtNacionalidadAutorNuevo() {
+        return txtNacionalidadAutorNuevo;
+    }
+
+    public JTextField getTxtGeneroLiterarioAutorNuevo() {
+        return txtGeneroLiterarioAutorNuevo;
+    }
+
+    public com.toedter.calendar.JDateChooser getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaAgregarAutor"));
+        jLabel3.setText(bundle.getString("identificadorGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("estiloLiterarioGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("nacionalidadGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("fechaNacimientoGeneral.IngresarDato"));
+        btnAgregarBibliotecario.setText(bundle.getString("btn.agregar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

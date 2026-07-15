@@ -4,11 +4,84 @@
  */
 package Vista.autor;
 
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 public class BuscarAutorView extends javax.swing.JInternalFrame {
 
     public BuscarAutorView() {
         initComponents();
     }
+
+    public void cargarDatosTabla(ArrayList<Object[]> filas) {
+        DefaultTableModel modelo = (DefaultTableModel) TablaLibrosDeAutor.getModel();
+        modelo.setRowCount(0);
+        for (Object[] fila : filas) {
+            modelo.addRow(fila);
+        }
+    }
+
+    public void mostrarInformacion(String nombre, String nacionalidad, String estiloLiterario, String fechaNacimiento){
+        txtNombreAutor.setText(nombre);
+        txtNacionalidadAutor.setText(nacionalidad);
+        txtGeneroLiterarioAutor.setText(estiloLiterario);
+        txtFechaNacimiento.setText(fechaNacimiento);
+    }
+
+    public void limpiarTextos(){
+        txtCedulaBibliotecarioBuscar.setText("");
+        txtNombreAutor.setText("");
+        txtNacionalidadAutor.setText("");
+        txtGeneroLiterarioAutor.setText("");
+        txtFechaNacimiento.setText("");
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public JButton getBtnBuscarUsuario() {
+        return btnBuscarUsuario;
+    }
+
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
+
+    public JTextField getTxtCedulaBibliotecarioBuscar() {
+        return txtCedulaBibliotecarioBuscar;
+    }
+
+    public JTable getTablaLibrosDeAutor() {
+        return TablaLibrosDeAutor;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaBuscarAutor"));
+        jLabel3.setText(bundle.getString("identificadorGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("estiloLiterarioGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("nacionalidadGeneral.IngresarDato"));
+        jLabel8.setText(bundle.getString("fechaNacimientoGeneral.IngresarDato"));
+        jLabel7.setText(bundle.getString("mensajeGeneral.DatosDeAutor"));
+        btnBuscarUsuario.setText(bundle.getString("btn.buscar"));
+        btnRegresar.setText(bundle.getString("btn.cancelar"));
+
+        DefaultTableModel modelo = (DefaultTableModel) TablaLibrosDeAutor.getModel();
+        modelo.setColumnIdentifiers(new Object[]{
+            bundle.getString("tituloTablaAutorBuscar.ISBN"),
+            bundle.getString("tituloTablaAutorBuscar.Nombre"),
+            bundle.getString("tituloTablaAutorBuscar.FechaPublicacion"),
+            bundle.getString("tituloTablaAutorBuscar.CantidadDisponible"),
+            bundle.getString("tituloTablaAutorBuscar.CantidadCopias")
+        });
+    }
+
 
 
     @SuppressWarnings("unchecked")

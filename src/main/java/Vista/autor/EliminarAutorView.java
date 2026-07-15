@@ -4,6 +4,11 @@
  */
 package Vista.autor;
 
+import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author User
@@ -13,6 +18,77 @@ public class EliminarAutorView extends javax.swing.JInternalFrame {
     public EliminarAutorView() {
         initComponents();
     }
+
+    public void limpiarTextos(){
+        txtCedulaSupervisor.setText("");
+        txtCedulaAutorAEliminar.setText("");
+        txtNombreAutorEliminar.setText("");
+        txtNumeroBibliotecarioEliminar.setText("");
+        txtCorreoBibliotecarioEliminar.setText("");
+        txtSectorBibliotecarioEliminar.setText("");
+    }
+
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    public void mostrarInformacion(String nombre, String nacionalidad, String estiloLiterario, String fechaNacimiento){
+        txtNombreAutorEliminar.setText(nombre);
+        txtNumeroBibliotecarioEliminar.setText(nacionalidad);
+        txtCorreoBibliotecarioEliminar.setText(estiloLiterario);
+        txtSectorBibliotecarioEliminar.setText(fechaNacimiento);
+    }
+
+    public JButton getBtnBuscarUsuario() {
+        return btnBuscarUsuario;
+    }
+
+    public JButton getBtnCancelar() {
+        return btnCancelar;
+    }
+
+    public JButton getBtnEliminarBibliotecario() {
+        return btnEliminarBibliotecario;
+    }
+
+    public JTextField getTxtCedulaSupervisor() {
+        return txtCedulaSupervisor;
+    }
+
+    public JTextField getTxtCedulaAutorAEliminar() {
+        return txtCedulaAutorAEliminar;
+    }
+
+    public JTextField getTxtNombreAutorEliminar() {
+        return txtNombreAutorEliminar;
+    }
+
+    public JTextField getTxtNumeroBibliotecarioEliminar() {
+        return txtNumeroBibliotecarioEliminar;
+    }
+
+    public JTextField getTxtCorreoBibliotecarioEliminar() {
+        return txtCorreoBibliotecarioEliminar;
+    }
+
+    public JTextField getTxtSectorBibliotecarioEliminar() {
+        return txtSectorBibliotecarioEliminar;
+    }
+
+    public void actualizarIdioma(ResourceBundle bundle){
+        jLabel1.setText(bundle.getString("titulo.VentanaEliminarAutor"));
+        jLabel3.setText(bundle.getString("identificadorGeneral.IngresarDato"));
+        jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
+        jLabel6.setText(bundle.getString("estiloLiterarioGeneral.IngresarDato"));
+        jLabel4.setText(bundle.getString("nacionalidadGeneral.IngresarDato"));
+        jLabelDatosAutor.setText(bundle.getString("mensajeGeneral.DatosDeAutor"));
+        jLabel9.setText(bundle.getString("cedulaSupervisor.IngresarDato"));
+        jLabel10.setText(bundle.getString("fechaNacimientoGeneral.IngresarDato"));
+        btnBuscarUsuario.setText(bundle.getString("btn.buscar"));
+        btnEliminarBibliotecario.setText(bundle.getString("btn.eliminar"));
+        btnCancelar.setText(bundle.getString("btn.cancelar"));
+    }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
