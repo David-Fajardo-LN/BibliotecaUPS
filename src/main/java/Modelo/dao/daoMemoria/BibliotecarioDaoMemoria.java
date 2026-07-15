@@ -50,8 +50,6 @@ public class BibliotecarioDaoMemoria implements InterfazDao<Bibliotecario> {
                 b.setNombre(otro.getNombre());
                 b.setSector(otro.getSector());
                 b.setTelefono(otro.getTelefono());
-                // Si el permiso o cargo también pueden cambiar:
-                b.setTienePermisoAvanzado(otro.tienePermisoAvanzado());
                 b.setCargo(otro.getCargo());
                 return;
             }
@@ -77,11 +75,11 @@ public class BibliotecarioDaoMemoria implements InterfazDao<Bibliotecario> {
         ArrayList<Bibliotecario> lista = new ArrayList<>();
         
         // Constructor: (sector, cargo, tienePermisoAvanzado, cedula, nombre, email, telefono)
-        lista.add(new Bibliotecario("Planta A", "Supervisor", true,  "1", "Carlos Herrera", "carlos.herrera@biblioteca.com", "0992345678"));
-        lista.add(new Bibliotecario("Planta B", "Archivador", false, "2", "María Cordero", "maria.cordero@biblioteca.com", "0983456789"));
-        lista.add(new Bibliotecario("Planta C", "Supervisor", true,  "3", "Andrés Salazar", "andres.salazar@biblioteca.com", "0974567890"));
-        lista.add(new Bibliotecario("Planta A", "Archivador", false, "4", "Gabriela Torres", "gabriela.torres@biblioteca.com", "0965678901"));
-        lista.add(new Bibliotecario("Planta B", "Archivador", false, "5", "Luis Mendoza", "luis.mendoza@biblioteca.com", "0956789012"));
+        lista.add(new Bibliotecario("Planta A", "Supervisor",  "1", "Carlos Herrera", "carlos.herrera@biblioteca.com", "0992345678"));
+        lista.add(new Bibliotecario("Planta B", "Archivador", "2", "María Cordero", "maria.cordero@biblioteca.com", "0983456789"));
+        lista.add(new Bibliotecario("Planta C", "Supervisor",  "3", "Andrés Salazar", "andres.salazar@biblioteca.com", "0974567890"));
+        lista.add(new Bibliotecario("Planta A", "Archivador", "4", "Gabriela Torres", "gabriela.torres@biblioteca.com", "0965678901"));
+        lista.add(new Bibliotecario("Planta B", "Archivador", "5", "Luis Mendoza", "luis.mendoza@biblioteca.com", "0956789012"));
         
         return lista;
     }

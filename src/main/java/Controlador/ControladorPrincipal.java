@@ -54,7 +54,7 @@ public class ControladorPrincipal {
         this.bibliotecarioDao = new BibliotecarioArchivosDao();
         this.libroDao = new LibroArchivosDao();
         
-        this.controladorUsuario = new ControladorUsuario(usuarioDao, bundle);
+        this.controladorUsuario = new ControladorUsuario(usuarioDao, bibliotecarioDao, bundle);
 
         configuradorEventos();
     }

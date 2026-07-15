@@ -62,7 +62,6 @@ public class BibliotecarioArchivosDao implements InterfazDao<Bibliotecario>{
         escribirCadena(raf, dato.getTelefono(), TAM_TELEFONO);
         escribirCadena(raf, dato.getSector(), TAM_SECTOR);
         escribirCadena(raf, dato.getCargo(), TAM_CARGO);
-        raf.writeBoolean(dato.isTienePermisoAvanzado());
 
         long escritos = raf.getFilePointer() - inicio;
 
@@ -79,9 +78,8 @@ public class BibliotecarioArchivosDao implements InterfazDao<Bibliotecario>{
         String telefono = leerCadena(raf, TAM_TELEFONO);
         String sector = leerCadena(raf, TAM_SECTOR);
         String cargo = leerCadena(raf, TAM_CARGO);
-        boolean permisoAvanzado = raf.readBoolean();
 
-        return new Bibliotecario(sector, cargo, permisoAvanzado, cedula, nombre, email, telefono);
+        return new Bibliotecario(sector, cargo, cedula, nombre, email, telefono);
     }
 
     private long buscarPosicion(RandomAccessFile raf, String cedula) throws IOException {
