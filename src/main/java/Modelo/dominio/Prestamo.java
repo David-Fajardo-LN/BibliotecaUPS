@@ -12,6 +12,7 @@ import java.util.Objects;
  * @author User
  */
 public class Prestamo {
+    
     private String codigo;
     private boolean estado;
     private LocalDate fechaDePrestamo;

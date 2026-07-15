@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo.dao;
+package Modelo.dao.daoArchivos;
 
-import Modelo.dominio.Autor;
+import Modelo.dao.InterfazDao;
+import Modelo.dominio.Libro;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -15,18 +16,20 @@ import java.util.ArrayList;
  *
  * @author User
  */
-public class AutorDao implements InterfazDao<Autor>{
+public class LibroArchivosDao implements InterfazDao<Libro>{
 
     private static final String RUTA = "//RutaEjemplo";
 
-    private static final int TAM_IDENTIFICADOR = 10;
+    private static final int TAM_ISBN = 10;
     private static final int TAM_NOMBRE = 80;
-    private static final int TAM_NACIONALIDAD = 80;
-    private static final int TAM_ESTILO_LITERARIO = 80;
-    private static final int TAM_FECHA_NACIMIENTO = 10;
-    private static final int TAM_REGISTRO = 700;
+    private static final int TAM_FECHA_PUBLICACION = 10;
+    private static final int TAM_CANTIDAD_DISPONIBLE = 10;
+    private static final int TAM_CANTIDAD_TOTAL = 10;
+    private static final int TAM_GENERO_LITERARIO = 80;
+    private static final int TAM_IDENTIFICADOR_AUTOR = 10;
+    private static final int TAM_REGISTRO = 600;
 
-    public AutorDao() {
+    public LibroArchivosDao() {
     }
 
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
@@ -52,18 +55,19 @@ public class AutorDao implements InterfazDao<Autor>{
         raf.writeChars(sb.toString());
     }
 
-    private void escribirRegistro(RandomAccessFile raf, Autor dato) throws IOException {
+    private void escribirRegistro(RandomAccessFile raf, Libro dato) throws IOException {
 
-        long inicioRegistro = raf.getFilePointer();
+        long inicio = raf.getFilePointer();
 
-        escribirCadena(raf, dato.getIdentificador(), TAM_IDENTIFICADOR);
+        escribirCadena(raf, dato.getISBN(), TAM_ISBN);
         escribirCadena(raf, dato.getNombre(), TAM_NOMBRE);
-        escribirCadena(raf, dato.getNacionalidad(), TAM_NACIONALIDAD);
-        escribirCadena(raf, dato.getEstiloLiterario(), TAM_ESTILO_LITERARIO);
-        escribirCadena(raf,
-                dato.getFechaDeNacimiento() == null? "": dato.getFechaDeNacimiento().toString(),TAM_FECHA_NACIMIENTO);
+        escribirCadena(raf, dato.getFechaDePublicacion() == null ? "" : dato.getFechaDePublicacion().toString(), TAM_FECHA_PUBLICACION);
+        escribirCadena(raf, String.valueOf(dato.getCantidadDisponible()), TAM_CANTIDAD_DISPONIBLE);
+        escribirCadena(raf, String.valueOf(dato.getCantidadTotal()), TAM_CANTIDAD_TOTAL);
+        escribirCadena(raf, dato.getGeneroLiterario(), TAM_GENERO_LITERARIO);
+        escribirCadena(raf, dato.getAutor(), TAM_IDENTIFICADOR_AUTOR);
 
-        long bytesEscritos = raf.getFilePointer() - inicioRegistro;
+        long bytesEscritos = raf.getFilePointer() - inicio;
 
         while (bytesEscritos < TAM_REGISTRO) {
             raf.writeByte(0);
@@ -71,24 +75,27 @@ public class AutorDao implements InterfazDao<Autor>{
         }
     }
 
-    private Autor leerRegistro(RandomAccessFile raf) throws IOException {
-        String identificador = leerCadena(raf, TAM_IDENTIFICADOR);
+    private Libro leerRegistro(RandomAccessFile raf) throws IOException {
+        String isbn = leerCadena(raf, TAM_ISBN);
         String nombre = leerCadena(raf, TAM_NOMBRE);
-        String nacionalidad = leerCadena(raf, TAM_NACIONALIDAD);
-        String estiloLiterario = leerCadena(raf, TAM_ESTILO_LITERARIO);
-        String fechaTexto = leerCadena(raf, TAM_FECHA_NACIMIENTO);
-        LocalDate fechaNacimiento = fechaTexto.isEmpty() ? null : LocalDate.parse(fechaTexto);
+        String fechaTexto = leerCadena(raf, TAM_FECHA_PUBLICACION);
+        LocalDate fechaPublicacion = fechaTexto.isEmpty() ? null : LocalDate.parse(fechaTexto);
+        int cantidadDisponible = Integer.parseInt(leerCadena(raf, TAM_CANTIDAD_DISPONIBLE));
+        int cantidadTotal = Integer.parseInt(leerCadena(raf, TAM_CANTIDAD_TOTAL));
+        String generoLiterario = leerCadena(raf, TAM_GENERO_LITERARIO);
+        String identificadorAutor = leerCadena(raf, TAM_IDENTIFICADOR_AUTOR);
 
-        return new Autor(identificador, nombre, nacionalidad, fechaNacimiento, estiloLiterario);
+        Libro libro = new Libro(isbn, nombre, fechaPublicacion, cantidadTotal, identificadorAutor, generoLiterario);
+        return libro;
     }
 
-    private long buscarPosicion(RandomAccessFile raf, String identificador) throws IOException {
+    private long buscarPosicion(RandomAccessFile raf, String isbn) throws IOException {
         long cantidadRegistros = raf.length() / TAM_REGISTRO;
         for (long i = 0; i < cantidadRegistros; i++) {
             long posicion = i * TAM_REGISTRO;
             raf.seek(posicion);
-            String identificadorLeido = leerCadena(raf, TAM_IDENTIFICADOR);
-            if (identificadorLeido.equals(identificador)) {
+            String isbnLeido = leerCadena(raf, TAM_ISBN);
+            if (isbnLeido.equals(isbn)) {
                 return posicion;
             }
         }
@@ -96,7 +103,7 @@ public class AutorDao implements InterfazDao<Autor>{
     }
 
     @Override
-    public Autor buscar(String parametro) {
+    public Libro buscar(String parametro) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long posicion = buscarPosicion(raf, parametro);
             if (posicion == -1) {
@@ -119,7 +126,7 @@ public class AutorDao implements InterfazDao<Autor>{
             long ultimaPosicion = raf.length() - TAM_REGISTRO;
             if (posicion != ultimaPosicion) {
                 raf.seek(ultimaPosicion);
-                Autor ultimo = leerRegistro(raf);
+                Libro ultimo = leerRegistro(raf);
                 raf.seek(posicion);
                 escribirRegistro(raf, ultimo);
             }
@@ -130,7 +137,7 @@ public class AutorDao implements InterfazDao<Autor>{
     }
 
     @Override
-    public void agregar(Autor dato) {
+    public void agregar(Libro dato) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             raf.seek(raf.length());
             escribirRegistro(raf, dato);
@@ -140,9 +147,9 @@ public class AutorDao implements InterfazDao<Autor>{
     }
 
     @Override
-    public void actualizar(Autor dato) {
+    public void actualizar(Libro dato) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
-            long posicion = buscarPosicion(raf, dato.getIdentificador());
+            long posicion = buscarPosicion(raf, dato.getISBN());
             if (posicion == -1) {
                 return;
             }
@@ -163,8 +170,8 @@ public class AutorDao implements InterfazDao<Autor>{
     }
 
     @Override
-    public ArrayList<Autor> obtenerLista() {
-        ArrayList<Autor> lista = new ArrayList<>();
+    public ArrayList obtenerLista() {
+        ArrayList<Libro> lista = new ArrayList<>();
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long cantidadRegistros = raf.length() / TAM_REGISTRO;
             for (long i = 0; i < cantidadRegistros; i++) {

@@ -4,7 +4,7 @@
  */
 package Modelo.dao;
 
-import Modelo.dominio.Usuario;
+import Modelo.dominio.Bibliotecario;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author User
  */
-public class UsuarioDao implements InterfazDao<Usuario>{
+public class BibliotecarioArchivosDao implements InterfazDao<Bibliotecario>{
 
     private static final String RUTA = "//RutaEjemplo";
 
@@ -22,10 +22,13 @@ public class UsuarioDao implements InterfazDao<Usuario>{
     private static final int TAM_NOMBRE = 80;
     private static final int TAM_EMAIL = 80;
     private static final int TAM_TELEFONO = 10;
-    private static final int TAM_REGISTRO = 400;
+    private static final int TAM_SECTOR = 80;
+    private static final int TAM_CARGO = 80;
+    private static final int TAM_REGISTRO = 750;
 
-    public UsuarioDao() {
+    public BibliotecarioArchivosDao() {
     }
+    
 
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
         char[] valor = new char[longitud];
@@ -50,36 +53,35 @@ public class UsuarioDao implements InterfazDao<Usuario>{
         raf.writeChars(sb.toString());
     }
 
-    private void escribirRegistro(RandomAccessFile raf, Usuario dato) throws IOException {
-
-        long inicioRegistro = raf.getFilePointer();
+    private void escribirRegistro(RandomAccessFile raf, Bibliotecario dato) throws IOException {
+        long inicio = raf.getFilePointer();
 
         escribirCadena(raf, dato.getCedula(), TAM_CEDULA);
         escribirCadena(raf, dato.getNombre(), TAM_NOMBRE);
         escribirCadena(raf, dato.getEmail(), TAM_EMAIL);
         escribirCadena(raf, dato.getTelefono(), TAM_TELEFONO);
-        raf.writeBoolean(dato.esValido());
+        escribirCadena(raf, dato.getSector(), TAM_SECTOR);
+        escribirCadena(raf, dato.getCargo(), TAM_CARGO);
+        raf.writeBoolean(dato.isTienePermisoAvanzado());
 
-        long bytesEscritos = raf.getFilePointer() - inicioRegistro;
+        long escritos = raf.getFilePointer() - inicio;
 
-        while (bytesEscritos < TAM_REGISTRO) {
+        while (escritos < TAM_REGISTRO) {
             raf.writeByte(0);
-            bytesEscritos++;
+            escritos++;
         }
     }
 
-    private Usuario leerRegistro(RandomAccessFile raf) throws IOException {
+    private Bibliotecario leerRegistro(RandomAccessFile raf) throws IOException {
         String cedula = leerCadena(raf, TAM_CEDULA);
         String nombre = leerCadena(raf, TAM_NOMBRE);
         String email = leerCadena(raf, TAM_EMAIL);
         String telefono = leerCadena(raf, TAM_TELEFONO);
-        boolean esValido = raf.readBoolean();
+        String sector = leerCadena(raf, TAM_SECTOR);
+        String cargo = leerCadena(raf, TAM_CARGO);
+        boolean permisoAvanzado = raf.readBoolean();
 
-        Usuario usuario = new Usuario(cedula, nombre, email, telefono);
-        if (!esValido) {
-            usuario.cambiarEstadoAInvalido();
-        }
-        return usuario;
+        return new Bibliotecario(sector, cargo, permisoAvanzado, cedula, nombre, email, telefono);
     }
 
     private long buscarPosicion(RandomAccessFile raf, String cedula) throws IOException {
@@ -96,7 +98,7 @@ public class UsuarioDao implements InterfazDao<Usuario>{
     }
 
     @Override
-    public Usuario buscar(String parametro) {
+    public Bibliotecario buscar(String parametro) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long posicion = buscarPosicion(raf, parametro);
             if (posicion == -1) {
@@ -119,7 +121,7 @@ public class UsuarioDao implements InterfazDao<Usuario>{
             long ultimaPosicion = raf.length() - TAM_REGISTRO;
             if (posicion != ultimaPosicion) {
                 raf.seek(ultimaPosicion);
-                Usuario ultimo = leerRegistro(raf);
+                Bibliotecario ultimo = leerRegistro(raf);
                 raf.seek(posicion);
                 escribirRegistro(raf, ultimo);
             }
@@ -130,7 +132,7 @@ public class UsuarioDao implements InterfazDao<Usuario>{
     }
 
     @Override
-    public void agregar(Usuario dato) {
+    public void agregar(Bibliotecario dato) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             raf.seek(raf.length());
             escribirRegistro(raf, dato);
@@ -140,7 +142,7 @@ public class UsuarioDao implements InterfazDao<Usuario>{
     }
 
     @Override
-    public void actualizar(Usuario dato) {
+    public void actualizar(Bibliotecario dato) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long posicion = buscarPosicion(raf, dato.getCedula());
             if (posicion == -1) {
@@ -164,7 +166,7 @@ public class UsuarioDao implements InterfazDao<Usuario>{
 
     @Override
     public ArrayList obtenerLista() {
-        ArrayList<Usuario> lista = new ArrayList<>();
+        ArrayList<Bibliotecario> lista = new ArrayList<>();
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long cantidadRegistros = raf.length() / TAM_REGISTRO;
             for (long i = 0; i < cantidadRegistros; i++) {
@@ -175,5 +177,5 @@ public class UsuarioDao implements InterfazDao<Usuario>{
             throw new RuntimeException(e);
         }
         return lista;
-    }
+    }   
 }

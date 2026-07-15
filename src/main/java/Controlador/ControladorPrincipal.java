@@ -2,15 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controlador.principal;
+package Controlador;
 
-import Modelo.dao.AutorDao;
-import Modelo.dao.BibliotecarioDao;
-import Modelo.dao.LibroDao;
-import Modelo.dao.PrestamoDao;
-import Modelo.dao.SancionDao;
-import Modelo.dao.UsuarioDao;
+import Modelo.dao.AutorArchivosDao;
+import Modelo.dao.BibliotecarioArchivosDao;
+import Modelo.dao.InterfazDao;
+import Modelo.dao.daoArchivos.LibroArchivosDao;
+import Modelo.dao.SancionArchivosDao;
+import Modelo.dao.UsuarioArchivosDao;
+import Modelo.dao.daoArchivos.PrestamoArchivosDao;
+import Modelo.dao.daoMemoria.AutorDaoMemoria;
+import Modelo.dao.daoMemoria.BibliotecarioDaoMemoria;
+import Modelo.dao.daoMemoria.LibroDaoMemoria;
+import Modelo.dao.daoMemoria.PrestamoDaoMemoria;
+import Modelo.dao.daoMemoria.SancionDaoMemoria;
+import Modelo.dao.daoMemoria.UsuarioDaoMemoria;
 import Vista.principal.PrincipalView;
+import Vista.principal.TipoDePersistenciaDaoView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
@@ -23,27 +31,30 @@ import javax.swing.Action;
  */
 public class ControladorPrincipal {
     private PrincipalView principalView;
+    private TipoDePersistenciaDaoView tipoDePersistenciaDao;
+    
     private static ResourceBundle bundle;
     private static Locale localeActual;
     
-    private AutorDao autorDao;
-    private BibliotecarioDao bibliotecarioDao;
-    private LibroDao libroDao;
-    private PrestamoDao prestamoDao;
-    private UsuarioDao usuarioDao;
-    private SancionDao sancionDao;
+    private InterfazDao autorDao;
+    private InterfazDao bibliotecarioDao;
+    private InterfazDao libroDao;
+    private InterfazDao prestamoDao;
+    private InterfazDao usuarioDao;
+    private InterfazDao sancionDao;
+    
+    private ControladorUsuario controladorUsuario;
 
     public ControladorPrincipal() {
         this.principalView = new PrincipalView();
         this.localeActual = new Locale("es", "EC");
         this.bundle = ResourceBundle.getBundle("mensajes", localeActual);
         
-        this.autorDao = new AutorDao();
-        this.bibliotecarioDao = new BibliotecarioDao();
-        this.libroDao = new LibroDao();
-        this.prestamoDao = new PrestamoDao();
-        this.sancionDao = new SancionDao();
-        this.usuarioDao = new UsuarioDao();
+        this.autorDao = new AutorArchivosDao();
+        this.bibliotecarioDao = new BibliotecarioArchivosDao();
+        this.libroDao = new LibroArchivosDao();
+        
+        this.controladorUsuario = new ControladorUsuario(usuarioDao, bundle);
 
         configuradorEventos();
     }
@@ -51,7 +62,7 @@ public class ControladorPrincipal {
     
     
     
-    public void configuradorEventos(){
+    private void configuradorEventos(){
         configurarEventosAccesosRapidos();
         configurarEventosMenuAutores();
         configurarEventosMenuBibliotecarios();
@@ -59,15 +70,49 @@ public class ControladorPrincipal {
         configurarEventosMenuPrestamos();
         configurarEventosMenuSanciones();
         configurarEventosMenuUsuarios();
+        configurarEventosTiposDePersistenciaDao();
     }
     
+    public void iniciarPrograma(){
+        tipoDePersistenciaDao.setVisible(true);
+    }
     
     private void cambiarIdioma(String idioma, String pais){
         localeActual = new Locale(idioma, pais);
         bundle = ResourceBundle.getBundle("mensajes", localeActual);
     }
     
-    public void configurarEventosAccesosRapidos(){
+    private void configurarEventosTiposDePersistenciaDao(){
+        tipoDePersistenciaDao.getBtnMemoriaArchivos().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                autorDao = new AutorArchivosDao();
+                bibliotecarioDao = new BibliotecarioArchivosDao();
+                libroDao = new LibroArchivosDao();
+                usuarioDao = new UsuarioArchivosDao();
+                prestamoDao = new PrestamoArchivosDao();
+                sancionDao = new SancionArchivosDao();
+                tipoDePersistenciaDao.dispose();
+                principalView.setVisible(true);
+            }
+        });
+        
+        tipoDePersistenciaDao.getBtnMemoriaRAM().addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                autorDao = new AutorDaoMemoria();
+                bibliotecarioDao = new BibliotecarioDaoMemoria();
+                libroDao = new LibroDaoMemoria();
+                usuarioDao = new UsuarioDaoMemoria();
+                prestamoDao = new PrestamoDaoMemoria();
+                sancionDao = new SancionDaoMemoria();
+                tipoDePersistenciaDao.dispose();
+                principalView.setVisible(true);
+            }
+        });
+    }
+    
+    private void configurarEventosAccesosRapidos(){
         
         // Botones de acceso rapido
         
@@ -101,7 +146,7 @@ public class ControladorPrincipal {
        
     }
     
-    public void configurarEventosMenuIdioma(){
+    private void configurarEventosMenuIdioma(){
         principalView.getItemMenuIdiomaEspañol().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,12 +162,12 @@ public class ControladorPrincipal {
         });
     }
     
-    public void configurarEventosMenuUsuarios(){
+    private void configurarEventosMenuUsuarios(){
         
         principalView.getItemAgregarUsuario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-              
+                
             }
         });
         
@@ -155,7 +200,7 @@ public class ControladorPrincipal {
         });
     }
     
-    public void configurarEventosMenuBibliotecarios(){
+    private void configurarEventosMenuBibliotecarios(){
         
         principalView.getItemAgregarBibliotecario().addActionListener(new ActionListener(){
             @Override
@@ -194,7 +239,7 @@ public class ControladorPrincipal {
         
     }
     
-    public void configurarEventosMenuAutores(){
+    private void configurarEventosMenuAutores(){
         principalView.getItemAgregarAutor().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -231,7 +276,7 @@ public class ControladorPrincipal {
         });
     }
     
-    public void configurarEventosMenuLibros(){
+    private void configurarEventosMenuLibros(){
         principalView.getItemAgregarLibro().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -268,7 +313,7 @@ public class ControladorPrincipal {
         });
     }
     
-    public void configurarEventosMenuPrestamos(){
+    private void configurarEventosMenuPrestamos(){
         principalView.getItemBuscarPrestamo().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -298,7 +343,7 @@ public class ControladorPrincipal {
         });
     }
     
-    public void configurarEventosMenuSanciones(){
+    private void configurarEventosMenuSanciones(){
         principalView.getItemBuscarSancion().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {

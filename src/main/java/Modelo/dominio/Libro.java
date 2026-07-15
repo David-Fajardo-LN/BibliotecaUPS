@@ -30,15 +30,6 @@ public class Libro {
         this.identificadorAutor = identificadorAutor;
     }
 
-    public Libro(String ISBN, String nombre, LocalDate fechaDePublicacion, int cantidadDisponible, int cantidadTotal, String generoLiterario) {
-        this.ISBN = ISBN;
-        this.nombre = nombre;
-        this.fechaDePublicacion = fechaDePublicacion;
-        this.cantidadDisponible = cantidadDisponible;
-        this.cantidadTotal = cantidadTotal;
-        this.generoLiterario = generoLiterario;
-    }
-
     public String getISBN() {
         return ISBN;
     }

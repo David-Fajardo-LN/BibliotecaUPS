@@ -4,31 +4,30 @@
  */
 package Modelo.dao;
 
-import Modelo.dominio.Bibliotecario;
+import Modelo.dominio.Autor;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
  *
  * @author User
  */
-public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
+public class AutorArchivosDao implements InterfazDao<Autor>{
 
     private static final String RUTA = "//RutaEjemplo";
 
-    private static final int TAM_CEDULA = 10;
+    private static final int TAM_IDENTIFICADOR = 10;
     private static final int TAM_NOMBRE = 80;
-    private static final int TAM_EMAIL = 80;
-    private static final int TAM_TELEFONO = 10;
-    private static final int TAM_SECTOR = 80;
-    private static final int TAM_CARGO = 80;
-    private static final int TAM_REGISTRO = 750;
+    private static final int TAM_NACIONALIDAD = 80;
+    private static final int TAM_ESTILO_LITERARIO = 80;
+    private static final int TAM_FECHA_NACIMIENTO = 10;
+    private static final int TAM_REGISTRO = 700;
 
-    public BibliotecarioDao() {
+    public AutorArchivosDao() {
     }
-    
 
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
         char[] valor = new char[longitud];
@@ -53,44 +52,43 @@ public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
         raf.writeChars(sb.toString());
     }
 
-    private void escribirRegistro(RandomAccessFile raf, Bibliotecario dato) throws IOException {
-        long inicio = raf.getFilePointer();
+    private void escribirRegistro(RandomAccessFile raf, Autor dato) throws IOException {
 
-        escribirCadena(raf, dato.getCedula(), TAM_CEDULA);
+        long inicioRegistro = raf.getFilePointer();
+
+        escribirCadena(raf, dato.getIdentificador(), TAM_IDENTIFICADOR);
         escribirCadena(raf, dato.getNombre(), TAM_NOMBRE);
-        escribirCadena(raf, dato.getEmail(), TAM_EMAIL);
-        escribirCadena(raf, dato.getTelefono(), TAM_TELEFONO);
-        escribirCadena(raf, dato.getSector(), TAM_SECTOR);
-        escribirCadena(raf, dato.getCargo(), TAM_CARGO);
-        raf.writeBoolean(dato.isTienePermisoAvanzado());
+        escribirCadena(raf, dato.getNacionalidad(), TAM_NACIONALIDAD);
+        escribirCadena(raf, dato.getEstiloLiterario(), TAM_ESTILO_LITERARIO);
+        escribirCadena(raf,
+                dato.getFechaDeNacimiento() == null? "": dato.getFechaDeNacimiento().toString(),TAM_FECHA_NACIMIENTO);
 
-        long escritos = raf.getFilePointer() - inicio;
+        long bytesEscritos = raf.getFilePointer() - inicioRegistro;
 
-        while (escritos < TAM_REGISTRO) {
+        while (bytesEscritos < TAM_REGISTRO) {
             raf.writeByte(0);
-            escritos++;
+            bytesEscritos++;
         }
     }
 
-    private Bibliotecario leerRegistro(RandomAccessFile raf) throws IOException {
-        String cedula = leerCadena(raf, TAM_CEDULA);
+    private Autor leerRegistro(RandomAccessFile raf) throws IOException {
+        String identificador = leerCadena(raf, TAM_IDENTIFICADOR);
         String nombre = leerCadena(raf, TAM_NOMBRE);
-        String email = leerCadena(raf, TAM_EMAIL);
-        String telefono = leerCadena(raf, TAM_TELEFONO);
-        String sector = leerCadena(raf, TAM_SECTOR);
-        String cargo = leerCadena(raf, TAM_CARGO);
-        boolean permisoAvanzado = raf.readBoolean();
+        String nacionalidad = leerCadena(raf, TAM_NACIONALIDAD);
+        String estiloLiterario = leerCadena(raf, TAM_ESTILO_LITERARIO);
+        String fechaTexto = leerCadena(raf, TAM_FECHA_NACIMIENTO);
+        LocalDate fechaNacimiento = fechaTexto.isEmpty() ? null : LocalDate.parse(fechaTexto);
 
-        return new Bibliotecario(sector, cargo, permisoAvanzado, cedula, nombre, email, telefono);
+        return new Autor(identificador, nombre, nacionalidad, fechaNacimiento, estiloLiterario);
     }
 
-    private long buscarPosicion(RandomAccessFile raf, String cedula) throws IOException {
+    private long buscarPosicion(RandomAccessFile raf, String identificador) throws IOException {
         long cantidadRegistros = raf.length() / TAM_REGISTRO;
         for (long i = 0; i < cantidadRegistros; i++) {
             long posicion = i * TAM_REGISTRO;
             raf.seek(posicion);
-            String cedulaLeida = leerCadena(raf, TAM_CEDULA);
-            if (cedulaLeida.equals(cedula)) {
+            String identificadorLeido = leerCadena(raf, TAM_IDENTIFICADOR);
+            if (identificadorLeido.equals(identificador)) {
                 return posicion;
             }
         }
@@ -98,7 +96,7 @@ public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
     }
 
     @Override
-    public Bibliotecario buscar(String parametro) {
+    public Autor buscar(String parametro) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long posicion = buscarPosicion(raf, parametro);
             if (posicion == -1) {
@@ -121,7 +119,7 @@ public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
             long ultimaPosicion = raf.length() - TAM_REGISTRO;
             if (posicion != ultimaPosicion) {
                 raf.seek(ultimaPosicion);
-                Bibliotecario ultimo = leerRegistro(raf);
+                Autor ultimo = leerRegistro(raf);
                 raf.seek(posicion);
                 escribirRegistro(raf, ultimo);
             }
@@ -132,7 +130,7 @@ public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
     }
 
     @Override
-    public void agregar(Bibliotecario dato) {
+    public void agregar(Autor dato) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             raf.seek(raf.length());
             escribirRegistro(raf, dato);
@@ -142,9 +140,9 @@ public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
     }
 
     @Override
-    public void actualizar(Bibliotecario dato) {
+    public void actualizar(Autor dato) {
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
-            long posicion = buscarPosicion(raf, dato.getCedula());
+            long posicion = buscarPosicion(raf, dato.getIdentificador());
             if (posicion == -1) {
                 return;
             }
@@ -165,8 +163,8 @@ public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
     }
 
     @Override
-    public ArrayList obtenerLista() {
-        ArrayList<Bibliotecario> lista = new ArrayList<>();
+    public ArrayList<Autor> obtenerLista() {
+        ArrayList<Autor> lista = new ArrayList<>();
         try (RandomAccessFile raf = new RandomAccessFile(new File(RUTA), "rw")) {
             long cantidadRegistros = raf.length() / TAM_REGISTRO;
             for (long i = 0; i < cantidadRegistros; i++) {
@@ -177,5 +175,5 @@ public class BibliotecarioDao implements InterfazDao<Bibliotecario>{
             throw new RuntimeException(e);
         }
         return lista;
-    }   
+    }
 }
