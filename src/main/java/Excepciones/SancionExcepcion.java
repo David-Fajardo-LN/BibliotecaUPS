@@ -2,18 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo.excepciones;
+package Excepciones;
 
 /**
  *
  * @author User
  */
-public class BibliotecaExcepcion extends Exception{
+public class SancionExcepcion extends Exception{
 
-    public BibliotecaExcepcion() {
-    }
-
-    public BibliotecaExcepcion(String message) {
+    public SancionExcepcion(String message) {
         super(message);
     }
+    
 }
