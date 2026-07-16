@@ -4,8 +4,10 @@
  */
 package Vista.bibliotecario;
 
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -22,12 +24,28 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
     public ModificarBibliotecarioView() {
         initComponents();
     }
+    
+    public void cargarSectores(List<String> sectores) {
+
+        comboBOXSectoresModificar.removeAllItems();
+
+        for(String sector : sectores){
+            comboBOXSectoresModificar.addItem(sector);
+        }
+    }
+    
+    public void cargarCargos(List<String> cargos){
+        comboBOXCargos.removeAllItems();
+        
+        for(String cargo : cargos){
+            comboBOXCargos.addItem(cargo);
+        }
+    }
 
     public void mostrarInformacionBibliotecario(String nombre, String telefono, String correo, String sector, String cargo){
         txtNombreBibliotecarioModificar.setText(nombre);
         txtNumeroBibliotecarioModificar.setText(telefono);
         txtCorreoBibliotecarioModificar.setText(correo);
-        txtSectorArea.setText(sector);
     }
 
     public void mostrarMensaje(String mensaje){
@@ -40,8 +58,6 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         txtCorreoBibliotecarioModificar.setText("");
         txtNombreBibliotecarioModificar.setText("");
         txtNumeroBibliotecarioModificar.setText("");
-        txtNuevoCargo.setText("");
-        txtSectorArea.setText("");
     }
 
     public void actualizarIdioma(ResourceBundle bundle){
@@ -59,6 +75,16 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         btnCancelar.setText(bundle.getString("btn.cancelar"));
     }
 
+    public JComboBox<String> getComboBOXSectoresModificar() {
+        return comboBOXSectoresModificar;
+    }
+
+    public JComboBox<String> getComboBOXCargos() {
+        return comboBOXCargos;
+    }
+
+    
+    
     public JButton getBtnBuscarBibliotecario() {
         return btnBuscarBibliotecario;
     }
@@ -91,13 +117,6 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         return txtNumeroBibliotecarioModificar;
     }
 
-    public JTextField getTxtSectorArea() {
-        return txtSectorArea;
-    }
-
-    public JTextField getTxtNuevoCargo() {
-        return txtNuevoCargo;
-    }
 
     
 
@@ -131,9 +150,9 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         txtCedulaUsuarioNuevo1 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
-        txtSectorArea = new javax.swing.JTextField();
         labelCargo = new javax.swing.JLabel();
-        txtNuevoCargo = new javax.swing.JTextField();
+        comboBOXSectoresModificar = new javax.swing.JComboBox<>();
+        comboBOXCargos = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -196,6 +215,10 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         labelCargo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelCargo.setText("CARGO:");
 
+        comboBOXSectoresModificar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        comboBOXCargos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -225,11 +248,11 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                                         .addComponent(labelCargo, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
                                     .addGap(39, 39, 39)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(txtNumeroBibliotecarioModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtCorreoBibliotecarioModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtSectorArea, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtNuevoCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtNumeroBibliotecarioModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                                        .addComponent(txtCorreoBibliotecarioModificar, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(comboBOXSectoresModificar, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(comboBOXCargos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(21, 21, 21))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -283,12 +306,12 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txtSectorArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBOXSectoresModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCargo)
-                    .addComponent(txtNuevoCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                    .addComponent(comboBOXCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -322,6 +345,8 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscarBibliotecario;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> comboBOXCargos;
+    private javax.swing.JComboBox<String> comboBOXSectoresModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -340,8 +365,6 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCedulaUsuarioNuevo1;
     private javax.swing.JTextField txtCorreoBibliotecarioModificar;
     private javax.swing.JTextField txtNombreBibliotecarioModificar;
-    private javax.swing.JTextField txtNuevoCargo;
     private javax.swing.JTextField txtNumeroBibliotecarioModificar;
-    private javax.swing.JTextField txtSectorArea;
     // End of variables declaration//GEN-END:variables
 }

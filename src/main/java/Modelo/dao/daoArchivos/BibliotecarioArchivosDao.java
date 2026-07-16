@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class BibliotecarioArchivosDao implements InterfazDao<Bibliotecario>{
 
-    private static final String RUTA = "//RutaEjemplo";
+    private static final String RUTA = "datos/bibliotecarios.dat";
 
     private static final int TAM_CEDULA = 10;
     private static final int TAM_NOMBRE = 80;
@@ -28,6 +28,21 @@ public class BibliotecarioArchivosDao implements InterfazDao<Bibliotecario>{
     private static final int TAM_REGISTRO = 750;
 
     public BibliotecarioArchivosDao() {
+        try {
+        File archivo = new File(RUTA);
+
+        File carpeta = archivo.getParentFile();
+        if (!carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+
+        if (!archivo.exists()) {
+            archivo.createNewFile();
+        }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     
 

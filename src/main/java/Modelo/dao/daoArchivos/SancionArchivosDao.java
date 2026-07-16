@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo.dao;
+package Modelo.dao.daoArchivos;
 
+import Modelo.dao.InterfazDao;
 import Modelo.dominio.Sancion;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  * @author User
  */
 public class SancionArchivosDao implements InterfazDao<Sancion>{
-    private static final String RUTA = "//RutaEjemplo";
+    private static final String RUTA = "datos/sanciones.dat";
 
     private static final int TAM_CODIGO = 10;
     private static final int TAM_FECHA_SANCION = 10;

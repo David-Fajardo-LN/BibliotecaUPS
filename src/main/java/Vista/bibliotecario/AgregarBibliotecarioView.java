@@ -4,8 +4,10 @@
  */
 package Vista.bibliotecario;
 
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -14,6 +16,16 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
     public AgregarBibliotecarioView() {
         initComponents();
     }
+    
+    public void cargarSectores(List<String> sectores) {
+
+        comboBOXSectores.removeAllItems();
+
+        for(String sector : sectores){
+            comboBOXSectores.addItem(sector);
+        }
+    }
+    
 
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
@@ -24,7 +36,6 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
         txtCorreoBibliotecarioNuevo.setText("");
         txtNombreBibliotecarioNuevo.setText("");
         txtNumeroBibliotecarioNuevo.setText("");
-        txtSectorBibliotecarioNuevo.setText("");
     }
 
     public JButton getBtnAgregarBibliotecario() {
@@ -51,9 +62,11 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
         return txtNumeroBibliotecarioNuevo;
     }
 
-    public JTextField getTxtSectorBibliotecarioNuevo() {
-        return txtSectorBibliotecarioNuevo;
+
+    public JComboBox<String> getComboBOXSectores() {
+        return comboBOXSectores;
     }
+    
 
     public void actualizarIdioma(ResourceBundle bundle){
         jLabel1.setText(bundle.getString("titulo.VentanaAgregarBibliotecario"));
@@ -85,7 +98,7 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
         txtNumeroBibliotecarioNuevo = new javax.swing.JTextField();
         txtCorreoBibliotecarioNuevo = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtSectorBibliotecarioNuevo = new javax.swing.JTextField();
+        comboBOXSectores = new javax.swing.JComboBox<>();
         btnAgregarBibliotecario = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -132,6 +145,8 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Sector/Area: ");
 
+        comboBOXSectores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -161,7 +176,7 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtSectorBibliotecarioNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboBOXSectores, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -186,8 +201,8 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtSectorBibliotecarioNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
+                    .addComponent(comboBOXSectores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         btnAgregarBibliotecario.setText("AGREGAR");
@@ -249,6 +264,7 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarBibliotecario;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> comboBOXSectores;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -263,6 +279,5 @@ public class AgregarBibliotecarioView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCorreoBibliotecarioNuevo;
     private javax.swing.JTextField txtNombreBibliotecarioNuevo;
     private javax.swing.JTextField txtNumeroBibliotecarioNuevo;
-    private javax.swing.JTextField txtSectorBibliotecarioNuevo;
     // End of variables declaration//GEN-END:variables
 }

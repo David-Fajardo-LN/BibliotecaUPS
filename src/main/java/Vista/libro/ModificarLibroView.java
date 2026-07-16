@@ -4,8 +4,10 @@
  */
 package Vista.libro;
 
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -21,10 +23,18 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
     public ModificarLibroView() {
         initComponents();
     }
+    
+    public void cargarGeneros(List<String> sectores) {
+
+        comboBOXGenerosLiterarios.removeAllItems();
+
+        for(String sector : sectores){
+            comboBOXGenerosLiterarios.addItem(sector);
+        }
+    }
 
     public void mostrarInformacionLibro(String nombre, String genero, String cantidadTotal, String cantidadDisponible, java.util.Date fechaPublicacion){
         txtNombreLibroAModificar.setText(nombre);
-        txtGeneroLibroAModificar.setText(genero);
         txtCantidadTotalLibroAModificar.setText(cantidadTotal);
         txtCantidadDisponibleLibroAModificar.setText(cantidadDisponible);
         txtFechaPublicacionLibroAModificar.setDate(fechaPublicacion);
@@ -38,10 +48,13 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
         txtISBNLibroABuscar.setText("");
         txtCedulaDeSupervisor.setText("");
         txtNombreLibroAModificar.setText("");
-        txtGeneroLibroAModificar.setText("");
         txtCantidadTotalLibroAModificar.setText("");
         txtCantidadDisponibleLibroAModificar.setText("");
         txtFechaPublicacionLibroAModificar.setDate(null);
+    }
+
+    public JComboBox<String> getComboBOXGenerosLiterarios() {
+        return comboBOXGenerosLiterarios;
     }
 
     public JButton getBtnBuscarLibro() {
@@ -67,11 +80,7 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
     public JTextField getTxtNombreLibroAModificar() {
         return txtNombreLibroAModificar;
     }
-
-    public JTextField getTxtGeneroLibroAModificar() {
-        return txtGeneroLibroAModificar;
-    }
-
+    
     public JTextField getTxtCantidadTotalLibroAModificar() {
         return txtCantidadTotalLibroAModificar;
     }
@@ -121,7 +130,6 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtISBNLibroABuscar = new javax.swing.JTextField();
         txtNombreLibroAModificar = new javax.swing.JTextField();
-        txtGeneroLibroAModificar = new javax.swing.JTextField();
         txtCantidadTotalLibroAModificar = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
@@ -133,6 +141,7 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
         txtFechaPublicacionLibroAModificar = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         txtCantidadDisponibleLibroAModificar = new javax.swing.JTextField();
+        comboBOXGenerosLiterarios = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -195,6 +204,8 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("CANTIDAD DISPONIBLE:");
 
+        comboBOXGenerosLiterarios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -229,21 +240,23 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
                                         .addGap(1, 1, 1))
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtGeneroLibroAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtCantidadTotalLibroAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGap(18, 18, 18)
                                             .addComponent(txtNombreLibroAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtCantidadDisponibleLibroAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                    .addGap(18, 18, 18)
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(txtCantidadTotalLibroAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
+                                                        .addComponent(comboBOXGenerosLiterarios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtCantidadDisponibleLibroAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                             .addGap(1, 1, 1))))))
                         .addGap(193, 193, 193))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -282,8 +295,8 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtGeneroLibroAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(comboBOXGenerosLiterarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -328,6 +341,7 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscarLibro;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> comboBOXGenerosLiterarios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
@@ -346,7 +360,6 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCantidadTotalLibroAModificar;
     private javax.swing.JTextField txtCedulaDeSupervisor;
     private com.toedter.calendar.JDateChooser txtFechaPublicacionLibroAModificar;
-    private javax.swing.JTextField txtGeneroLibroAModificar;
     private javax.swing.JTextField txtISBNLibroABuscar;
     private javax.swing.JTextField txtNombreLibroAModificar;
     // End of variables declaration//GEN-END:variables

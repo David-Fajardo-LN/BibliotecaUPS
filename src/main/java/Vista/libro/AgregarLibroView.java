@@ -4,8 +4,11 @@
  */
 package Vista.libro;
 
+import Modelo.enums.GeneroLiterario;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -21,6 +24,15 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
     public AgregarLibroView() {
         initComponents();
     }
+    
+    public void cargarGeneros(List<String> enums, ResourceBundle bundle) {
+
+        comboBOXGeneroLiterarioLibroAgregar.removeAllItems();
+
+        for (GeneroLiterario genero : GeneroLiterario.values()) {
+            comboBOXGeneroLiterarioLibroAgregar.addItem(bundle.getString(genero.name()));
+        }
+    }
 
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
@@ -31,7 +43,6 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
         txtNombreLibroAgregar.setText("");
         txtCantidadTotalLibroAgregar.setText("");
         txtAutorDeLbroAgregar.setText("");
-        txtGeneroLiterarioLibroAgregar.setText("");
         txtFechaDePublicacionLibroAgregar.setDate(null);
     }
 
@@ -59,8 +70,8 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
         return txtAutorDeLbroAgregar;
     }
 
-    public JTextField getTxtGeneroLiterarioLibroAgregar() {
-        return txtGeneroLiterarioLibroAgregar;
+    public JComboBox<String> getComboBOXGeneroLiterarioLibroAgregar() {
+        return comboBOXGeneroLiterarioLibroAgregar;
     }
 
     public com.toedter.calendar.JDateChooser getTxtFechaDePublicacionLibroAgregar() {
@@ -105,7 +116,7 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txtFechaDePublicacionLibroAgregar = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
-        txtGeneroLiterarioLibroAgregar = new javax.swing.JTextField();
+        comboBOXGeneroLiterarioLibroAgregar = new javax.swing.JComboBox<>();
         btnAgregarLibro = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -155,6 +166,8 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("GENERO LITERARIO:");
 
+        comboBOXGeneroLiterarioLibroAgregar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -165,7 +178,7 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtGeneroLiterarioLibroAgregar))
+                        .addComponent(comboBOXGeneroLiterarioLibroAgregar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -208,7 +221,7 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(txtGeneroLiterarioLibroAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBOXGeneroLiterarioLibroAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
@@ -277,6 +290,7 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarLibro;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> comboBOXGeneroLiterarioLibroAgregar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -291,7 +305,6 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtAutorDeLbroAgregar;
     private javax.swing.JTextField txtCantidadTotalLibroAgregar;
     private com.toedter.calendar.JDateChooser txtFechaDePublicacionLibroAgregar;
-    private javax.swing.JTextField txtGeneroLiterarioLibroAgregar;
     private javax.swing.JTextField txtISBNlibroAgregar;
     private javax.swing.JTextField txtNombreLibroAgregar;
     // End of variables declaration//GEN-END:variables

@@ -7,7 +7,6 @@
 package Modelo.dao.daoArchivos;
 
 import Modelo.dao.PrestamoDao;
-import Modelo.dao.SancionArchivosDao;
 import Modelo.dominio.Prestamo;
 import Modelo.dominio.Sancion;
 import java.io.File;
@@ -22,7 +21,7 @@ import java.util.ArrayList;
  */
 public class PrestamoArchivosDao implements PrestamoDao{
 
-    private static final String RUTA = "//RutaEjemplo";
+    private static final String RUTA = "datos/prestamos.dat";
 
     private static final int TAM_CODIGO = 10;
     private static final int TAM_FECHA_PRESTAMO = 10;
@@ -37,6 +36,20 @@ public class PrestamoArchivosDao implements PrestamoDao{
     private final SancionArchivosDao sancionDao = new SancionArchivosDao();
 
     public PrestamoArchivosDao() {
+        try {
+            File archivo = new File(RUTA);
+
+            File carpeta = archivo.getParentFile();
+            if (carpeta != null && !carpeta.exists()) {
+                carpeta.mkdirs();
+            }
+
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo crear el archivo de préstamos.", e);
+        }
     }
 
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {

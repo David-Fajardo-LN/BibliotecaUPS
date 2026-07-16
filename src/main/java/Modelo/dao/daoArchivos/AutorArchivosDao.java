@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Modelo.dao;
+package Modelo.dao.daoArchivos;
 
+import Modelo.dao.InterfazDao;
 import Modelo.dominio.Autor;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  */
 public class AutorArchivosDao implements InterfazDao<Autor>{
 
-    private static final String RUTA = "//RutaEjemplo";
+    private static final String RUTA = "datos/autores.dat";
 
     private static final int TAM_IDENTIFICADOR = 10;
     private static final int TAM_NOMBRE = 80;
@@ -27,6 +28,21 @@ public class AutorArchivosDao implements InterfazDao<Autor>{
     private static final int TAM_REGISTRO = 700;
 
     public AutorArchivosDao() {
+    try {
+        File archivo = new File(RUTA);
+
+        File carpeta = archivo.getParentFile();
+        if (!carpeta.exists()) {
+            carpeta.mkdirs();
+        }
+
+        if (!archivo.exists()) {
+            archivo.createNewFile();
+        }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {

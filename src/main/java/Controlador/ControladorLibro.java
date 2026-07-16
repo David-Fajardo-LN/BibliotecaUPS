@@ -8,6 +8,7 @@ import Excepciones.LibroExcepcion;
 import Modelo.dao.InterfazDao;
 import Modelo.dominio.Autor;
 import Modelo.dominio.Libro;
+import Modelo.enums.GeneroLiterario;
 import Vista.libro.AgregarLibroView;
 import Vista.libro.BuscarLibroView;
 import Vista.libro.EliminarLibro;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControladorLibro {
@@ -204,6 +206,7 @@ public class ControladorLibro {
 
 
     public void activarVentanaAgregarLibro(){
+        cargarGeneros();
         principalView.abrirVentana(agregarLibroView);
     }
 
@@ -216,6 +219,7 @@ public class ControladorLibro {
     }
 
     public void activarVentanaModificarLibro(){
+        modificarLibroView.cargarGeneros(cargarGeneros());
         principalView.abrirVentana(modificarLibroView);
     }
 
@@ -229,7 +233,7 @@ public class ControladorLibro {
         String nombre = agregarLibroView.getTxtNombreLibroAgregar().getText();
         String cantidadTotalTexto = agregarLibroView.getTxtCantidadTotalLibroAgregar().getText();
         String identificadorAutor = agregarLibroView.getTxtAutorDeLbroAgregar().getText();
-        String generoLiterario = agregarLibroView.getTxtGeneroLiterarioLibroAgregar().getText();
+        String generoLiterario = (String) agregarLibroView.getComboBOXGeneroLiterarioLibroAgregar().getSelectedItem();
         Date fechaPublicacion = agregarLibroView.getTxtFechaDePublicacionLibroAgregar().getDate();
 
         if(isbn.isBlank())
@@ -324,7 +328,7 @@ public class ControladorLibro {
             throw new LibroExcepcion("error.CedulaSupervisorNoExiste");
 
         String nuevoNombre = modificarLibroView.getTxtNombreLibroAModificar().getText();
-        String nuevoGenero = modificarLibroView.getTxtGeneroLibroAModificar().getText();
+        String nuevoGenero = (String) modificarLibroView.getComboBOXGenerosLiterarios().getSelectedItem();
         String nuevaCantidadTotalTexto = modificarLibroView.getTxtCantidadTotalLibroAModificar().getText();
         String nuevaCantidadDisponibleTexto = modificarLibroView.getTxtCantidadDisponibleLibroAModificar().getText();
         Date nuevaFecha = modificarLibroView.getTxtFechaPublicacionLibroAModificar().getDate();
@@ -367,6 +371,16 @@ public class ControladorLibro {
         eliminarLibroView.actualizarIdioma(bundle);
         modificarLibroView.actualizarIdioma(bundle);
         listarLibroView.actualizarIdioma(bundle);
+    }
+    
+    public List<String> cargarGeneros() {
+
+        List<String> generos = new ArrayList<>();
+
+        for (GeneroLiterario genero : GeneroLiterario.values()) {
+            generos.add(bundle.getString(genero.name()));
+        }
+        return generos;
     }
 
 }

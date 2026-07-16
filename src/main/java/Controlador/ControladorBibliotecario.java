@@ -9,6 +9,8 @@ import Modelo.dao.InterfazDao;
 import Modelo.dao.PrestamoDao;
 import Modelo.dominio.Bibliotecario;
 import Modelo.dominio.Prestamo;
+import Modelo.enums.CargosBibliotecarios;
+import Modelo.enums.SectorBibliotecarios;
 import Vista.bibliotecario.AgregarBibliotecarioView;
 import Vista.bibliotecario.BuscarBibliotecarioView;
 import Vista.bibliotecario.EliminarBibliotecarioView;
@@ -18,6 +20,7 @@ import Vista.principal.PrincipalView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControladorBibliotecario {
@@ -198,6 +201,7 @@ public class ControladorBibliotecario {
 
 
     public void activarVentanaAgregarBibliotecario(){
+        agregarBibliotecarioView.cargarSectores(obtenersectores());
         principalView.abrirVentana(agregarBibliotecarioView);
     }
 
@@ -210,6 +214,8 @@ public class ControladorBibliotecario {
     }
 
     public void activarVentanaModificarBibliotecario(){
+        modificarBibliotecarioView.cargarCargos(obtenerCargos());
+        modificarBibliotecarioView.cargarSectores(obtenersectores());
         principalView.abrirVentana(modificarBibliotecarioView);
     }
 
@@ -223,7 +229,7 @@ public class ControladorBibliotecario {
         String nombres = agregarBibliotecarioView.getTxtNombreBibliotecarioNuevo().getText();
         String numeroTelefonico = agregarBibliotecarioView.getTxtNumeroBibliotecarioNuevo().getText();
         String correoElectronico = agregarBibliotecarioView.getTxtCorreoBibliotecarioNuevo().getText();
-        String sector = agregarBibliotecarioView.getTxtSectorBibliotecarioNuevo().getText();
+        String sector = (String) agregarBibliotecarioView.getComboBOXSectores().getSelectedItem();
 
         if(cedula.isBlank())
             throw new BibliotecarioExcepcion("campoVacio.Cedula");
@@ -316,8 +322,8 @@ public class ControladorBibliotecario {
         String nuevoNombre = modificarBibliotecarioView.getTxtNombreBibliotecarioModificar().getText();
         String nuevoCorreo = modificarBibliotecarioView.getTxtCorreoBibliotecarioModificar().getText();
         String nuevoTelefono = modificarBibliotecarioView.getTxtNumeroBibliotecarioModificar().getText();
-        String nuevoSector = modificarBibliotecarioView.getTxtSectorArea().getText();
-        String nuevoCargo = modificarBibliotecarioView.getTxtNuevoCargo().getText();
+        String nuevoSector = (String) modificarBibliotecarioView.getComboBOXSectoresModificar().getSelectedItem();
+        String nuevoCargo = (String) modificarBibliotecarioView.getComboBOXCargos().getSelectedItem();
 
         if(nuevoNombre.isBlank())
             throw new BibliotecarioExcepcion("campoVacio.Nombres");
@@ -388,5 +394,26 @@ public class ControladorBibliotecario {
         modificarBibliotecarioView.actualizarIdioma(bundle);
         listarBibliotecarioView.actualizarIdioma(bundle);
     }
+    
+    public List<String> obtenersectores() {
 
+        List<String> sectores = new ArrayList<>();
+
+        for (SectorBibliotecarios sector : SectorBibliotecarios.values()) {
+            sectores.add(bundle.getString(sector.name()));
+        }
+
+        return sectores;
+    }
+    
+    public List<String> obtenerCargos() {
+
+        List<String> cargos = new ArrayList<>();
+
+        for (CargosBibliotecarios cargo : CargosBibliotecarios.values()) {
+            cargos.add(bundle.getString(cargo.name()));
+        }
+
+        return cargos;
+    }
 }

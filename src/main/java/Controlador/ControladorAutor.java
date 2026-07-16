@@ -10,6 +10,8 @@ import Modelo.dao.LibroDao;
 import Modelo.dominio.Autor;
 import Modelo.dominio.Bibliotecario;
 import Modelo.dominio.Libro;
+import Modelo.enums.EstiloLiterario;
+import Modelo.enums.Nacionalidad;
 import Vista.autor.AgregarAutorView;
 import Vista.autor.BuscarAutorView;
 import Vista.autor.EliminarAutorView;
@@ -20,8 +22,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ControladorAutor {
@@ -203,6 +207,8 @@ public class ControladorAutor {
 
 
     public void activarVentanaAgregarAutor(){
+        agregarAutorView.cargarEstilosLiterario(obtenerEstilosLiterarios());
+        agregarAutorView.cargarNacionalidades(obtenerNacionalidades());
         principalView.abrirVentana(agregarAutorView);
     }
 
@@ -215,6 +221,8 @@ public class ControladorAutor {
     }
 
     public void activarVentanaModificarAutor(){
+        modificarAutorView.cargarEstilosLiterario(obtenerEstilosLiterarios());
+        modificarAutorView.cargarNacionalidades(obtenerNacionalidades());
         principalView.abrirVentana(modificarAutorView);
     }
 
@@ -235,8 +243,8 @@ public class ControladorAutor {
     private void agregarAutor() throws AutorExcepcion{
         String identificador = agregarAutorView.getTxtIdentificadorAutorNuevo().getText();
         String nombres = agregarAutorView.getTxtNombreAutorNuevo().getText();
-        String nacionalidad = agregarAutorView.getTxtNacionalidadAutorNuevo().getText();
-        String estiloLiterario = agregarAutorView.getTxtGeneroLiterarioAutorNuevo().getText();
+        String nacionalidad = (String) agregarAutorView.getComboBOXNacionalidad().getSelectedItem();
+        String estiloLiterario = (String) agregarAutorView.getComboBOXEstiloLiterario().getSelectedItem();
         Date fechaNacimiento = agregarAutorView.getFechaNacimiento().getDate();
 
         if(identificador.isBlank())
@@ -326,8 +334,8 @@ public class ControladorAutor {
             throw new AutorExcepcion("error.CedulaSupervisorNoExiste");
 
         String nuevoNombre = modificarAutorView.getTxtNombreAutorAModificar().getText();
-        String nuevaNacionalidad = modificarAutorView.getTxtNacionalidadAutorAModificar().getText();
-        String nuevoEstilo = modificarAutorView.getTxtGeneroAutorAModificar().getText();
+        String nuevaNacionalidad = (String) modificarAutorView.getComboBOXNacionalidad().getSelectedItem();
+        String nuevoEstilo = (String) modificarAutorView.getComboBOXEstilosLiterario().getSelectedItem();
         Date nuevaFecha = modificarAutorView.getFechaNacimientoAutorAModificar().getDate();
 
         if(nuevoNombre.isBlank())
@@ -344,6 +352,25 @@ public class ControladorAutor {
         autorDao.actualizar(modificado);
         autorAuxiliar = null;
         modificarAutorView.limpiarTextos();
+    }
+    
+    public List<String> obtenerNacionalidades() {
+
+        List<String> nacionalidades = new ArrayList<>();
+
+        for (Nacionalidad nacionalidad : Nacionalidad.values()) {
+            nacionalidades.add(bundle.getString(nacionalidad.name()));
+        }
+
+        return nacionalidades;
+    }
+    
+    public List<String> obtenerEstilosLiterarios(){
+        List<String> estilos = new ArrayList<>();
+        for(EstiloLiterario estilo: EstiloLiterario.values()){
+            estilos.add(bundle.getString(estilo.name()));
+        }
+        return estilos;
     }
 
 }

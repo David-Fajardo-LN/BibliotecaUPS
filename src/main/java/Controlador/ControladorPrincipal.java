@@ -4,15 +4,15 @@
  */
 package Controlador;
 
-import Modelo.dao.AutorArchivosDao;
+import Modelo.dao.daoArchivos.AutorArchivosDao;
 import Modelo.dao.InterfazDao;
 import Modelo.dao.LibroDao;
 import Modelo.dao.PrestamoDao;
 import Modelo.dao.daoArchivos.LibroArchivosDao;
-import Modelo.dao.SancionArchivosDao;
-import Modelo.dao.UsuarioArchivosDao;
+import Modelo.dao.daoArchivos.UsuarioArchivosDao;
 import Modelo.dao.daoArchivos.BibliotecarioArchivosDao;
 import Modelo.dao.daoArchivos.PrestamoArchivosDao;
+import Modelo.dao.daoArchivos.SancionArchivosDao;
 import Modelo.dao.daoMemoria.AutorDaoMemoria;
 import Modelo.dao.daoMemoria.BibliotecarioDaoMemoria;
 import Modelo.dao.daoMemoria.LibroDaoMemoria;

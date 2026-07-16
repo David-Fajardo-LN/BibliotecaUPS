@@ -4,8 +4,10 @@
  */
 package Vista.autor;
 
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -18,11 +20,37 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
     public ModificarAutorView() {
         initComponents();
     }
+    
+    public void cargarNacionalidades(List<String> nacionalidades) {
+
+        comboBOXNacionalidad.removeAllItems();
+
+        for (String nacionalidad : nacionalidades) {
+            comboBOXNacionalidad.addItem(nacionalidad);
+        }
+    }
+    
+    public void cargarEstilosLiterario(List<String> estilos) {
+
+        comboBOXGeneroLiterario.removeAllItems();
+
+        for (String estilo : estilos) {
+            comboBOXGeneroLiterario.addItem(estilo);
+        }
+    }
+
+    public JComboBox<String> getComboBOXEstilosLiterario() {
+        return comboBOXGeneroLiterario;
+    }
+
+    public JComboBox<String> getComboBOXNacionalidad() {
+        return comboBOXNacionalidad;
+    }
+    
+    
 
     public void mostrarInformacionAutor(String nombre, String nacionalidad, String estiloLiterario, java.util.Date fechaNacimiento){
         txtNombreAutorAModificar.setText(nombre);
-        txtNacionalidadAutorAModificar.setText(nacionalidad);
-        txtGeneroAutorAModificar.setText(estiloLiterario);
         fechaNacimientoAutorAModificar.setDate(fechaNacimiento);
     }
 
@@ -34,8 +62,6 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
         txtIdentificadorAutor.setText("");
         txtCedulaDeSupervisor.setText("");
         txtNombreAutorAModificar.setText("");
-        txtNacionalidadAutorAModificar.setText("");
-        txtGeneroAutorAModificar.setText("");
         fechaNacimientoAutorAModificar.setDate(null);
     }
 
@@ -59,13 +85,6 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
         return txtNombreAutorAModificar;
     }
 
-    public JTextField getTxtGeneroAutorAModificar() {
-        return txtGeneroAutorAModificar;
-    }
-
-    public JTextField getTxtNacionalidadAutorAModificar() {
-        return txtNacionalidadAutorAModificar;
-    }
 
     public JTextField getTxtCedulaDeSupervisor() {
         return txtCedulaDeSupervisor;
@@ -106,8 +125,6 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtIdentificadorAutor = new javax.swing.JTextField();
         txtNombreAutorAModificar = new javax.swing.JTextField();
-        txtGeneroAutorAModificar = new javax.swing.JTextField();
-        txtNacionalidadAutorAModificar = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
@@ -116,6 +133,8 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         fechaNacimientoAutorAModificar = new com.toedter.calendar.JDateChooser();
+        comboBOXGeneroLiterario = new javax.swing.JComboBox<>();
+        comboBOXNacionalidad = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -175,6 +194,10 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("FECHA DE NACIMIENTO:");
 
+        comboBOXGeneroLiterario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        comboBOXNacionalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -213,24 +236,21 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(128, 128, 128))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtNombreAutorAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-                                    .addComponent(fechaNacimientoAutorAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(128, 128, 128))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtGeneroAutorAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNacionalidadAutorAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtNombreAutorAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                            .addComponent(fechaNacimientoAutorAModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboBOXGeneroLiterario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboBOXNacionalidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(21, 21, 21))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -264,12 +284,12 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtGeneroAutorAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(comboBOXGeneroLiterario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtNacionalidadAutorAModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBOXNacionalidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -308,6 +328,8 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscarAutor;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> comboBOXGeneroLiterario;
+    private javax.swing.JComboBox<String> comboBOXNacionalidad;
     private com.toedter.calendar.JDateChooser fechaNacimientoAutorAModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -323,9 +345,7 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextField txtCedulaDeSupervisor;
-    private javax.swing.JTextField txtGeneroAutorAModificar;
     private javax.swing.JTextField txtIdentificadorAutor;
-    private javax.swing.JTextField txtNacionalidadAutorAModificar;
     private javax.swing.JTextField txtNombreAutorAModificar;
     // End of variables declaration//GEN-END:variables
 }

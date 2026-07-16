@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class LibroArchivosDao implements LibroDao{
 
-    private static final String RUTA = "//RutaEjemplo";
+    private static final String RUTA = "datos/libros.dat";
 
     private static final int TAM_ISBN = 10;
     private static final int TAM_NOMBRE = 80;
@@ -30,6 +30,21 @@ public class LibroArchivosDao implements LibroDao{
     private static final int TAM_REGISTRO = 600;
 
     public LibroArchivosDao() {
+        try {
+            File archivo = new File(RUTA);
+
+            File carpeta = archivo.getParentFile();
+            if (!carpeta.exists()) {
+                carpeta.mkdirs();
+            }
+
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String leerCadena(RandomAccessFile raf, int longitud) throws IOException {
