@@ -233,10 +233,10 @@ public class ControladorAutor {
     
     public void actualizarIdiomaAutor(ResourceBundle nuevo){
         this.bundle = nuevo;
-        agregarAutorView.actualizarIdioma(nuevo);
+        agregarAutorView.actualizarIdioma(obtenerEstilosLiterarios(), obtenerNacionalidades(), bundle);
         buscarAutorView.actualizarIdioma(nuevo);
         eliminarAutorView.actualizarIdioma(nuevo);
-        modificarAutorView.actualizarIdioma(nuevo);
+        modificarAutorView.actualizarIdioma(obtenerEstilosLiterarios(), obtenerNacionalidades(), bundle);
         listarAutorView.actualizarIdioma(nuevo);
     }
 

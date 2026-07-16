@@ -93,7 +93,7 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
         return txtFechaPublicacionLibroAModificar;
     }
 
-    public void actualizarIdioma(ResourceBundle bundle){
+    public void actualizarIdioma(List<String> generos,ResourceBundle bundle){
         jLabel1.setText(bundle.getString("titulo.VentanaModificarLibro"));
         jLabel3.setText(bundle.getString("isbnGeneral.IngresarDato"));
         jLabel5.setText(bundle.getString("nombreLibroGeneral.IngresarDato"));
@@ -106,6 +106,7 @@ public class ModificarLibroView extends javax.swing.JInternalFrame {
         btnBuscarLibro.setText(bundle.getString("btn.buscar"));
         btnModificar.setText(bundle.getString("btn.modificar"));
         btnCancelar.setText(bundle.getString("btn.cancelar"));
+        cargarGeneros(generos);
     }
 
 

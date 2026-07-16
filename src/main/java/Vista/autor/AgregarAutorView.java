@@ -79,7 +79,7 @@ public class AgregarAutorView extends javax.swing.JInternalFrame {
         return fechaNacimiento;
     }
 
-    public void actualizarIdioma(ResourceBundle bundle){
+    public void actualizarIdioma(List<String> estilos, List<String> nacionalidades,ResourceBundle bundle){
         jLabel1.setText(bundle.getString("titulo.VentanaAgregarAutor"));
         jLabel3.setText(bundle.getString("identificadorGeneral.IngresarDato"));
         jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
@@ -88,6 +88,8 @@ public class AgregarAutorView extends javax.swing.JInternalFrame {
         jLabel7.setText(bundle.getString("fechaNacimientoGeneral.IngresarDato"));
         btnAgregarBibliotecario.setText(bundle.getString("btn.agregar"));
         btnCancelar.setText(bundle.getString("btn.cancelar"));
+        cargarEstilosLiterario(estilos);
+        cargarNacionalidades(nacionalidades);
     }
 
 

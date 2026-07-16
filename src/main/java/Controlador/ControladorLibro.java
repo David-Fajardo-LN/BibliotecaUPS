@@ -366,10 +366,10 @@ public class ControladorLibro {
     
     public void actualizarIdiomaLibro(ResourceBundle bundle){
         this.bundle=bundle;
-        agregarLibroView.actualizarIdioma(bundle);
+        agregarLibroView.actualizarIdioma(cargarGeneros(),bundle);
         buscarLibroView.actualizarIdioma(bundle);
         eliminarLibroView.actualizarIdioma(bundle);
-        modificarLibroView.actualizarIdioma(bundle);
+        modificarLibroView.actualizarIdioma(cargarGeneros(),bundle);
         listarLibroView.actualizarIdioma(bundle);
     }
     

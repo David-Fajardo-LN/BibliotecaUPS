@@ -78,7 +78,7 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
         return txtFechaDePublicacionLibroAgregar;
     }
 
-    public void actualizarIdioma(ResourceBundle bundle){
+    public void actualizarIdioma(List<String> enums,ResourceBundle bundle){
         jLabel1.setText(bundle.getString("titulo.VentanaAgregarLibro"));
         jLabel3.setText(bundle.getString("isbnGeneral.IngresarDato"));
         jLabel5.setText(bundle.getString("nombreLibroGeneral.IngresarDato"));
@@ -88,6 +88,7 @@ public class AgregarLibroView extends javax.swing.JInternalFrame {
         jLabel8.setText(bundle.getString("generoLiterarioGeneral.IngresarDato"));
         btnAgregarLibro.setText(bundle.getString("btn.agregar"));
         btnCancelar.setText(bundle.getString("btn.cancelar"));
+        cargarGeneros(enums, bundle);
     }
 
 

@@ -94,7 +94,7 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
         return fechaNacimientoAutorAModificar;
     }
 
-    public void actualizarIdioma(ResourceBundle bundle){
+    public void actualizarIdioma(List<String> estilos, List<String> nacionalidades,ResourceBundle bundle){
         jLabel1.setText(bundle.getString("titulo.VentanaModificarAutor"));
         jLabel3.setText(bundle.getString("identificadorGeneral.IngresarDato"));
         jLabel5.setText(bundle.getString("nombreGeneral.IngresarDato"));
@@ -106,6 +106,8 @@ public class ModificarAutorView extends javax.swing.JInternalFrame {
         btnBuscarAutor.setText(bundle.getString("btn.buscar"));
         btnModificar.setText(bundle.getString("btn.modificar"));
         btnCancelar.setText(bundle.getString("btn.cancelar"));
+        cargarEstilosLiterario(estilos);
+        cargarNacionalidades(nacionalidades);
     }
 
 
