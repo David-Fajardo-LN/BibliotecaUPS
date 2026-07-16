@@ -135,7 +135,7 @@ public class ControladorUsuario {
                try{
                    buscarUsuarioAModificar();
                }catch(UsuarioExcepcion ex){
-                   modificarUsuarioView.mostrarMensaje(bundle.getString("error.UsuarioNoExiste"));
+                   modificarUsuarioView.mostrarMensaje(bundle.getString(bundle.getString("error.UsuarioNoExiste")));
                }
             }
         });
@@ -143,17 +143,16 @@ public class ControladorUsuario {
         modificarUsuarioView.getBtnModificar().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(usuarioAuxiliar == null){
-                    modificarUsuarioView.mostrarMensaje(bundle.getString("error.BuscarUsuarioPrimero"));
-                    return;
-                }
                 
-                try{
-                    modificarusuario();
-                }catch(UsuarioExcepcion ex){
-                    modificarUsuarioView.mostrarMensaje(bundle.getString(ex.getMessage()));
+                if(usuarioAuxiliar != null){
+                    try{
+                        modificarusuario();
+                    }catch(UsuarioExcepcion ex){
+                        modificarUsuarioView.mostrarMensaje(bundle.getString(ex.getMessage()));
+                    }
                 }
-                
+                modificarUsuarioView.mostrarMensaje(bundle.getString(bundle.getString("error.BuscarUsuarioPrimero")));
+                return;
             }
         });
         
@@ -192,22 +191,18 @@ public class ControladorUsuario {
     
     
     public void activarVentanaAgregarUsuario(){
-        agregarUsuarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(agregarUsuarioView);
     }
     
     public void activarVentanaBuscarUsuario(){
-        buscarUsuarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(buscarUsuarioView);
     }
     
     public void activarVentanaEliminarUsuario(){
-        eliminarUsuarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(eliminarUsuarioView);
     }
     
     public void activarVentanaModificarUsuario(){
-        modificarUsuarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(modificarUsuarioView);
     }
     
@@ -223,19 +218,19 @@ public class ControladorUsuario {
         String correoElectronico = agregarUsuarioView.getTxtCorreoUsuarioNuevo().getText();
         
         if(cedula.isBlank())
-            throw new UsuarioExcepcion("campoVacio.Cedula");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.Cedula"));
         if(nombres.isBlank())
-            throw new UsuarioExcepcion("campoVacio.Nombres");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.Nombres"));
         if(numeroTelefonico.isBlank())
-            throw new UsuarioExcepcion("campoVacio.NumeroTelefonico");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.NumeroTelefonico"));
         if(correoElectronico.isBlank())
-            throw new UsuarioExcepcion("campoVacio.CorreoElectronico");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.CorreoElectronico"));
         if(!validarCedula(cedula))
-            throw new UsuarioExcepcion("error.CedulaInvalida");
+            throw new UsuarioExcepcion(bundle.getString("error.CedulaInvalida"));
         if(!validarNumeroTelefonico(numeroTelefonico))
-            throw new UsuarioExcepcion("error.NumeroTelefonoInvalido");
+            throw new UsuarioExcepcion(bundle.getString("error.NumeroTelefonoInvalido"));
         if(usuarioDao.existe(cedula))
-            throw new UsuarioExcepcion("error.UsuarioYaExiste");
+            throw new UsuarioExcepcion(bundle.getString("error.UsuarioYaExiste"));
         
         Usuario usuarioNuevo = new Usuario(cedula, nombres, correoElectronico, numeroTelefonico);
         usuarioDao.agregar(usuarioNuevo);       
@@ -244,12 +239,12 @@ public class ControladorUsuario {
     private void buscarUsuario() throws UsuarioExcepcion{
         String cedula = buscarUsuarioView.getTxtCedulaUsuarioBuscar().getText();
         if(cedula.isBlank())
-            throw new UsuarioExcepcion("campoVacio.Cedula");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.Cedula"));
         
         Usuario usuario = (Usuario) usuarioDao.buscar(cedula);
         
         if(usuario == null)
-            throw new UsuarioExcepcion("error.UsuarioNoExiste");
+            throw new UsuarioExcepcion(bundle.getString("error.UsuarioNoExiste"));
         
         buscarUsuarioView.mostrarInformacion(usuario.getNombre(), usuario.getTelefono(), usuario.getEmail());
     }
@@ -257,12 +252,12 @@ public class ControladorUsuario {
     private void buscarUsuarioAEliminar() throws UsuarioExcepcion{
         String cedula = eliminarUsuarioView.getTxtCedulaUsuarioAEliminar().getText();
         if(cedula.isBlank())
-            throw new UsuarioExcepcion("campoVacio.Cedula");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.Cedula"));
         
         usuarioAuxiliar = (Usuario) usuarioDao.buscar(cedula);
         
         if(usuarioAuxiliar == null)
-            throw new UsuarioExcepcion("error.UsuarioNoExiste");
+            throw new UsuarioExcepcion(bundle.getString("error.UsuarioNoExiste"));
         
         eliminarUsuarioView.mostrarInformacion(usuarioAuxiliar.getEmail(), usuarioAuxiliar.getNombre(), usuarioAuxiliar.getTelefono());
     }
@@ -271,9 +266,9 @@ public class ControladorUsuario {
         String cedulaSupervisor = eliminarUsuarioView.getTxtCedulaSupervisor().getText();
         
         if(cedulaSupervisor.isBlank())
-            throw new UsuarioExcepcion("campoVacio.CedulaSupervisor");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.CedulaSupervisor"));
         if(!bibliotecarioDao.existe(cedulaSupervisor))
-            throw new UsuarioExcepcion("error.CedulaSupervisorNoExiste");
+            throw new UsuarioExcepcion(bundle.getString("error.CedulaSupervisorNoExiste"));
         
         usuarioDao.eliminar(usuarioAuxiliar.getCedula());
         usuarioAuxiliar = null;
@@ -282,12 +277,12 @@ public class ControladorUsuario {
     private void buscarUsuarioAModificar() throws UsuarioExcepcion{
         String cedula = modificarUsuarioView.getTxtCedulaUsuarioModificar().getText();
         if(cedula.isBlank())
-            throw new UsuarioExcepcion("campoVacio.Cedula");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.Cedula"));
         
         usuarioAuxiliar = (Usuario) usuarioDao.buscar(cedula);
         
         if(usuarioAuxiliar == null)
-            throw new UsuarioExcepcion("error.UsuarioNoExiste");
+            throw new UsuarioExcepcion(bundle.getString("error.UsuarioNoExiste"));
         
         modificarUsuarioView.getTxtCedulaUsuarioModificar().setText(usuarioAuxiliar.getCedula());
         modificarUsuarioView.getTxtCorreoUsuarioModificar().setText(usuarioAuxiliar.getEmail());
@@ -299,22 +294,22 @@ public class ControladorUsuario {
         String cedulaSupervisor = modificarUsuarioView.getTxtCedulaSupervisor().getText();
         
         if(cedulaSupervisor.isBlank())
-            throw new UsuarioExcepcion("campoVacio.CedulaSupervisor");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.CedulaSupervisor"));
         if(!bibliotecarioDao.existe(cedulaSupervisor))
-            throw new UsuarioExcepcion("error.CedulaSupervisorNoExiste");
+            throw new UsuarioExcepcion(bundle.getString("error.CedulaSupervisorNoExiste"));
         
         String nuevoNombre = modificarUsuarioView.getTxtNombreUsuarioModificar().getText();
         String nuevoCorreo = modificarUsuarioView.getTxtCorreoUsuarioModificar().getText();
         String nuevoTelefono = modificarUsuarioView.getTxtNumeroUsuarioModificar().getText();
         
         if(nuevoNombre.isBlank())
-            throw new UsuarioExcepcion("campoVacio.Nombres");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.Nombres"));
         if(nuevoTelefono.isBlank())
-            throw new UsuarioExcepcion("campoVacio.NumeroTelefonico");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.NumeroTelefonico"));
         if(nuevoCorreo.isBlank())
-            throw new UsuarioExcepcion("campoVacio.CorreoElectronico");
+            throw new UsuarioExcepcion(bundle.getString("campoVacio.CorreoElectronico"));
         if(!validarNumeroTelefonico(nuevoTelefono))
-            throw new UsuarioExcepcion("error.NumeroTelefonoInvalido");
+            throw new UsuarioExcepcion(bundle.getString("error.NumeroTelefonoInvalido"));
         
         Usuario modificado = new Usuario(usuarioAuxiliar.getCedula(), nuevoNombre, nuevoCorreo, nuevoTelefono);
         usuarioDao.actualizar(modificado);
@@ -361,6 +356,15 @@ public class ControladorUsuario {
         if(!telefono.substring(0,2).equals("09"))
             return false;
         return true;
+    }
+    
+    public void actualizarIdiomaUuario(ResourceBundle nuevo){
+        this.bundle=nuevo;
+        agregarUsuarioView.actualizarIdioma(nuevo);
+        buscarUsuarioView.actualizarIdioma(nuevo);
+        eliminarUsuarioView.actualizarIdioma(nuevo);
+        modificarUsuarioView.actualizarIdioma(nuevo);
+        listarUsuarioView.actualizarIdioma(nuevo);
     }
     
 }

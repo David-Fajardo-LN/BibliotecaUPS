@@ -28,11 +28,6 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         txtNumeroBibliotecarioModificar.setText(telefono);
         txtCorreoBibliotecarioModificar.setText(correo);
         txtSectorArea.setText(sector);
-        if("Basico".equals(cargo)){
-            rbtnPermisoBasico.setSelected(true);
-        }else{
-            rbtnPermisoAvanzado.setSelected(true);
-        }
     }
 
     public void mostrarMensaje(String mensaje){
@@ -45,6 +40,7 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         txtCorreoBibliotecarioModificar.setText("");
         txtNombreBibliotecarioModificar.setText("");
         txtNumeroBibliotecarioModificar.setText("");
+        txtNuevoCargo.setText("");
         txtSectorArea.setText("");
     }
 
@@ -55,11 +51,9 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         jLabel6.setText(bundle.getString("numeroTelefonicoGeneral.IngresarDato"));
         jLabel4.setText(bundle.getString("correoElectronicoGeneral.IngresarDato"));
         jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
-        jLabel9.setText(bundle.getString("nivelPermiso.Titulo"));
         jLabel10.setText(bundle.getString("cedulaSupervisor.IngresarDato"));
         jLabel11.setText(bundle.getString("sectorGeneral.IngresarDato"));
-        rbtnPermisoBasico.setText(bundle.getString("permisoBasico.IngresarDato"));
-        rbtnPermisoAvanzado.setText(bundle.getString("permisoAvanzado.IngresarDato"));
+        labelCargo.setText(bundle.getString("nuevoCargo.Bibliotecario"));
         btnAgregarUsuario.setText(bundle.getString("btn.buscar"));
         btnModificar.setText(bundle.getString("btn.modificar"));
         btnCancelar.setText(bundle.getString("btn.cancelar"));
@@ -101,14 +95,11 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         return txtSectorArea;
     }
 
-    public JRadioButton getRbtnPermisoBasico() {
-        return rbtnPermisoBasico;
+    public JTextField getTxtNuevoCargo() {
+        return txtNuevoCargo;
     }
 
-    public JRadioButton getRbtnPermisoAvanzado() {
-        return rbtnPermisoAvanzado;
-    }
-
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,14 +127,13 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtCedulaUsuarioNuevo1 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        rbtnPermisoBasico = new javax.swing.JRadioButton();
-        rbtnPermisoAvanzado = new javax.swing.JRadioButton();
         jLabel11 = new javax.swing.JLabel();
         txtSectorArea = new javax.swing.JTextField();
+        labelCargo = new javax.swing.JLabel();
+        txtNuevoCargo = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -194,23 +184,17 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
 
         btnCancelar.setText("CANCELAR");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText(" NIVEL DE PERMISO");
-
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("CEDULA DE SUPERVISOR:");
 
         txtCedulaUsuarioNuevo1.setBackground(new java.awt.Color(255, 255, 0));
 
-        rbtnPermisoBasico.setText("PERMISO BÁSICO");
-        rbtnPermisoBasico.addActionListener(this::rbtnPermisoBasicoActionPerformed);
-
-        rbtnPermisoAvanzado.setText("PERMISO AVANZADO");
-        rbtnPermisoAvanzado.addActionListener(this::rbtnPermisoAvanzadoActionPerformed);
-
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("SECTOR/AREA:");
+
+        labelCargo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelCargo.setText("CARGO:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -223,32 +207,29 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(128, 128, 128)
+                                .addComponent(txtNombreBibliotecarioModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombreBibliotecarioModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(rbtnPermisoAvanzado)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(rbtnPermisoBasico))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtNumeroBibliotecarioModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCorreoBibliotecarioModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtSectorArea, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCedulaUsuarioNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtCedulaUsuarioNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                                        .addComponent(labelCargo, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                                    .addGap(39, 39, 39)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtNumeroBibliotecarioModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtCorreoBibliotecarioModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtSectorArea, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNuevoCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(21, 21, 21))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -266,7 +247,7 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
+                        .addGap(70, 70, 70)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -303,22 +284,21 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(txtSectorArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(58, 58, 58)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(rbtnPermisoAvanzado)
-                    .addComponent(rbtnPermisoBasico))
-                .addGap(28, 28, 28)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCargo)
+                    .addComponent(txtNuevoCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(txtCedulaUsuarioNuevo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -337,14 +317,6 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rbtnPermisoBasicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPermisoBasicoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnPermisoBasicoActionPerformed
-
-    private void rbtnPermisoAvanzadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPermisoAvanzadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rbtnPermisoAvanzadoActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarUsuario;
@@ -358,18 +330,17 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JRadioButton rbtnPermisoAvanzado;
-    private javax.swing.JRadioButton rbtnPermisoBasico;
+    private javax.swing.JLabel labelCargo;
     private javax.swing.JTextField txtCedulaUsuarioNuevo;
     private javax.swing.JTextField txtCedulaUsuarioNuevo1;
     private javax.swing.JTextField txtCorreoBibliotecarioModificar;
     private javax.swing.JTextField txtNombreBibliotecarioModificar;
+    private javax.swing.JTextField txtNuevoCargo;
     private javax.swing.JTextField txtNumeroBibliotecarioModificar;
     private javax.swing.JTextField txtSectorArea;
     // End of variables declaration//GEN-END:variables

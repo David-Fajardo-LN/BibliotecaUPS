@@ -126,12 +126,10 @@ public class ControladorSancion {
 
 
     public void activarVentanaBuscarSancion(){
-        buscarSancionView.actualizarIdioma(bundle);
         principalView.abrirVentana(buscarSancionView);
     }
 
     public void activarVentanaPagarMulta(){
-        pagarMultaView.actualizarIdioma(bundle);
         principalView.abrirVentana(pagarMultaView);
     }
 
@@ -180,4 +178,11 @@ public class ControladorSancion {
         sancionAuxiliar = null;
     }
 
+    public void actualizarIdiomaSancion(ResourceBundle bundle){
+        this.bundle=bundle;
+        buscarSancionView.actualizarIdioma(bundle);
+        pagarMultaView.actualizarIdioma(bundle);
+        listarSancionView.actualizarIdioma(bundle);
+    }
+    
 }

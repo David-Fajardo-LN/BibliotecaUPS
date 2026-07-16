@@ -137,7 +137,6 @@ public class ControladorPrincipal {
                 sancionDao = new SancionArchivosDao();
                 inicializarControladores();
                 tipoDePersistenciaDao.dispose();
-                principalView.actualizarIdioma(bundle);
                 principalView.setVisible(true);
             }
         });
@@ -153,7 +152,6 @@ public class ControladorPrincipal {
                 sancionDao = new SancionDaoMemoria();
                 inicializarControladores();
                 tipoDePersistenciaDao.dispose();
-                principalView.actualizarIdioma(bundle);
                 principalView.setVisible(true);
             }
         });
@@ -198,6 +196,7 @@ public class ControladorPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cambiarIdioma("es", "EC");
+                actualizarIdiomaSistema(bundle);
             }
         });
         
@@ -205,6 +204,7 @@ public class ControladorPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cambiarIdioma("en", "US");
+                actualizarIdiomaSistema(bundle);
             }
         });
     }
@@ -413,19 +413,19 @@ public class ControladorPrincipal {
         });
     }
     
+    public void actualizarIdiomaSistema(ResourceBundle bundle){
+        controladorAutor.actualizarIdiomaAutor(bundle);
+        controladorBibliotecario.actualisarIdiomaBibliotecario(bundle);
+        controladorLibro.actualizarIdiomaLibro(bundle);
+        controladorPrestamo.actualizarIdiomaPrestamo(bundle);
+        controladorSancion.actualizarIdiomaSancion(bundle);
+        controladorUsuario.actualizarIdiomaUuario(bundle);
+    }
+    
     public static void main(String[] args) {
-    System.out.println("A");
-
     java.awt.EventQueue.invokeLater(() -> {
-        System.out.println("B");
-
-        ControladorPrincipal controlador = new ControladorPrincipal();
-
-        System.out.println("C");
-
-        controlador.iniciarPrograma();
-
-        System.out.println("D");
-    });
-}
+            ControladorPrincipal controlador = new ControladorPrincipal();
+            controlador.iniciarPrograma();
+        });
+    }
 }

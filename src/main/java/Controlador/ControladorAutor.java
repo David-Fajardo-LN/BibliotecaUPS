@@ -7,6 +7,7 @@ package Controlador;
 import Excepciones.AutorExcepcion;
 import Modelo.dao.InterfazDao;
 import Modelo.dominio.Autor;
+import Modelo.dominio.Bibliotecario;
 import Vista.autor.AgregarAutorView;
 import Vista.autor.BuscarAutorView;
 import Vista.autor.EliminarAutorView;
@@ -31,8 +32,8 @@ public class ControladorAutor {
     private PrincipalView principalView;
     private ResourceBundle bundle;
 
-    private InterfazDao autorDao;
-    private InterfazDao bibliotecarioDao;
+    private InterfazDao<Autor> autorDao;
+    private InterfazDao<Bibliotecario> bibliotecarioDao;
 
     private Autor autorAuxiliar;
 
@@ -154,6 +155,7 @@ public class ControladorAutor {
 
                 try{
                     modificarAutor();
+                    modificarAutorView.mostrarMensaje(bundle.getString("exito.AutorModificado"));
                 }catch(AutorExcepcion ex){
                     modificarAutorView.mostrarMensaje(bundle.getString(ex.getMessage()));
                 }
@@ -193,29 +195,32 @@ public class ControladorAutor {
 
 
     public void activarVentanaAgregarAutor(){
-        agregarAutorView.actualizarIdioma(bundle);
         principalView.abrirVentana(agregarAutorView);
     }
 
     public void activarVentanaBuscarAutor(){
-        buscarAutorView.actualizarIdioma(bundle);
         principalView.abrirVentana(buscarAutorView);
     }
 
     public void activarVentanaEliminarAutor(){
-        eliminarAutorView.actualizarIdioma(bundle);
-        
         principalView.abrirVentana(eliminarAutorView);
     }
 
     public void activarVentanaModificarAutor(){
-        modificarAutorView.actualizarIdioma(bundle);
         principalView.abrirVentana(modificarAutorView);
     }
 
     public void activarVentanaListarAutor(){
-        listarAutorView.actualizarIdioma(bundle);
         principalView.abrirVentana(listarAutorView);
+    }
+    
+    public void actualizarIdiomaAutor(ResourceBundle nuevo){
+        this.bundle = nuevo;
+        agregarAutorView.actualizarIdioma(nuevo);
+        buscarAutorView.actualizarIdioma(nuevo);
+        eliminarAutorView.actualizarIdioma(nuevo);
+        modificarAutorView.actualizarIdioma(nuevo);
+        listarAutorView.actualizarIdioma(nuevo);
     }
 
     private void agregarAutor() throws AutorExcepcion{
@@ -241,6 +246,7 @@ public class ControladorAutor {
         LocalDate fecha = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Autor autorNuevo = new Autor(identificador, nombres, nacionalidad, fecha, estiloLiterario);
         autorDao.agregar(autorNuevo);
+        modificarAutorView.limpiarTextos();
     }
 
     private void buscarAutor() throws AutorExcepcion{
@@ -286,7 +292,7 @@ public class ControladorAutor {
         if(identificador.isBlank())
             throw new AutorExcepcion("campoVacio.Identificador");
 
-        autorAuxiliar = (Autor) autorDao.buscar(identificador);
+        autorAuxiliar = autorDao.buscar(identificador);
 
         if(autorAuxiliar == null)
             throw new AutorExcepcion("error.AutorNoExiste");
@@ -321,6 +327,7 @@ public class ControladorAutor {
         Autor modificado = new Autor(autorAuxiliar.getCodigoIdentificador(), nuevoNombre, nuevaNacionalidad, fecha, nuevoEstilo);
         autorDao.actualizar(modificado);
         autorAuxiliar = null;
+        modificarAutorView.limpiarTextos();
     }
 
 }

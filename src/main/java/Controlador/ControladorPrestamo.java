@@ -174,17 +174,14 @@ public class ControladorPrestamo {
 
 
     public void activarVentanaRegistrarPrestamo(){
-        registrarPrestamoView.actualizarIdioma(bundle);
         principalView.abrirVentana(registrarPrestamoView);
     }
 
     public void activarVentanaBuscarPrestamo(){
-        buscarPrestamoView.actualizarIdioma(bundle);
         principalView.abrirVentana(buscarPrestamoView);
     }
 
     public void activarVentanaRegistrarDevolucion(){
-        registrarDevolucionView.actualizarIdioma(bundle);
         principalView.abrirVentana(registrarDevolucionView);
     }
 
@@ -316,6 +313,14 @@ public class ControladorPrestamo {
         libroDao.actualizar(libro);
 
         prestamoAuxiliar = null;
+    }
+    
+    public void actualizarIdiomaPrestamo(ResourceBundle bundle){
+        this.bundle = bundle;
+        registrarDevolucionView.actualizarIdioma(bundle);
+        registrarPrestamoView.actualizarIdioma(bundle);
+        buscarPrestamoView.actualizarIdioma(bundle);
+        listarPrestamoView.actualizarIdioma(bundle);
     }
 
 }

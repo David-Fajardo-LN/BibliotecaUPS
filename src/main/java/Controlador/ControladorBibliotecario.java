@@ -28,7 +28,7 @@ public class ControladorBibliotecario {
     private PrincipalView principalView;
     private ResourceBundle bundle;
 
-    private InterfazDao bibliotecarioDao;
+    private InterfazDao<Bibliotecario> bibliotecarioDao;
 
     private Bibliotecario bibliotecarioAuxiliar;
 
@@ -133,6 +133,7 @@ public class ControladorBibliotecario {
             public void actionPerformed(ActionEvent e) {
                 try{
                     buscarBibliotecarioAModificar();
+                    modificarBibliotecarioView.mostrarMensaje(bundle.getString("exito.ModificarBibliotecario"));
                 }catch(BibliotecarioExcepcion ex){
                     modificarBibliotecarioView.mostrarMensaje(bundle.getString("error.BibliotecarioNoExiste"));
                 }
@@ -188,27 +189,22 @@ public class ControladorBibliotecario {
 
 
     public void activarVentanaAgregarBibliotecario(){
-        agregarBibliotecarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(agregarBibliotecarioView);
     }
 
     public void activarVentanaBuscarBibliotecario(){
-        buscarBibliotecarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(buscarBibliotecarioView);
     }
 
     public void activarVentanaEliminarBibliotecario(){
-        eliminarBibliotecarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(eliminarBibliotecarioView);
     }
 
     public void activarVentanaModificarBibliotecario(){
-        modificarBibliotecarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(modificarBibliotecarioView);
     }
 
     public void activarVentanaListarBibliotecario(){
-        listarBibliotecarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(listarBibliotecarioView);
     }
 
@@ -283,7 +279,7 @@ public class ControladorBibliotecario {
         if(cedula.isBlank())
             throw new BibliotecarioExcepcion("campoVacio.Cedula");
 
-        bibliotecarioAuxiliar = (Bibliotecario) bibliotecarioDao.buscar(cedula);
+        bibliotecarioAuxiliar = bibliotecarioDao.buscar(cedula);
 
         if(bibliotecarioAuxiliar == null)
             throw new BibliotecarioExcepcion("error.BibliotecarioNoExiste");
@@ -303,6 +299,7 @@ public class ControladorBibliotecario {
         String nuevoCorreo = modificarBibliotecarioView.getTxtCorreoBibliotecarioModificar().getText();
         String nuevoTelefono = modificarBibliotecarioView.getTxtNumeroBibliotecarioModificar().getText();
         String nuevoSector = modificarBibliotecarioView.getTxtSectorArea().getText();
+        String nuevoCargo = modificarBibliotecarioView.getTxtNuevoCargo().getText();
 
         if(nuevoNombre.isBlank())
             throw new BibliotecarioExcepcion("campoVacio.Nombres");
@@ -312,13 +309,14 @@ public class ControladorBibliotecario {
             throw new BibliotecarioExcepcion("campoVacio.CorreoElectronico");
         if(nuevoSector.isBlank())
             throw new BibliotecarioExcepcion("campoVacio.Sector");
+        if(nuevoCargo.isBlank())
+            throw new BibliotecarioExcepcion(bundle.getString("errorCargo.Vacio"));
         if(!validarNumeroTelefonico(nuevoTelefono))
             throw new BibliotecarioExcepcion("error.NumeroTelefonoInvalido");
 
-        String nuevoCargo = modificarBibliotecarioView.getRbtnPermisoBasico().isSelected() ? "Basico" : "Avanzado";
-
         Bibliotecario modificado = new Bibliotecario(nuevoSector, nuevoCargo, bibliotecarioAuxiliar.getCedula(), nuevoNombre, nuevoCorreo, nuevoTelefono);
         bibliotecarioDao.actualizar(modificado);
+        modificarBibliotecarioView.limpiarTextos();
         bibliotecarioAuxiliar = null;
     }
 
@@ -362,6 +360,15 @@ public class ControladorBibliotecario {
         if(!telefono.substring(0,2).equals("09"))
             return false;
         return true;
+    }
+    
+    public void actualisarIdiomaBibliotecario(ResourceBundle bundle){
+        this.bundle=bundle;
+        agregarBibliotecarioView.actualizarIdioma(bundle);
+        buscarBibliotecarioView.actualizarIdioma(bundle);
+        eliminarBibliotecarioView.actualizarIdioma(bundle);
+        modificarBibliotecarioView.actualizarIdioma(bundle);
+        listarBibliotecarioView.actualizarIdioma(bundle);
     }
 
 }

@@ -158,6 +158,7 @@ public class ControladorLibro {
 
                 try{
                     modificarLibro();
+                    modificarLibroView.mostrarMensaje(bundle.getString("exito.ModificarLibro"));
                 }catch(LibroExcepcion ex){
                     modificarLibroView.mostrarMensaje(bundle.getString(ex.getMessage()));
                 }
@@ -199,27 +200,22 @@ public class ControladorLibro {
 
 
     public void activarVentanaAgregarLibro(){
-        agregarLibroView.actualizarIdioma(bundle);
         principalView.abrirVentana(agregarLibroView);
     }
 
     public void activarVentanaBuscarLibro(){
-        buscarLibroView.actualizarIdioma(bundle);
         principalView.abrirVentana(buscarLibroView);
     }
 
     public void activarVentanaEliminarLibro(){
-        eliminarLibroView.actualizarIdioma(bundle);
         principalView.abrirVentana(eliminarLibroView);
     }
 
     public void activarVentanaModificarLibro(){
-        modificarLibroView.actualizarIdioma(bundle);
         principalView.abrirVentana(modificarLibroView);
     }
 
     public void activarVentanaListarLibro(){
-        listarLibroView.actualizarIdioma(bundle);
         principalView.abrirVentana(listarLibroView);
     }
 
@@ -345,6 +341,7 @@ public class ControladorLibro {
         modificado.setCantidadDisponible(nuevaCantidadDisponible);
         libroDao.actualizar(modificado);
         libroAuxiliar = null;
+        modificarLibroView.limpiarTextos();
     }
 
     private int validarCantidad(String texto) throws LibroExcepcion{
@@ -356,6 +353,15 @@ public class ControladorLibro {
         }catch(NumberFormatException ex){
             throw new LibroExcepcion("error.CantidadInvalida");
         }
+    }
+    
+    public void actualizarIdiomaLibro(ResourceBundle bundle){
+        this.bundle=bundle;
+        agregarLibroView.actualizarIdioma(bundle);
+        buscarLibroView.actualizarIdioma(bundle);
+        eliminarLibroView.actualizarIdioma(bundle);
+        modificarLibroView.actualizarIdioma(bundle);
+        listarLibroView.actualizarIdioma(bundle);
     }
 
 }
