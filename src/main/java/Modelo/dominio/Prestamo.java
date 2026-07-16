@@ -18,44 +18,22 @@ public class Prestamo {
     private LocalDate fechaDePrestamo;
     private LocalDate fechaLimiteDePrestamo;
     private LocalDate fechaDeDevolucion;
-    private Bibliotecario bibliotecario;
-    private Usuario usuario;
-    private Libro libro;
+    private String bibliotecarioCedula;
+    private String usuarioCedula;
+    private String libroISBN;
     
     private Sancion sancion;
 
     //ESTE CONSTRUCTOR SE USO SOLO PARA GENERAR LOS PRESTAMOS HISTORICOS ----- NO USAR -----
-    public Prestamo(String codigo, LocalDate fechaDePrestamo, LocalDate fechaLimiteDePrestamo, LocalDate fechaDeDevolucion, Bibliotecario bibliotecario, Usuario usuario, Libro libro) {
+    public Prestamo(String codigo, LocalDate fechaDePrestamo, LocalDate fechaLimiteDePrestamo, LocalDate fechaDeDevolucion, String bibliotecarioCedula, String usuarioCedula, String libroISBN) {
         this.codigo = codigo;
         this.fechaDePrestamo = fechaDePrestamo;
         this.fechaLimiteDePrestamo = fechaLimiteDePrestamo;
         this.fechaDeDevolucion = fechaDeDevolucion;
-        this.bibliotecario = bibliotecario;
-        this.usuario = usuario;
-        this.libro = libro;
+        this.bibliotecarioCedula = bibliotecarioCedula;
+        this.usuarioCedula = usuarioCedula;
+        this.libroISBN = libroISBN;
         this.sancion=null;
-    }
-
-    // SOLO FUE USADO PARA GENERAR UN PRESTAMO TARDIO NO USAR
-    public Prestamo(String codigo, LocalDate fechaDePrestamo, Bibliotecario bibliotecario, Usuario usuario, Libro libro, Sancion sancion) {
-        this.codigo = codigo;
-        this.estado = true;
-        this.fechaDePrestamo = fechaDePrestamo;
-        this.fechaLimiteDePrestamo = LocalDate.now().minusDays(6);
-        this.bibliotecario = bibliotecario;
-        this.usuario = usuario;
-        this.libro = libro;
-        this.sancion = sancion;
-    }
-
-    public Prestamo(String codigo, Bibliotecario bibliotecario, Usuario usuario, Libro libro) {
-        this.estado = true;
-        this.codigo = codigo;
-        this.bibliotecario = bibliotecario;
-        this.usuario = usuario;
-        this.libro = libro;
-        this.fechaDePrestamo = LocalDate.now();
-        this.fechaLimiteDePrestamo = fechaDePrestamo.plusDays(3);
     }
 
     public String getCodigo() {
@@ -88,30 +66,6 @@ public class Prestamo {
 
     public void setFechaDeDevolucion(LocalDate fechaDeDevolucion) {
         this.fechaDeDevolucion = fechaDeDevolucion;
-    }
-
-    public Bibliotecario getBibliotecario() {
-        return bibliotecario;
-    }
-
-    public void setBibliotecario(Bibliotecario bibliotecario) {
-        this.bibliotecario = bibliotecario;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Libro getLibro() {
-        return libro;
-    }
-
-    public void setLibro(Libro libro) {
-        this.libro = libro;
     }
 
     public Sancion tieneSancion() {
