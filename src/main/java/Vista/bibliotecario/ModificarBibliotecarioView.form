@@ -92,7 +92,7 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="txtCedulaUsuarioNuevo" min="-2" pref="265" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnAgregarUsuario" min="-2" pref="199" max="-2" attributes="0"/>
+                                  <Component id="btnBuscarBibliotecario" min="-2" pref="199" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -123,7 +123,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCedulaUsuarioNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnAgregarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnBuscarBibliotecario" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
@@ -215,7 +215,7 @@
         </Container>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
-        <Component class="javax.swing.JButton" name="btnAgregarUsuario">
+        <Component class="javax.swing.JButton" name="btnBuscarBibliotecario">
           <Properties>
             <Property name="text" type="java.lang.String" value="BUSCAR"/>
           </Properties>

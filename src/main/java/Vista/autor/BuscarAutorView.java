@@ -17,6 +17,11 @@ public class BuscarAutorView extends javax.swing.JInternalFrame {
     public BuscarAutorView() {
         initComponents();
     }
+    
+    public void limpiarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel) TablaLibrosDeAutor.getModel();
+        modelo.setRowCount(0);
+    }
 
     public void cargarDatosTabla(ArrayList<Object[]> filas) {
         DefaultTableModel modelo = (DefaultTableModel) TablaLibrosDeAutor.getModel();

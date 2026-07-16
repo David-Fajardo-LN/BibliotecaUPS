@@ -119,6 +119,7 @@ public class ControladorSancion {
         listarSancionView.getBtnCancelar().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                listarSancionView.limpiarTabla();
                 listarSancionView.setVisible(false);
             }
         });
@@ -148,7 +149,7 @@ public class ControladorSancion {
             throw new SancionExcepcion("error.SancionNoExiste");
 
         Prestamo prestamo = (Prestamo) prestamoDao.buscar(sancion.getPrestamo());
-        String usuario = prestamo != null ? prestamo.getUsuario().getNombre() : "";
+        String usuario = prestamo != null ? prestamo.getUsuarioCedula() : "";
         String estado = sancion.getEstado() ? bundle.getString("estado.Pendiente") : bundle.getString("estado.Pagada");
 
         buscarSancionView.mostrarInformacion(sancion.getFechaDeSancion().toString(), sancion.getDescripción(), String.valueOf(sancion.getMonto()), sancion.getPrestamo(), estado, usuario);

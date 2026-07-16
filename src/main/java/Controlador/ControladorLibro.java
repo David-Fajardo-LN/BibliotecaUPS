@@ -60,6 +60,7 @@ public class ControladorLibro {
             public void actionPerformed(ActionEvent e) {
                 try{
                     agregarLibro();
+                    agregarLibroView.limpiarTextos();
                     agregarLibroView.mostrarMensaje(bundle.getString("exito.AgregarLibro"));
                 }catch(LibroExcepcion ex){
                     agregarLibroView.mostrarMensaje(bundle.getString(ex.getMessage()));
@@ -103,6 +104,8 @@ public class ControladorLibro {
             public void actionPerformed(ActionEvent e) {
                 try{
                     buscarLibroAEliminar();
+                    eliminarLibroView.limpiarTextos();
+                    eliminarLibroView.mostrarMensaje(bundle.getString("exito.EliminarBibliotecario"));
                 }catch(LibroExcepcion ex){
                     eliminarLibroView.mostrarMensaje(bundle.getString(ex.getMessage()));
                 }
@@ -193,6 +196,7 @@ public class ControladorLibro {
         listarLibroView.getBtnCancelar().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                listarLibroView.limpiarTabla();
                 listarLibroView.setVisible(false);
             }
         });
@@ -216,6 +220,7 @@ public class ControladorLibro {
     }
 
     public void activarVentanaListarLibro(){
+        listarLibroView.actualizarIdioma(bundle);
         principalView.abrirVentana(listarLibroView);
     }
 

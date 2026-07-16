@@ -6,7 +6,9 @@ package Controlador;
 
 import Excepciones.BibliotecarioExcepcion;
 import Modelo.dao.InterfazDao;
+import Modelo.dao.PrestamoDao;
 import Modelo.dominio.Bibliotecario;
+import Modelo.dominio.Prestamo;
 import Vista.bibliotecario.AgregarBibliotecarioView;
 import Vista.bibliotecario.BuscarBibliotecarioView;
 import Vista.bibliotecario.EliminarBibliotecarioView;
@@ -29,10 +31,11 @@ public class ControladorBibliotecario {
     private ResourceBundle bundle;
 
     private InterfazDao<Bibliotecario> bibliotecarioDao;
+    private PrestamoDao prestamoDao;
 
     private Bibliotecario bibliotecarioAuxiliar;
 
-    public ControladorBibliotecario(InterfazDao bibliotecarioDao, ResourceBundle bundle, PrincipalView principalView) {
+    public ControladorBibliotecario(InterfazDao bibliotecarioDao, PrestamoDao prestamoDao, ResourceBundle bundle, PrincipalView principalView) {
 
         agregarBibliotecarioView = new AgregarBibliotecarioView();
         buscarBibliotecarioView = new BuscarBibliotecarioView();
@@ -42,6 +45,7 @@ public class ControladorBibliotecario {
         this.principalView = principalView;
 
         this.bibliotecarioDao = bibliotecarioDao;
+        this.prestamoDao = prestamoDao;
         this.bundle = bundle;
     }
 
@@ -51,6 +55,7 @@ public class ControladorBibliotecario {
             public void actionPerformed(ActionEvent e) {
                 try{
                     agregarBibliotecario();
+                    agregarBibliotecarioView.limpiarTextos();
                     agregarBibliotecarioView.mostrarMensaje(bundle.getString("exito.AgregarBibliotecario"));
                 }catch(BibliotecarioExcepcion ex){
                     agregarBibliotecarioView.mostrarMensaje(bundle.getString(ex.getMessage()));
@@ -83,6 +88,7 @@ public class ControladorBibliotecario {
             @Override
             public void actionPerformed(ActionEvent e) {
                 buscarBibliotecarioView.limpiarTextos();
+                buscarBibliotecarioView.limpiarTabla();
                 buscarBibliotecarioView.setVisible(false);
             }
         });
@@ -110,6 +116,7 @@ public class ControladorBibliotecario {
 
                 try{
                     eliminarBibliotecario();
+                    eliminarBibliotecarioView.limpiarTextos();
                     eliminarBibliotecarioView.mostrarMensaje(bundle.getString("exito.EliminarBibliotecario"));
                 }catch(BibliotecarioExcepcion ex){
                     eliminarBibliotecarioView.mostrarMensaje(bundle.getString(ex.getMessage()));
@@ -128,12 +135,11 @@ public class ControladorBibliotecario {
     }
 
     public void configurarEventosModificarBibliotecario(){
-        modificarBibliotecarioView.getBtnAgregarUsuario().addActionListener(new ActionListener(){
+        modificarBibliotecarioView.getBtnBuscarBibliotecario().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
                     buscarBibliotecarioAModificar();
-                    modificarBibliotecarioView.mostrarMensaje(bundle.getString("exito.ModificarBibliotecario"));
                 }catch(BibliotecarioExcepcion ex){
                     modificarBibliotecarioView.mostrarMensaje(bundle.getString("error.BibliotecarioNoExiste"));
                 }
@@ -150,6 +156,8 @@ public class ControladorBibliotecario {
 
                 try{
                     modificarBibliotecario();
+                    modificarBibliotecarioView.limpiarTextos();
+                    modificarBibliotecarioView.mostrarMensaje(bundle.getString("exito.ModificarBibliotecario"));
                 }catch(BibliotecarioExcepcion ex){
                     modificarBibliotecarioView.mostrarMensaje(bundle.getString(ex.getMessage()));
                 }
@@ -182,6 +190,7 @@ public class ControladorBibliotecario {
         listarBibliotecarioView.getBtnCancelar().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                listarBibliotecarioView.limpiarTabla();
                 listarBibliotecarioView.setVisible(false);
             }
         });
@@ -205,6 +214,7 @@ public class ControladorBibliotecario {
     }
 
     public void activarVentanaListarBibliotecario(){
+        listarBibliotecarioView.actualizarIdioma(bundle);
         principalView.abrirVentana(listarBibliotecarioView);
     }
 
@@ -241,12 +251,20 @@ public class ControladorBibliotecario {
         if(cedula.isBlank())
             throw new BibliotecarioExcepcion("campoVacio.Cedula");
 
-        Bibliotecario bibliotecario = (Bibliotecario) bibliotecarioDao.buscar(cedula);
+        Bibliotecario bibliotecario = bibliotecarioDao.buscar(cedula);
 
         if(bibliotecario == null)
             throw new BibliotecarioExcepcion("error.BibliotecarioNoExiste");
 
         buscarBibliotecarioView.mostrarInformacion(bibliotecario.getNombre(), bibliotecario.getTelefono(), bibliotecario.getEmail(), bibliotecario.getSector());
+
+        ArrayList<Prestamo> prestamos = prestamoDao.obtenerPorBibliotecario(cedula);
+        ArrayList<Object[]> filas = new ArrayList<>();
+        for(Prestamo p : prestamos){
+            String sancion = p.getSancion() != null ? p.getSancion().getCodigo() : "-";
+            filas.add(new Object[]{p.getCodigo(), p.getFechaDePrestamo(), p.getFechaDeDevolucion(), p.getUsuarioCedula(), sancion});
+        }
+        buscarBibliotecarioView.cargarDatosTabla(filas);
     }
 
     private void buscarBibliotecarioAEliminar() throws BibliotecarioExcepcion{
@@ -254,7 +272,7 @@ public class ControladorBibliotecario {
         if(cedula.isBlank())
             throw new BibliotecarioExcepcion("campoVacio.Cedula");
 
-        bibliotecarioAuxiliar = (Bibliotecario) bibliotecarioDao.buscar(cedula);
+        bibliotecarioAuxiliar =  bibliotecarioDao.buscar(cedula);
 
         if(bibliotecarioAuxiliar == null)
             throw new BibliotecarioExcepcion("error.BibliotecarioNoExiste");

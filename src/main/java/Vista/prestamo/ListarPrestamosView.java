@@ -23,7 +23,12 @@ public class ListarPrestamosView extends javax.swing.JInternalFrame {
     public ListarPrestamosView() {
         initComponents();
     }
-
+    
+    public void limpiarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel) TablaDePrestamosListar.getModel();
+        modelo.setRowCount(0);
+    }
+    
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
     }

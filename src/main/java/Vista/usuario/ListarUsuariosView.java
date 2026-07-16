@@ -21,8 +21,13 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
         initComponents();
     }
     
-        public void mostrarMensaje(String mensaje){
+    public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this,mensaje);
+    }
+        
+    public void limpiarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel) TablaUsuariosListar.getModel();
+        modelo.setRowCount(0);
     }
 
     public void cargarDatosTabla(ArrayList<Object[]> filas) {

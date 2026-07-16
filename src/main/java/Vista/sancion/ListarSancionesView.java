@@ -23,6 +23,11 @@ public class ListarSancionesView extends javax.swing.JInternalFrame {
     public ListarSancionesView() {
         initComponents();
     }
+    
+    public void limpiarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeSancionesListar.getModel();
+        modelo.setRowCount(0);
+    }
 
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);

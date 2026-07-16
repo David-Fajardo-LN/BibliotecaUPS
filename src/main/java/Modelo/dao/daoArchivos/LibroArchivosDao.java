@@ -4,7 +4,7 @@
  */
 package Modelo.dao.daoArchivos;
 
-import Modelo.dao.InterfazDao;
+import Modelo.dao.LibroDao;
 import Modelo.dominio.Libro;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author User
  */
-public class LibroArchivosDao implements InterfazDao<Libro>{
+public class LibroArchivosDao implements LibroDao{
 
     private static final String RUTA = "//RutaEjemplo";
 
@@ -182,5 +182,17 @@ public class LibroArchivosDao implements InterfazDao<Libro>{
             throw new RuntimeException(e);
         }
         return lista;
+    }
+
+    @Override
+    public ArrayList<Libro> obtenerPorAutor(String identificador) {
+        ArrayList<Libro> resultado = new ArrayList<>();
+        for (Object o : obtenerLista()) {
+            Libro l = (Libro) o;
+            if (l.getAutor() != null && l.getAutor().equals(identificador)) {
+                resultado.add(l);
+            }
+        }
+        return resultado;
     }
 }

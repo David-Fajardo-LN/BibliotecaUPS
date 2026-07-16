@@ -6,8 +6,10 @@ package Controlador;
 
 import Excepciones.AutorExcepcion;
 import Modelo.dao.InterfazDao;
+import Modelo.dao.LibroDao;
 import Modelo.dominio.Autor;
 import Modelo.dominio.Bibliotecario;
+import Modelo.dominio.Libro;
 import Vista.autor.AgregarAutorView;
 import Vista.autor.BuscarAutorView;
 import Vista.autor.EliminarAutorView;
@@ -34,10 +36,11 @@ public class ControladorAutor {
 
     private InterfazDao<Autor> autorDao;
     private InterfazDao<Bibliotecario> bibliotecarioDao;
+    private LibroDao libroDao;
 
     private Autor autorAuxiliar;
 
-    public ControladorAutor(InterfazDao autorDao, InterfazDao bibliotecarioDao, ResourceBundle bundle, PrincipalView principalView) {
+    public ControladorAutor(InterfazDao autorDao, InterfazDao bibliotecarioDao, LibroDao libroDao, ResourceBundle bundle, PrincipalView principalView) {
 
         agregarAutorView = new AgregarAutorView();
         buscarAutorView = new BuscarAutorView();
@@ -48,6 +51,7 @@ public class ControladorAutor {
 
         this.autorDao = autorDao;
         this.bibliotecarioDao = bibliotecarioDao;
+        this.libroDao = libroDao;
         this.bundle = bundle;
     }
 
@@ -57,6 +61,7 @@ public class ControladorAutor {
             public void actionPerformed(ActionEvent e) {
                 try{
                     agregarAutor();
+                    agregarAutorView.limpiarTextos();
                     agregarAutorView.mostrarMensaje(bundle.getString("exito.AgregarAutor"));
                 }catch(AutorExcepcion ex){
                     agregarAutorView.mostrarMensaje(bundle.getString(ex.getMessage()));
@@ -116,6 +121,7 @@ public class ControladorAutor {
 
                 try{
                     eliminarAutor();
+                    eliminarAutorView.limpiarTextos();
                     eliminarAutorView.mostrarMensaje(bundle.getString("exito.EliminarAutor"));
                 }catch(AutorExcepcion ex){
                     eliminarAutorView.mostrarMensaje(bundle.getString(ex.getMessage()));
@@ -155,6 +161,7 @@ public class ControladorAutor {
 
                 try{
                     modificarAutor();
+                    modificarAutorView.limpiarTextos();
                     modificarAutorView.mostrarMensaje(bundle.getString("exito.AutorModificado"));
                 }catch(AutorExcepcion ex){
                     modificarAutorView.mostrarMensaje(bundle.getString(ex.getMessage()));
@@ -188,6 +195,7 @@ public class ControladorAutor {
         listarAutorView.getBtnCancelar().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                listarAutorView.limpiarTabla();
                 listarAutorView.setVisible(false);
             }
         });
@@ -211,6 +219,7 @@ public class ControladorAutor {
     }
 
     public void activarVentanaListarAutor(){
+        listarAutorView.actualizarIdioma(bundle);
         principalView.abrirVentana(listarAutorView);
     }
     
@@ -254,12 +263,19 @@ public class ControladorAutor {
         if(identificador.isBlank())
             throw new AutorExcepcion("campoVacio.Identificador");
 
-        Autor autor = (Autor) autorDao.buscar(identificador);
+        Autor autor = autorDao.buscar(identificador);
 
         if(autor == null)
             throw new AutorExcepcion("error.AutorNoExiste");
 
         buscarAutorView.mostrarInformacion(autor.getNombre(), autor.getNacionalidad(), autor.getEstiloLiterario(), autor.getFechaDeNacimiento().toString());
+
+        ArrayList<Libro> libros = libroDao.obtenerPorAutor(identificador);
+        ArrayList<Object[]> filas = new ArrayList<>();
+        for(Libro l : libros){
+            filas.add(new Object[]{l.getISBN(), l.getNombre(), l.getFechaDePublicacion(), l.getCantidadDisponible(), l.getCantidadTotal()});
+        }
+        buscarAutorView.cargarDatosTabla(filas);
     }
 
     private void buscarAutorAEliminar() throws AutorExcepcion{
@@ -267,7 +283,7 @@ public class ControladorAutor {
         if(identificador.isBlank())
             throw new AutorExcepcion("campoVacio.Identificador");
 
-        autorAuxiliar = (Autor) autorDao.buscar(identificador);
+        autorAuxiliar = autorDao.buscar(identificador);
 
         if(autorAuxiliar == null)
             throw new AutorExcepcion("error.AutorNoExiste");

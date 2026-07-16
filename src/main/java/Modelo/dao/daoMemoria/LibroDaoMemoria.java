@@ -4,7 +4,7 @@
  */
 package Modelo.dao.daoMemoria;
 
-import Modelo.dao.InterfazDao;
+import Modelo.dao.LibroDao;
 import Modelo.dominio.Libro;
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class LibroDaoMemoria implements InterfazDao<Libro> {
+public class LibroDaoMemoria implements LibroDao {
 
     private ArrayList<Libro> libros;
 
@@ -71,6 +71,17 @@ public class LibroDaoMemoria implements InterfazDao<Libro> {
     @Override
     public ArrayList<Libro> obtenerLista() {
         return libros;
+    }
+
+    @Override
+    public ArrayList<Libro> obtenerPorAutor(String identificador) {
+        ArrayList<Libro> resultado = new ArrayList<>();
+        for (Libro l : libros) {
+            if (l.getAutor() != null && l.getAutor().equals(identificador)) {
+                resultado.add(l);
+            }
+        }
+        return resultado;
     }
 
     private ArrayList<Libro> generarLibrosIniciales() {

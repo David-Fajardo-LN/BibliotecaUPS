@@ -555,7 +555,6 @@ public class PrincipalView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemModificarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemModificarUsuarioActionPerformed
-        System.exit(0);
     }//GEN-LAST:event_itemModificarUsuarioActionPerformed
 
     private void itemListarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemListarUsuariosActionPerformed

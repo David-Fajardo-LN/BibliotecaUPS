@@ -36,6 +36,18 @@ public class Prestamo {
         this.sancion=null;
     }
 
+    public Prestamo(String codigo, String bibliotecarioCedula, String usuarioCedula, String libroISBN) {
+        this.codigo = codigo;
+        this.fechaDePrestamo = LocalDate.now();
+        this.fechaLimiteDePrestamo = LocalDate.now().plusDays(14);
+        this.fechaDeDevolucion = null;
+        this.bibliotecarioCedula = bibliotecarioCedula;
+        this.usuarioCedula = usuarioCedula;
+        this.libroISBN = libroISBN;
+        this.sancion = null;
+        this.estado = true;
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -66,6 +78,18 @@ public class Prestamo {
 
     public void setFechaDeDevolucion(LocalDate fechaDeDevolucion) {
         this.fechaDeDevolucion = fechaDeDevolucion;
+    }
+
+    public String getBibliotecarioCedula() {
+        return bibliotecarioCedula;
+    }
+
+    public String getUsuarioCedula() {
+        return usuarioCedula;
+    }
+
+    public String getLibroISBN() {
+        return libroISBN;
     }
 
     public Sancion tieneSancion() {

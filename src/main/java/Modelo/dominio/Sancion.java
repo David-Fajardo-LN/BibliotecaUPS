@@ -20,6 +20,7 @@ public class Sancion {
     private double monto;
     private boolean estado;
     private String codigoPrestamo;
+    private String cedulaUsuario;
 
     public Sancion(String codigo, LocalDate fechaDeSancion, String descripción, double monto, String codigoPrestamo) {
         this.codigo = codigo;

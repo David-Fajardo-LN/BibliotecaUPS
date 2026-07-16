@@ -23,6 +23,11 @@ public class ListarBibliotecariosView extends javax.swing.JInternalFrame {
     public ListarBibliotecariosView() {
         initComponents();
     }
+    
+    public void limpiarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeBibliotecariosListar.getModel();
+        modelo.setRowCount(0);
+    }
 
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);

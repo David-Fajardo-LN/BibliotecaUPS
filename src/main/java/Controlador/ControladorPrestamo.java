@@ -32,11 +32,11 @@ public class ControladorPrestamo {
     private PrincipalView principalView;
     private ResourceBundle bundle;
 
-    private InterfazDao prestamoDao;
-    private InterfazDao libroDao;
-    private InterfazDao usuarioDao;
-    private InterfazDao bibliotecarioDao;
-    private InterfazDao sancionDao;
+    private InterfazDao<Prestamo> prestamoDao;
+    private InterfazDao<Libro> libroDao;
+    private InterfazDao<Usuario> usuarioDao;
+    private InterfazDao<Bibliotecario> bibliotecarioDao;
+    private InterfazDao<Sancion> sancionDao;
 
     private Prestamo prestamoAuxiliar;
 
@@ -134,6 +134,7 @@ public class ControladorPrestamo {
 
                 try{
                     registrarDevolucion();
+                    registrarDevolucionView.limpiarTextos();
                     registrarDevolucionView.mostrarMensaje(bundle.getString("exito.RegistrarDevolucion"));
                 }catch(PrestamoExcepcion ex){
                     registrarDevolucionView.mostrarMensaje(bundle.getString(ex.getMessage()));
@@ -158,7 +159,7 @@ public class ControladorPrestamo {
                 ArrayList<Prestamo> prestamos = prestamoDao.obtenerLista();
                 ArrayList<Object[]> filas = new ArrayList<>();
                 for(Prestamo p : prestamos){
-                    filas.add(new Object[]{p.getCodigo(), p.getFechaDePrestamo(), p.getFechaLimiteDePrestamo(), p.getFechaDeDevolucion(), p.getUsuario().getCedula(), p.getLibro().getISBN()});
+                    filas.add(new Object[]{p.getCodigo(), p.getFechaDePrestamo(), p.getFechaLimiteDePrestamo(), p.getFechaDeDevolucion(), p.getUsuarioCedula(), p.getLibroISBN()});
                 }
                 listarPrestamoView.cargarDatosTabla(filas);
             }
@@ -167,6 +168,7 @@ public class ControladorPrestamo {
         listarPrestamoView.getBtnCancelar().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
+                listarPrestamoView.limpiarTabla();
                 listarPrestamoView.setVisible(false);
             }
         });
@@ -202,7 +204,7 @@ public class ControladorPrestamo {
         if(cedulaUsuario.isBlank())
             throw new PrestamoExcepcion("campoVacio.CedulaUsuario");
 
-        Libro libro = (Libro) libroDao.buscar(isbn);
+        Libro libro = libroDao.buscar(isbn);
         if(libro == null)
             throw new PrestamoExcepcion("error.LibroNoExiste");
 
@@ -242,7 +244,7 @@ public class ControladorPrestamo {
         if(libro.getCantidadDisponible() <= 0)
             throw new PrestamoExcepcion("error.LibroSinDisponibilidad");
 
-        Bibliotecario bibliotecario = (Bibliotecario) bibliotecarioDao.buscar(cedulaBibliotecario);
+        Bibliotecario bibliotecario = bibliotecarioDao.buscar(cedulaBibliotecario);
         if(bibliotecario == null)
             throw new PrestamoExcepcion("error.BibliotecarioNoExiste");
 
@@ -250,7 +252,7 @@ public class ControladorPrestamo {
         if(usuario == null)
             throw new PrestamoExcepcion("error.UsuarioNoExiste");
 
-        Prestamo prestamoNuevo = new Prestamo(codigo, bibliotecario, usuario, libro);
+        Prestamo prestamoNuevo = new Prestamo(codigo, bibliotecario.getCedula(), usuario.getCedula(), libro.getISBN());
         prestamoDao.agregar(prestamoNuevo);
 
         libro.restarDisponibilidad();
@@ -266,10 +268,13 @@ public class ControladorPrestamo {
         if(prestamo == null)
             throw new PrestamoExcepcion("error.PrestamoNoExiste");
 
+        Usuario usuario = usuarioDao.buscar(prestamo.getUsuarioCedula());
+        Libro libro = (Libro) libroDao.buscar(prestamo.getLibroISBN());
+
         String fechaDevolucion = prestamo.getFechaDeDevolucion() != null ? prestamo.getFechaDeDevolucion().toString() : "-";
         String sancion = prestamo.getSancion() != null ? prestamo.getSancion().getCodigo() : "-";
 
-        buscarPrestamoView.mostrarInformacion(prestamo.getUsuario().getNombre(), prestamo.getLibro().getNombre(), prestamo.getFechaDePrestamo().toString(), prestamo.getFechaLimiteDePrestamo().toString(), fechaDevolucion, sancion);
+        buscarPrestamoView.mostrarInformacion(usuario.getNombre(), libro.getNombre(), prestamo.getFechaDePrestamo().toString(), prestamo.getFechaLimiteDePrestamo().toString(), fechaDevolucion, sancion);
     }
 
     private void buscarPrestamoADevolver() throws PrestamoExcepcion{
@@ -288,7 +293,10 @@ public class ControladorPrestamo {
         String sancion = diasAtraso > 0 ? bundle.getString("sancion.SiAplica") : bundle.getString("sancion.NoAplica");
         double monto = diasAtraso > 0 ? diasAtraso * MONTO_POR_DIA_DE_ATRASO : 0.0;
 
-        registrarDevolucionView.mostrarInformacion(prestamoAuxiliar.getUsuario().getNombre(), prestamoAuxiliar.getLibro().getNombre(), prestamoAuxiliar.getFechaDePrestamo().toString(), prestamoAuxiliar.getFechaLimiteDePrestamo().toString(), fechaDevolucion.toString(), sancion, String.valueOf(monto));
+        Usuario usuario = usuarioDao.buscar(prestamoAuxiliar.getUsuarioCedula());
+        Libro libro = libroDao.buscar(prestamoAuxiliar.getLibroISBN());
+
+        registrarDevolucionView.mostrarInformacion(usuario.getNombre(), libro.getNombre(), prestamoAuxiliar.getFechaDePrestamo().toString(), prestamoAuxiliar.getFechaLimiteDePrestamo().toString(), fechaDevolucion.toString(), sancion, String.valueOf(monto));
     }
 
     private void registrarDevolucion() throws PrestamoExcepcion{
@@ -308,7 +316,7 @@ public class ControladorPrestamo {
 
         prestamoDao.actualizar(prestamoAuxiliar);
 
-        Libro libro = prestamoAuxiliar.getLibro();
+        Libro libro = (Libro) libroDao.buscar(prestamoAuxiliar.getLibroISBN());
         libro.sumarDisponibilidad();
         libroDao.actualizar(libro);
 

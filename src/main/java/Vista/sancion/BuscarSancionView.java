@@ -22,13 +22,13 @@ public class BuscarSancionView extends javax.swing.JInternalFrame {
         initComponents();
     }
 
-    public void mostrarInformacion(String fechaSancion, String motivo, String monto, String codigoPrestamo, String estado, String usuario){
+    public void mostrarInformacion(String fechaSancion, String motivo, String monto, String codigoPrestamo, String estado, String cedulaUsuario){
         txtFechaSancion.setText(fechaSancion);
         txtMotivoSancion.setText(motivo);
         txtMontoSancion.setText(monto);
         txtCodigoPrestamo.setText(codigoPrestamo);
         txtEstadoDeSancion.setText(estado);
-        txtUsuarioSancionado.setText(usuario);
+        txtUsuarioSancionado.setText(cedulaUsuario);
     }
 
     public void limpiarTextos(){
@@ -66,7 +66,6 @@ public class BuscarSancionView extends javax.swing.JInternalFrame {
         jLabel7.setText(bundle.getString("mensajeGeneral.DatosMostrados"));
         jLabel8.setText(bundle.getString("codigoPrestamoGeneral.IngresarDato"));
         jLabel9.setText(bundle.getString("estadoGeneral.IngresarDato"));
-        jLabel10.setText(bundle.getString("usuarioSancionadoGeneral.IngresarDato"));
         btnBuscarSancion.setText(bundle.getString("btn.buscar"));
         btnRegresar.setText(bundle.getString("btn.cancelar"));
     }

@@ -72,8 +72,8 @@ public class SancionDaoMemoria implements InterfazDao<Sancion> {
 
     private ArrayList<Sancion> generarSancionesIniciales() {
         ArrayList<Sancion> lista = new ArrayList<>();
-        lista.add(new Sancion("1", LocalDate.of(2026, 3, 6), "Devolución tardía de 2 dias.", 34.00, null));
-        lista.add(new Sancion("2", LocalDate.of(2026, 4, 19), "Devolución tardía de 4 días.", 34.00, null));
+        lista.add(new Sancion("1", LocalDate.of(2026, 3, 6), "Devolución tardía de 2 dias.", 34.00, "1"));
+        lista.add(new Sancion("2", LocalDate.of(2026, 4, 19), "Devolución tardía de 4 días.", 34.00, "2"));
 
         return lista;
     }

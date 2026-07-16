@@ -21,6 +21,11 @@ public class ListarAutoresView extends javax.swing.JInternalFrame {
         initComponents();
     }
 
+    public void limpiarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel) TablaDeAutoresListar.getModel();
+        modelo.setRowCount(0);
+    }
+    
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
     }

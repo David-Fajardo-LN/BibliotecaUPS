@@ -22,6 +22,11 @@ public class BuscarUsuarioView extends javax.swing.JInternalFrame {
         initComponents();
     }
     
+    public void limpiarTabla(){
+        DefaultTableModel modelo = (DefaultTableModel) TablaPrestamosUsuario.getModel();
+        modelo.setRowCount(0);
+    }
+    
     public void cargarDatosTabla(ArrayList<Object[]> filas) {
         DefaultTableModel modelo = (DefaultTableModel) TablaPrestamosUsuario.getModel();
         modelo.setRowCount(0);

@@ -6,6 +6,8 @@ package Controlador;
 
 import Modelo.dao.AutorArchivosDao;
 import Modelo.dao.InterfazDao;
+import Modelo.dao.LibroDao;
+import Modelo.dao.PrestamoDao;
 import Modelo.dao.daoArchivos.LibroArchivosDao;
 import Modelo.dao.SancionArchivosDao;
 import Modelo.dao.UsuarioArchivosDao;
@@ -37,8 +39,8 @@ public class ControladorPrincipal {
     
     private InterfazDao autorDao;
     private InterfazDao bibliotecarioDao;
-    private InterfazDao libroDao;
-    private InterfazDao prestamoDao;
+    private LibroDao libroDao;
+    private PrestamoDao prestamoDao;
     private InterfazDao usuarioDao;
     private InterfazDao sancionDao;
     
@@ -84,9 +86,9 @@ public class ControladorPrincipal {
     }
     
     private void inicializarControladores(){
-        controladorUsuario = new ControladorUsuario(usuarioDao, bibliotecarioDao, bundle,principalView);
-        controladorBibliotecario = new ControladorBibliotecario(bibliotecarioDao, bundle,principalView);
-        controladorAutor = new ControladorAutor(autorDao, bibliotecarioDao, bundle,principalView);
+        controladorUsuario = new ControladorUsuario(usuarioDao, bibliotecarioDao, prestamoDao, bundle,principalView);
+        controladorBibliotecario = new ControladorBibliotecario(bibliotecarioDao, prestamoDao, bundle,principalView);
+        controladorAutor = new ControladorAutor(autorDao, bibliotecarioDao, libroDao, bundle,principalView);
         controladorLibro = new ControladorLibro(libroDao, autorDao, bibliotecarioDao, bundle,principalView);
         controladorPrestamo = new ControladorPrestamo(prestamoDao, libroDao, usuarioDao, bibliotecarioDao, sancionDao, bundle,principalView);
         controladorSancion = new ControladorSancion(sancionDao, prestamoDao, bundle,principalView);

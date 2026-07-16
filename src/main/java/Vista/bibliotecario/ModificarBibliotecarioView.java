@@ -54,13 +54,13 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         jLabel10.setText(bundle.getString("cedulaSupervisor.IngresarDato"));
         jLabel11.setText(bundle.getString("sectorGeneral.IngresarDato"));
         labelCargo.setText(bundle.getString("nuevoCargo.Bibliotecario"));
-        btnAgregarUsuario.setText(bundle.getString("btn.buscar"));
+        btnBuscarBibliotecario.setText(bundle.getString("btn.buscar"));
         btnModificar.setText(bundle.getString("btn.modificar"));
         btnCancelar.setText(bundle.getString("btn.cancelar"));
     }
 
-    public JButton getBtnAgregarUsuario() {
-        return btnAgregarUsuario;
+    public JButton getBtnBuscarBibliotecario() {
+        return btnBuscarBibliotecario;
     }
 
     public JButton getBtnModificar() {
@@ -114,7 +114,7 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnAgregarUsuario = new javax.swing.JButton();
+        btnBuscarBibliotecario = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -160,7 +160,7 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        btnAgregarUsuario.setText("BUSCAR");
+        btnBuscarBibliotecario.setText("BUSCAR");
 
         btnModificar.setText("MODIFICAR");
 
@@ -241,7 +241,7 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtCedulaUsuarioNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnAgregarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnBuscarBibliotecario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(151, 151, 151))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,7 +263,7 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtCedulaUsuarioNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarUsuario))
+                    .addComponent(btnBuscarBibliotecario))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -319,7 +319,7 @@ public class ModificarBibliotecarioView extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarUsuario;
+    private javax.swing.JButton btnBuscarBibliotecario;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;

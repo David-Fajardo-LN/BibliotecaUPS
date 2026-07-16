@@ -6,15 +6,10 @@
  */
 package Modelo.dao.daoArchivos;
 
-import Modelo.dao.InterfazDao;
+import Modelo.dao.PrestamoDao;
 import Modelo.dao.SancionArchivosDao;
-import Modelo.dao.UsuarioArchivosDao;
-import Modelo.dao.daoArchivos.LibroArchivosDao;
-import Modelo.dominio.Bibliotecario;
-import Modelo.dominio.Libro;
 import Modelo.dominio.Prestamo;
 import Modelo.dominio.Sancion;
-import Modelo.dominio.Usuario;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -25,7 +20,7 @@ import java.util.ArrayList;
  *
  * @author User
  */
-public class PrestamoArchivosDao implements InterfazDao<Prestamo>{
+public class PrestamoArchivosDao implements PrestamoDao{
 
     private static final String RUTA = "//RutaEjemplo";
 
@@ -39,9 +34,6 @@ public class PrestamoArchivosDao implements InterfazDao<Prestamo>{
     private static final int TAM_CODIGO_SANCION = 10;
     private static final int TAM_REGISTRO = 200;
 
-    private final BibliotecarioArchivosDao bibliotecarioDao = new BibliotecarioArchivosDao();
-    private final UsuarioArchivosDao usuarioDao = new UsuarioArchivosDao();
-    private final LibroArchivosDao libroDao = new LibroArchivosDao();
     private final SancionArchivosDao sancionDao = new SancionArchivosDao();
 
     public PrestamoArchivosDao() {
@@ -79,9 +71,9 @@ public class PrestamoArchivosDao implements InterfazDao<Prestamo>{
         escribirCadena(raf, dato.getFechaDePrestamo() == null ? "" : dato.getFechaDePrestamo().toString(), TAM_FECHA_PRESTAMO);
         escribirCadena(raf, dato.getFechaDeDevolucion() == null ? "" : dato.getFechaDeDevolucion().toString(), TAM_FECHA_DEVOLUCION);
         escribirCadena(raf, dato.getFechaLimiteDePrestamo() == null ? "" : dato.getFechaLimiteDePrestamo().toString(), TAM_FECHA_LIMITE);
-        escribirCadena(raf, dato.getBibliotecario() == null ? "" : dato.getBibliotecario().getCedula(), TAM_CEDULA_BIBLIOTECARIO);
-        escribirCadena(raf, dato.getUsuario() == null ? "" : dato.getUsuario().getCedula(), TAM_CEDULA_USUARIO);
-        escribirCadena(raf, dato.getLibro() == null ? "" : dato.getLibro().getISBN(), TAM_ISBN_LIBRO);
+        escribirCadena(raf, dato.getBibliotecarioCedula(), TAM_CEDULA_BIBLIOTECARIO);
+        escribirCadena(raf, dato.getUsuarioCedula(), TAM_CEDULA_USUARIO);
+        escribirCadena(raf, dato.getLibroISBN(), TAM_ISBN_LIBRO);
         escribirCadena(raf, dato.getSancion() == null ? "" : dato.getSancion().getCodigo(), TAM_CODIGO_SANCION);
 
         long bytesEscritos = raf.getFilePointer() - inicioRegistro;
@@ -103,15 +95,15 @@ public class PrestamoArchivosDao implements InterfazDao<Prestamo>{
         String isbnLibro = leerCadena(raf, TAM_ISBN_LIBRO);
         String codigoSancion = leerCadena(raf, TAM_CODIGO_SANCION);
 
-        Bibliotecario bibliotecario = cedulaBibliotecario.isEmpty() ? null : bibliotecarioDao.buscar(cedulaBibliotecario);
-        Usuario usuario = cedulaUsuario.isEmpty() ? null : usuarioDao.buscar(cedulaUsuario);
-        Libro libro = isbnLibro.isEmpty() ? null : libroDao.buscar(isbnLibro);
         Sancion sancion = codigoSancion.isEmpty() ? null : sancionDao.buscar(codigoSancion);
+        LocalDate fechaPrestamo = fechaPrestamoTexto.isEmpty() ? null : LocalDate.parse(fechaPrestamoTexto);
+        LocalDate fechaLimite = fechaLimiteTexto.isEmpty() ? null : LocalDate.parse(fechaLimiteTexto);
+        LocalDate fechaDevolucion = fechaDevolucionTexto.isEmpty() ? null : LocalDate.parse(fechaDevolucionTexto);
+        String cedulaBib = cedulaBibliotecario.isEmpty() ? null : cedulaBibliotecario;
+        String cedulaUsu = cedulaUsuario.isEmpty() ? null : cedulaUsuario;
+        String isbn = isbnLibro.isEmpty() ? null : isbnLibro;
 
-        Prestamo prestamo = new Prestamo(codigo, bibliotecario, usuario, libro);
-        prestamo.setFechaDePrestamo(fechaPrestamoTexto.isEmpty() ? null : LocalDate.parse(fechaPrestamoTexto));
-        prestamo.setFechaDeDevolucion(fechaDevolucionTexto.isEmpty() ? null : LocalDate.parse(fechaDevolucionTexto));
-        prestamo.setFechaLimiteDePrestamo(fechaLimiteTexto.isEmpty() ? null : LocalDate.parse(fechaLimiteTexto));
+        Prestamo prestamo = new Prestamo(codigo, fechaPrestamo, fechaLimite, fechaDevolucion, cedulaBib, cedulaUsu, isbn);
         prestamo.setSancion(sancion);
         if (!estado) {
             prestamo.cambiarEstadoFalse();
@@ -216,6 +208,30 @@ public class PrestamoArchivosDao implements InterfazDao<Prestamo>{
     
     public void registrarDevolucion(){
         
+    }
+
+    @Override
+    public ArrayList<Prestamo> obtenerPorUsuario(String cedula) {
+        ArrayList<Prestamo> resultado = new ArrayList<>();
+        for (Object o : obtenerLista()) {
+            Prestamo p = (Prestamo) o;
+            if (p.getUsuarioCedula() != null && p.getUsuarioCedula().equals(cedula)) {
+                resultado.add(p);
+            }
+        }
+        return resultado;
+    }
+
+    @Override
+    public ArrayList<Prestamo> obtenerPorBibliotecario(String cedula) {
+        ArrayList<Prestamo> resultado = new ArrayList<>();
+        for (Object o : obtenerLista()) {
+            Prestamo p = (Prestamo) o;
+            if (p.getBibliotecarioCedula() != null && p.getBibliotecarioCedula().equals(cedula)) {
+                resultado.add(p);
+            }
+        }
+        return resultado;
     }
     
 }
